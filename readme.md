@@ -1,14 +1,12 @@
 # Exsited Python SDK
-
-Please find the document inside the docs directory.
-
-# Exsited SDK
+***
+## Table of Contents
 
 The Exsited Python SDK provides an easy-to-use library for integrating Exsited services into your project. This includes Custom Integration, Onsite Integration and all APIs.
 ## Requirements
 Python 3.12 and Later
 
-## Create virtual environment & Required Dependency
+## Installation
 ```bash
 # Install virtualenv
 pip install virtualenv
@@ -64,23 +62,147 @@ def get_request_token_dto():
 | ExsitedUrl   | [YOUR_EXSITED_SERVER_URL] | 
 
 ## Getting Started
+Follow the common pattern to test the functions on the SDK. All the tests can be done on the test files located in the Tests directory.
 
-**Method:** `test_account_create_basic`
+### Testing SDK Functions
 
-**DTO:** `AccountCreateDTO`
+### Method: `test_account_create_basic`
+***
 
-**Steps:**
+### Request Parameters
 
+| Parameter       | Description                                             | Type             | Required |
+|-----------------|---------------------------------------------------------|------------------|----------|
+| account         | Contains the account details to be created.             | `AccountDataDTO` | Yes      |
+| account.name    | The name of the account.                                | `str`            | Yes      |
+| account.emailAddress | The email address associated with the account.     | `str`            | Yes      |
 
-1 **Create `AccountCreateDTO` Object:** Create an instance of the `AccountCreateDTO` class and populate its mandatory fields using the `AccountDataDTO` object.
+### Example Request Data (JSON Representation)
 
-    - **Mandatory Fields:**
-        - `name`: Set the name of the account (e.g., "Python SDK")
-        - `emailAddress`: Set the email address for the account (e.g., "a26@bfei.net")
+```json
+{
+  "account": {
+    "name": "Example Name",
+    "emailAddress": "example@example.com"
+  }
+}
+```
+### Function Signature
+```Python
+def test_account_create_basic():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
 
+    autobill_sdk: AutoBillSDK = AutoBillSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
-**Code Example:**
+    try:
+        # You will edit the following request_data
+        request_data = AccountCreateDTO(account=AccountDataDTO(name="Example Name", emailAddress="example@example.com"))
+        
+        response = autobill_sdk.account.create(request_data=request_data)
+        print(response)
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+```
+
+### Method: `test_order_create_basic`
+***
+| Parameter  | Description                                 | Type | Required |
+|------------|---------------------------------------------|------|----------|
+| accountId  | The ID of the account associated with the order. | str  | Yes      |
+| item_id    | The ID of the item being ordered.           | str  | Yes      |
+| quantity   | The quantity of the item being ordered.     | str  | Yes      |
+
+```json
+{
+  "order": {
+    "accountId": "30PS79",
+    "lines": [
+      {
+        "item_id": "ITEM-0055",
+        "quantity": "1"
+      }
+    ]
+  }
+}
+```
+### Function Signature
+```Python
+def test_order_create_basic():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    autobill_sdk = AutoBillSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        # You will edit the following request_data
+        request_data = OrderCreateDTO(order=OrderDataDTO(accountId="30PS79").add_line(item_id="ITEM-0055", quantity="1"))
+        response = autobill_sdk.order.create(request_data=request_data)
+        print(response)
+        
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
 
 ```
-Code
-```
+***
+### Response
+| Field    | Description                                         |
+|----------|-----------------------------------------------------|
+| response | The response from the `account.create` method.     |
+| errors   | Any errors encountered during the account creation process. |
+
+### Error Handling
+| Field           | Description                                             |
+|-----------------|---------------------------------------------------------|
+| ab              | The exception object.                                   |
+| ab.get_errors() | A list of errors that occurred during the account creation process. |
+| ab.raw_response | The raw response data from the API call, useful for debugging. |
+
+## Testing
+### Executing Functions
+To test the SDK functions, adhere to the common pattern outlined below. All tests should be conducted using the provided test files located in the "Tests" directory.
+
+1. Set up the environment: Ensure that the SDK configuration is appropriately initialized for testing purposes.
+
+2. Customize request data: Adjust the `request_data` as needed for the specific function being tested.
+
+3. Execute the function: Call the desired function from the SDK, updating the `request_data` inside the function body.
+
+### Required Fields
+Check out the following documentation to find details on the DTO classes. 
+
+[DTO Classes Documentation](https://webalive.atlassian.net/wiki/spaces/~61ad8c41744c4d006959553f/pages/560889859/DTO+classes)
+### Account
+
+| Function Name                     | Required Fields                |
+|-----------------------------------|--------------------------------|
+| test_account_create_basic        | name, emailAddress            |
+| test_account_update_info         | id (Account ID)               |
+| test_account_list_basic          | n/a                            |
+| test_account_details             | id (Account ID)               |
+| test_account_delete              | id (Account ID)               |
+| test_account_payment_methods_add | processorType, default, paymentProcessor, reference |
+| test_account_payment_card_methods_add | processorType, default, paymentProcessor, reference, cardType, token, cardNumber, expiryMonth, expiryYear |
+| test_list_payment_methods        | account_id (Account ID)       |
+| test_delete_payment_methods      | account_id (Account ID), reference |
+| test_payment_method_details      | account_id (Account ID), reference |
+
+### Order 
+| Function                   | Required Parameters               |
+|----------------------------|-----------------------------------|
+| test_order_create_basic   | accountId, item_id, quantity (Item Quantity) |
+| test_order_list_basic     | n/a                               |
+| test_order_details        | id (Order ID)                     |
+| test_order_cancel         | id (Order ID), effective_date     |
+| test_order_usage_add      | chargeItemUuid, chargingPeriod, quantity, startTime, endTime, type |
+
+
+### Invoice 
+| Function              | Required Parameters |
+|-----------------------|----------------------|
+| test_invoice_list    | n/a                  |
+| test_invoice_details | id                   |
