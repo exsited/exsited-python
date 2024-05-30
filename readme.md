@@ -73,7 +73,7 @@ Follow the common pattern to test the functions on the SDK. All the tests can be
 
 ### Testing SDK Functions
 
-### Method: `test_account_create_basic`
+### Example Method 1: `test_account_create_basic`
 ***
 
 ### Request Parameters
@@ -114,7 +114,7 @@ def test_account_create_basic():
         print(ab.raw_response)
 ```
 
-### Method: `test_order_create_basic`
+### Example Method 2: `test_order_create_basic`
 ***
 | Parameter  | Description                                 | Type | Required |
 |------------|---------------------------------------------|------|----------|
