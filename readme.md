@@ -1,12 +1,19 @@
 # Exsited Python SDK
+The Exsited Python SDK provides an easy-to-use library for integrating Exsited services into your project. This includes Custom Integration, Onsite Integration and all APIs.
+
 ***
 ## Table of Contents
-
-The Exsited Python SDK provides an easy-to-use library for integrating Exsited services into your project. This includes Custom Integration, Onsite Integration and all APIs.
-## Requirements
+- [Requirements](#Requirements)
+- [Installation](#Installation)
+- [Configuration](#Configuration)
+- [Authentication](#Authentication)
+- [Getting Started](#Getting Started)
+- [Testing](#Testing)
+- [API Documentation](#API Documentation)
+# Requirements
 Python 3.12 and Later
 
-## Installation
+# Installation
 ```bash
 # Install virtualenv
 pip install virtualenv
@@ -29,13 +36,13 @@ pip install -e .
 ```
 
 
-## Configuration
+# Configuration
 
 To set up the Exsited SDK, you'll require your `Client ID`, `Client Secret`, and `Redirect URL`. If you have not received these details already, please reach out to your designated client contact to obtain them
 
 
 
-## Authentication
+# Authentication
 1. **Locate `common_data.py`:** Open the SKD project directory on an IDE and navigate to the `common_data.py` file which is located in the following path: `tests/common/common_data.py`.
 2. **Update `get_request_token_dto` function:** Within the `common_data.py` class, locate the method named `get_request_token_dto` and update it with the credentials you were provided.
 <img src="blob:https://webalive.atlassian.net/c058a466-42ce-405e-b3ca-dfbbb81a9939#media-blob-url=true&id=ee9aff06-3e79-4823-b0bf-9ef83f5d3c9a&collection=contentId-558825510&contextId=558825510&mimeType=image%2Fpng&name=image.png&size=435487&width=2049&height=922&alt=image.png" alt="">
@@ -61,7 +68,7 @@ def get_request_token_dto():
 | redirectUri  | "YOUR_REDIRECT_URI"       | 
 | ExsitedUrl   | [YOUR_EXSITED_SERVER_URL] | 
 
-## Getting Started
+# Getting Started
 Follow the common pattern to test the functions on the SDK. All the tests can be done on the test files located in the Tests directory.
 
 ### Testing SDK Functions
@@ -162,7 +169,7 @@ def test_order_create_basic():
 | ab.get_errors() | A list of errors that occurred during the account creation process. |
 | ab.raw_response | The raw response data from the API call, useful for debugging. |
 
-## Testing
+# Testing
 ### Executing Functions
 To test the SDK functions, adhere to the common pattern outlined below. All tests should be conducted using the provided test files located in the "Tests" directory.
 
@@ -206,3 +213,5 @@ Check out the following documentation to find details on the DTO classes.
 |-----------------------|----------------------|
 | test_invoice_list    | n/a                  |
 | test_invoice_details | id                   |
+
+# API Documentation
