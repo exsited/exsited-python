@@ -7,9 +7,9 @@ The Exsited Python SDK provides an easy-to-use library for integrating Exsited s
 - [Installation](#Installation)
 - [Configuration](#Configuration)
 - [Authentication](#Authentication)
-- [Getting Started](#Getting Started)
+- [Getting Started](#Getting-Started)
 - [Testing](#Testing)
-- [API Documentation](#API Documentation)
+- [API Documentation](#API-Documentation)
 # Requirements
 Python 3.12 and Later
 
