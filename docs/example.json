@@ -1,0 +1,26 @@
+{
+  'account': {
+    'payment_method': {
+      'processor_type': 'OTHER',
+      'status': 'ACTIVE',
+      'default': 'true',
+      'processor': {
+        'uuid': '39c8c148-ef05-4b36-9d47-19357516558a',
+        'name': 'Cheque',
+        'link': 'https://api-stage.exsited.com/api/v2/payment_processors/39c8c148-ef05-4b36-9d47-19357516558a'
+      },
+      'reference': 'check_processor',
+      'payment_count': '0.000000',
+      'last_used_on': '',
+      'created_by': 'SDK Testing',
+      'created_on': '2024-05-16T07:30:57Z',
+      'last_updated_by': '',
+      'last_updated_on': '',
+      'uuid': '0164e8f7-789c-436b-924b-1a3dc9ec5461',
+      'version': '1',
+      'use_for_specified_orders': 'false',
+      'specified_orders': ''
+    },
+    'id': 'KZ558V'
+  }
+}
