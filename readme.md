@@ -213,4 +213,4 @@ The following tables contain for the required fields for the test cases
 | test_invoice_details | id                   |
 
 # API Documentation
-[API Documentation](https://webalive.atlassian.net/wiki/spaces/~61ad8c41744c4d006959553f/pages/562528291/API+Documentations)
+[API Documentation](https://callservice.atlassian.net/wiki/spaces/Implementa/pages/8355904/Usage+API+Endpoints)
