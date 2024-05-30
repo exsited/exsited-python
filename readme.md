@@ -157,9 +157,9 @@ def test_order_create_basic():
 ```
 ***
 ### Response
-| Field    | Description                                         |
-|----------|-----------------------------------------------------|
-| response | The response from the `account.create` method.     |
+| Field    | Description                                                 |
+|----------|-------------------------------------------------------------|
+| response | The response from the the method being called.              |
 | errors   | Any errors encountered during the account creation process. |
 
 ### Error Handling
