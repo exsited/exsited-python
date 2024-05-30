@@ -65,8 +65,8 @@ def get_request_token_dto():
 |--------------|---------------------------|
 | clientId     | "[YOUR_CLIENT_ID]"        | 
 | clientSecret | "[YOUR_CLIENT_SECRET]"    | 
-| redirectUri  | "YOUR_REDIRECT_URI"       | 
-| ExsitedUrl   | [YOUR_EXSITED_SERVER_URL] | 
+| redirectUri  | "[YOUR_REDIRECT_URI]"       | 
+| ExsitedUrl   | "[YOUR_EXSITED_SERVER_URL]" | 
 
 # Getting Started
 Follow the common pattern to test the functions on the SDK. All the tests can be done on the test files located in the Tests directory.
