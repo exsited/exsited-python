@@ -180,9 +180,7 @@ To test the SDK functions, adhere to the common pattern outlined below. All test
 3. Execute the function: Call the desired function from the SDK, updating the `request_data` inside the function body.
 
 ### Required Fields
-Check out the following documentation to find details on the DTO classes. 
-
-[DTO Classes Documentation](https://webalive.atlassian.net/wiki/spaces/~61ad8c41744c4d006959553f/pages/560889859/DTO+classes)
+The following tables contain for the required fields for the test cases
 ### Account
 
 | Function Name                     | Required Fields                |
