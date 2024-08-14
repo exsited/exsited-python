@@ -133,6 +133,32 @@ def test_order_usage_add():
         print(ab.raw_response)
 
 
+def test_order_create_with_usage_association():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        request_data = OrderCreateDTO(
+            order=OrderDataDTO(accountId="QP38FA").add_line(item_id="ITEM-0015", quantity="1"))
+        response = exsited_sdk.order.create(request_data=request_data)
+        print(response)
+        # ResponseToObj().process(response=response)
+
+        if response.order:
+            account_id = response.order.accountId
+            order_id = response.order.id
+            for line in response.order.lines:
+                if line.itemChargeType == 'METERED':
+                    SaveToDB.process_order_data(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
+                                     _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
 # test_order_create_with_property()
 test_order_create_basic()
 # test_order_details()
