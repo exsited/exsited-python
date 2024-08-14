@@ -221,7 +221,7 @@ The following tables contain for the required fields for the test cases
 # API Documentation
 [API Documentation](https://callservice.atlassian.net/wiki/spaces/Implementa/pages/8159248/API+Documentations)
 
-# Usage Charge Item UUID Association
+# Usage `charge_item_uuid` Association
 
 
 
@@ -230,19 +230,19 @@ The `order_usage_db` folder contains the functionality for handling database ope
 ### Components of `order_usage_db`
 
 1. **`connect_with_db.py`**  
-   - Handles the connection setup to your database. This includes functions to connect and disconnect from the database.
+   - Manages the database connection setup, including functions for establishing and terminating connections
 
 2. **`order_manager.py`**  
    - Manages Order data, to create rows for the database where the relevant associations are made in order to create usages easily using **`charge_item_uuid`**
 
 3. **`order_model.py`**  
-   - Defines the data models for orders and their related entities (e.g., `Order`, `OrderLine`). These models are used across the module to maintain consistent data structures.
+   - Contains the structure of the order association table
 
 4. **`order_service.py`**  
-   - Contains the business logic for processing orders, applying discounts, calculating totals, and handling other order-related operations.
+   - Contains the function to create the association records
 
 5. **`save_to_db.py`**  
-   - Implements the logic to persist order data to the database. It interacts with the `connect_with_db.py` module to perform save operations.
+   - Implements the logic to persist order association data to the database. It interacts with the `connect_with_db.py` module to perform save operations.
 
 ### Usage
 
@@ -250,10 +250,50 @@ After configuring your database connection in `connect_with_db.py`, you can use 
 
 #### Example Workflow
 
-1. **Initialize the SDK and Database Connection**
+1. **Adding Database Details:**
+   In the SaveToDB class within the order_usage_db module, ensure that you update the OrderManager 
+   initialization with your specific database connection details, such as the database name, username, 
+   password, and host address.
+2. ```python
+   class SaveToDB:
+    def process_order_data(_order_id: str, _account_id: str, _item_id: str, _item_name: str, _charge_item_uuid: str):
+        # Add your database details below
+        order_manager = OrderManager('your_database_name', 'your_username', 'your_password', 'your_host_address')
+        order_manager.connect_to_db()
+        order_manager.process_order(
+            account_id=_account_id,
+            order_id=_order_id,
+            item_id=_item_id,
+            item_name=_item_name,
+            charge_item_uuid=_charge_item_uuid
+        )
+        order_manager.disconnect_from_db()
+   
+3. Once the database details and other necessary configurations have been added, you can use the following example to add an order. 
+This will automatically update the association tables, allowing you to retrieve the relevant details needed to update usage data.
+   
    ```python
-   from your_sdk_package import ExsitedSDK, CommonData
-   from order_usage_db.connect_with_db import connect
+   def test_order_create_basic():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = False
 
-   sdk = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-   db_connection = connect()
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        request_data = OrderCreateDTO(
+            order=OrderDataDTO(accountId="AC01").add_line(item_id="ITEM-001", quantity="1"))
+        response = exsited_sdk.order.create(request_data=request_data)
+        
+        if response.order:
+            account_id = response.order.accountId
+            order_id = response.order.id
+            for line in response.order.lines:
+                if line.itemChargeType == 'METERED':
+                     #Note: The item must be of type "Metered" for the association data to be stored.
+                    SaveToDB.process_order_data(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
+                                     _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+   
