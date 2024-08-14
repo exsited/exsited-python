@@ -10,6 +10,7 @@ The Exsited Python SDK provides an easy-to-use library for integrating Exsited s
 - [Getting Started](#Getting-Started)
 - [Testing](#Testing)
 - [API Documentation](#API-Documentation)
+- [Usage charge_item_uuid Association](#Usage charge_item_uuid Association)
 # Requirements
 Python 3.12 and Later
 
