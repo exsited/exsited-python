@@ -8,7 +8,7 @@ class RequestTokenDTO(ABBaseDTO):
     clientId: str
     clientSecret: str
     redirectUri: str
-    autoBillUrl: str
+    exsitedUrl: str
 
 
 @dataclass(kw_only=True)

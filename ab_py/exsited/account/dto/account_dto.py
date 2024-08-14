@@ -1,10 +1,10 @@
-from dataclasses import dataclass
-from ab_py.autobill.common.dto.common_dto import CurrencyDTO, TimeZoneDTO, PaginationDTO, CustomAttributesDTO, TaxDTO, \
+from dataclasses import dataclass, field
+from ab_py.exsited.common.dto.common_dto import CurrencyDTO, TimeZoneDTO, PaginationDTO, CustomAttributesDTO, TaxDTO, \
     AddressDTO, CustomFormsDTO
 from ab_py.sdlize.ab_base_dto import ABBaseDTO
-from ab_py.autobill.account.dto.account_nested_dto import AccountingCodeDTO, CommunicationPreferenceDTO, \
+from ab_py.exsited.account.dto.account_nested_dto import AccountingCodeDTO, CommunicationPreferenceDTO, \
     PaymentMethodsDataDTO, BillingPreferencesDTO, PaymentMethodsDTO, PaymentCardMethodsDTO, PaymentCardMethodsDataDTO, \
-    PaymentMethodListDTO
+    PaymentMethodListDTO, AccountContacts, AccountContactsType, AccountContactsUpdate, AccountContactUpdate
 
 
 @dataclass(kw_only=True)
@@ -95,3 +95,43 @@ class PaymentCardMethodsAddDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class PaymentMethodsListDTO(ABBaseDTO):
     account: PaymentMethodListDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountCancelDataDTO(ABBaseDTO):
+    effectiveDate: str
+
+
+@dataclass(kw_only=True)
+class AccountCancelDTO(ABBaseDTO):
+    account: AccountCancelDataDTO
+
+
+@dataclass(kw_only=True)
+class AccountReactivateDataDTO(ABBaseDTO):
+    effectiveDate: str = None
+
+
+@dataclass(kw_only=True)
+class AccountReactivateDTO(ABBaseDTO):
+    account: AccountReactivateDataDTO
+
+
+@dataclass(kw_only=True)
+class AccountContactsDTO(ABBaseDTO):
+    account: AccountContacts = None
+
+
+@dataclass(kw_only=True)
+class AccountContactsTypeDTO(ABBaseDTO):
+    account: AccountContactsType = None
+
+
+@dataclass(kw_only=True)
+class AccountContactUpdateDTO(ABBaseDTO):
+    account: AccountContactUpdate = None
+
+@dataclass(kw_only=True)
+class AccountContactsUpdateDTO(ABBaseDTO):
+    account: AccountContactsUpdate = None
+

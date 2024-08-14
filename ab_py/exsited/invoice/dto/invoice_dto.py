@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from ab_py.autobill.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, PaginationDTO
-from ab_py.autobill.order.dto.order_nested_dto import OrderLineDTO
+from ab_py.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, PaginationDTO
+from ab_py.exsited.order.dto.order_nested_dto import OrderLineDTO
 from ab_py.sdlize.ab_base_dto import ABBaseDTO
 
 
@@ -47,6 +47,11 @@ class InvoiceDataDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class InvoiceDetailsDTO(ABBaseDTO):
     invoice: InvoiceDataDTO = None
+
+
+@dataclass(kw_only=True)
+class InvoiceCreateDTO(ABBaseDTO):
+    invoice: InvoiceDataDTO
 
 
 @dataclass(kw_only=True)

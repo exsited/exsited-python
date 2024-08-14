@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from ab_py.autobill.auth.auth_api_url import AuthApiUrl
-from ab_py.autobill.auth.dto.token_dto import TokenResponseDTO, RequestTokenDTO, RefreshTokenDTO
+from ab_py.exsited.auth.auth_api_url import AuthApiUrl
+from ab_py.exsited.auth.dto.token_dto import TokenResponseDTO, RequestTokenDTO, RefreshTokenDTO
 from ab_py.common.ab_exception import ABException
 from ab_py.common.sdk_conf import SDKConfig
 from ab_py.common.sdk_console import SDKConsole
@@ -79,7 +79,7 @@ class ABRestProcessor:
         self._set_token(api_response=api_response)
 
     def _init_config(self):
-        self.http_requester.baseUrl = self.request_token_dto.autoBillUrl
+        self.http_requester.baseUrl = self.request_token_dto.exsitedUrl
         if not self.rest_token or not self.rest_token.accessToken:
             self._init_auth()
         self.http_requester.add_bearer_token(self.rest_token.accessToken)
