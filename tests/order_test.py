@@ -3,7 +3,7 @@ from ab_py.exsited.order.dto.order_dto import OrderCreateDTO, OrderDataDTO
 from ab_py.exsited.order.dto.usage_dto import UsageCreateDTO, UsageDataDTO
 from ab_py.common.ab_exception import ABException
 from ab_py.common.sdk_conf import SDKConfig
-from order_usage_db.save_to_db import SaveTODB
+from order_usage_db.save_to_db import SaveToDB
 from tests.common.common_data import CommonData
 from ab_py.exsited.order.dto.order_nested_dto import OrderPropertiesDTO
 
@@ -26,7 +26,7 @@ def test_order_create_basic():
             order_id = response.order.id
             for line in response.order.lines:
                 if line.itemChargeType == 'METERED':
-                    SaveTODB.process(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
+                    SaveToDB.process(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
                                      _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
     except ABException as ab:
         print(ab)
