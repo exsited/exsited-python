@@ -33,6 +33,12 @@ pip install setuptools
 
 # Install app Dependency
 pip install -e .
+
+# Usage association Dependencies
+pip install peewee
+pip install mysql-connector-python
+
+
 ```
 
 
@@ -214,3 +220,40 @@ The following tables contain for the required fields for the test cases
 
 # API Documentation
 [API Documentation](https://callservice.atlassian.net/wiki/spaces/Implementa/pages/8159248/API+Documentations)
+
+# Usage Charge Item UUID Association
+
+
+
+The `order_usage_db` folder contains the functionality for handling database operations related to orders within the Exsited SDK. This module is responsible for connecting to the database, managing orders, processing order data, and saving the relevant information to the database.
+
+### Components of `order_usage_db`
+
+1. **`connect_with_db.py`**  
+   - Handles the connection setup to your database. This includes functions to connect and disconnect from the database.
+
+2. **`order_manager.py`**  
+   - Manages Order data, to create rows for the database where the relevant associations are made in order to create usages easily using **`charge_item_uuid`**
+
+3. **`order_model.py`**  
+   - Defines the data models for orders and their related entities (e.g., `Order`, `OrderLine`). These models are used across the module to maintain consistent data structures.
+
+4. **`order_service.py`**  
+   - Contains the business logic for processing orders, applying discounts, calculating totals, and handling other order-related operations.
+
+5. **`save_to_db.py`**  
+   - Implements the logic to persist order data to the database. It interacts with the `connect_with_db.py` module to perform save operations.
+
+### Usage
+
+After configuring your database connection in `connect_with_db.py`, you can use the other scripts to manage orders and persist data to your database. For example, you can create and process an order using `order_manager.py` and then save it using `save_to_db.py`.
+
+#### Example Workflow
+
+1. **Initialize the SDK and Database Connection**
+   ```python
+   from your_sdk_package import ExsitedSDK, CommonData
+   from order_usage_db.connect_with_db import connect
+
+   sdk = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+   db_connection = connect()

@@ -15,7 +15,7 @@ class OrderManager:
         self.db_connection.close()
 
     def process_order(self, account_id: str, order_id: str, item_id: str, item_name: str, charge_item_uuid: str):
-        new_order = self.order_service.create_order(
+        new_order = self.order_service.create_association_data(
             account_id=account_id,
             order_id=order_id,
             item_id=item_id,

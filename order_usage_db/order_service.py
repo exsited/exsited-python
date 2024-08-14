@@ -6,7 +6,7 @@ class OrderService:
         self.db = db_connection.get_db()
         Order._meta.database = self.db
 
-    def create_order(self, account_id, order_id, item_id, item_name, charge_item_uuid):
+    def create_association_data(self, account_id, order_id, item_id, item_name, charge_item_uuid):
         with self.db.atomic():
             new_order = Order.create(
                 account_id=account_id,

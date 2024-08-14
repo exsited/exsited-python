@@ -26,7 +26,7 @@ def test_order_create_basic():
             order_id = response.order.id
             for line in response.order.lines:
                 if line.itemChargeType == 'METERED':
-                    SaveToDB.process(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
+                    SaveToDB.process_order_data(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
                                      _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
     except ABException as ab:
         print(ab)
