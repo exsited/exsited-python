@@ -39,6 +39,7 @@ class PaymentDataDTO(ABBaseDTO):
     reconcileStatus: str = None
     totalApplied: float = None
     paymentApplied: list[PaymentAppliedDTO] = None
+    note: str = None
     creditApplied: list[CreditAppliedDTO] = None
     invoices: list[InvoiceDTO] = None
     createdBy: str = None

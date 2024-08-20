@@ -39,6 +39,22 @@ class OrderItemPriceSnapshotDTO(ABBaseDTO):
 
 
 @dataclass(kw_only=True)
+class POInformationDTO(ABBaseDTO):
+    id: str = None
+    name: str = None
+    accountId: str = None
+    currency: str = None
+    itemQuantity: str = None
+    itemPriceSnapshot: OrderItemPriceSnapshotDTO = None
+
+
+@dataclass(kw_only=True)
+class OrderPurchaseDTO(ABBaseDTO):
+    createPo: str = None
+    poInformation: POInformationDTO = None
+
+
+@dataclass(kw_only=True)
 class OrderLineDTO(ABBaseDTO):
     itemId: str = None
     itemOrderQuantity: str
@@ -56,6 +72,7 @@ class OrderLineDTO(ABBaseDTO):
     itemAccountingCode: OrderItemAccountingCodeDTO = None
     itemPriceSnapshot: OrderItemPriceSnapshotDTO = None
     itemSaleTaxConfiguration: OrderItemSaleTaxConfigurationDTO = None
+    purchaseOrder: OrderPurchaseDTO = None
 
 
 @dataclass(kw_only=True)

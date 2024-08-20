@@ -29,18 +29,18 @@ def test_payment_create_card():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
         card_payment_applied = CardPaymentAppliedDTO(
-            processor="Stripe",
-            amount="50.00",
+            processor="Stripe card",
+            amount="1.00",
             cardType="Visa",
-            token="tok_1PcPlbKfTp0ACfgN7iGyZug7",
-            cardNumber="4242",
+            token="tok_1PpLKAKfTp0ACfgNyrGN0fFL",
+            cardNumber="XXXXXXXXXXXX4242",
             expiryMonth="12",
             expiryYear="2025",
             additionalFields={"host_ip": "192.168.116.34"}
         )
-        card_payment_data = CardPaymentDataDTO(date="2024-08-10", paymentApplied=[card_payment_applied], note="fghgfh")
+        card_payment_data = CardPaymentDataDTO(date="2024-08-19", paymentApplied=[card_payment_applied], note="fghgfh")
         request_data = CardPaymentCreateDTO(payment=card_payment_data)
-        response = exsited_sdk.payment.create_card(invoice_id="INV-U80A-0-0117", request_data=request_data)
+        response = exsited_sdk.payment.create_card(invoice_id="INV-JQY12I-0051", request_data=request_data)
         print(response)
     except ABException as ab:
         print(ab)
@@ -72,6 +72,6 @@ def test_payment_create_direct_debit():
 
 
 # Call the test function
-#test_payment_create_card()
+test_payment_create_card()
 #test_payment_create_basic()
-test_payment_create_direct_debit()
+#test_payment_create_direct_debit()

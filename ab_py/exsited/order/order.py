@@ -28,3 +28,7 @@ class Order(ABRestProcessor):
     def add_usage(self, request_data: UsageCreateDTO) -> UsageDataDTO:
         response = self.post(url=OrderApiUrl.USAGE_ADD, request_obj=request_data, response_obj=UsageCreateDTO())
         return response
+
+    def create_with_purchase(self, request_data: OrderCreateDTO) -> OrderDetailsDTO:
+        response = self.post(url=OrderApiUrl.PURCHASE_ORDER_CREATE, request_obj=request_data, response_obj=OrderDetailsDTO())
+        return response
