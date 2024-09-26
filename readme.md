@@ -16,6 +16,9 @@ Python 3.12 and Later
 
 # Installation
 ```bash
+#Navigate to the project directory
+cd exsited-python
+
 # Install virtualenv
 pip install virtualenv
 
