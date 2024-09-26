@@ -17,10 +17,9 @@ def test_order_create_basic():
 
     try:
         request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="QP38FA").add_line(item_id="ITEM-0014", quantity="1"))
+            order=OrderDataDTO(accountId="ACCOUNT_ID_PLACEHOLDER").add_line(item_id="ITEM_ID_PLACEHOLDER", quantity="1"))
         response = exsited_sdk.order.create(request_data=request_data)
         print(response)
-        # ResponseToObj().process(response=response)
 
         if response.order:
             account_id = response.order.accountId
@@ -45,11 +44,11 @@ def test_order_create_with_property():
             paymentMode="MANUAL",
         )
         order_data = OrderDataDTO(
-            accountId="U80A-0000000171",
-            id="32446FB3-3DD0-11EF-A268-C025A5CEBA52",
+            accountId="ACCOUNT_ID_PLACEHOLDER",
+            id="ORDER_ID_PLACEHOLDER",
             properties=order_properties
         )
-        order_data.add_line(item_id="ITEM-0296", quantity="1", price=400)
+        order_data.add_line(item_id="ITEM_ID_PLACEHOLDER", quantity="1", price=400)
         request_data = OrderCreateDTO(order=order_data)
         response = autobill_sdk.order.create(request_data=request_data)
         print(response)
@@ -68,7 +67,6 @@ def test_order_list_basic():
     try:
         response = exsited_sdk.order.list()
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -85,11 +83,7 @@ def test_order_details(id: str):
         response = exsited_sdk.order.details(id=id)
         print(response)
         return response
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
-        # print(ab)
-        # print(ab.get_errors())
-        # print(ab.raw_response)
         error_code = None
         if ab.get_errors() and "errors" in ab.raw_response:
             error_code = ab.raw_response["errors"][0].get("code", None)
@@ -103,9 +97,8 @@ def test_order_cancel():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.order.cancel(id="32446FB3-3DD0-11EF-A268-C025A5CEBA52", effective_date="2024-07-07")
+        response = exsited_sdk.order.cancel(id="ORDER_ID_PLACEHOLDER", effective_date="2024-10-11")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -120,7 +113,7 @@ def test_order_usage_add():
 
     try:
         request_data = UsageCreateDTO(
-            usage=UsageDataDTO(chargeItemUuid="3cbf2ca7-ce1f-44dc-98ed-9d08716e9250",
+            usage=UsageDataDTO(chargeItemUuid="UUID_PLACEHOLDER",
                                chargingPeriod="2024-05-21-2024-06-20",
                                quantity="82",
                                startTime="2024-05-21 16:58:57",
@@ -135,32 +128,6 @@ def test_order_usage_add():
         print(ab.raw_response)
 
 
-def test_order_create_with_usage_association():
-    SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="QP38FA").add_line(item_id="ITEM-0015", quantity="1"))
-        response = exsited_sdk.order.create(request_data=request_data)
-        print(response)
-        # ResponseToObj().process(response=response)
-
-        if response.order:
-            account_id = response.order.accountId
-            order_id = response.order.id
-            for line in response.order.lines:
-                if line.itemChargeType == 'METERED':
-                    SaveToDB.process_order_data(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
-                                     _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
 def test_order_create_with_purchase_order():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
@@ -168,40 +135,53 @@ def test_order_create_with_purchase_order():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-
         land_owner_purchase = OrderPurchaseDTO(createPo="true",
-                                               poInformation=POInformationDTO(id="land1234", accountId="5P51SQ",
-                                                                              currency="AUD", item_quantity="1",
+                                               poInformation=POInformationDTO(id="PO_ID_PLACEHOLDER", accountId="ACCOUNT_ID_PLACEHOLDER",
+                                                                              currency="AUD", itemQuantity="1",
                                                                               itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                                                                   (pricingRule=OrderItemPricingRuleDTO(
                                                                                   price="98.00"))))
-        land_owner_line = OrderLineDTO(itemId="ITEM-0016", itemOrderQuantity="1",
+        land_owner_line = OrderLineDTO(itemId="ITEM_ID_PLACEHOLDER", itemOrderQuantity="1",
                                        itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                        (pricingRule=OrderItemPricingRuleDTO(price="100.00")),
                                        purchaseOrder=land_owner_purchase
                                        )
 
         software_owner_purchase = OrderPurchaseDTO(createPo="true",
-                                                   poInformation=POInformationDTO(id="owner1234", accountId="QJ2OWQ",
+                                                   poInformation=POInformationDTO(id="PO_ID_PLACEHOLDER", accountId="ACCOUNT_ID_PLACEHOLDER",
                                                                                   currency="AUD",
-                                                                                  item_quantity="1",
+                                                                                  itemQuantity="1",
                                                                                   itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                                                                       (
                                                                                       pricingRule=OrderItemPricingRuleDTO(
                                                                                           price="2.00"))))
-        software_owner_line = OrderLineDTO(itemId="ITEM-0018", itemOrderQuantity="1",
+        software_owner_line = OrderLineDTO(itemId="ITEM_ID_PLACEHOLDER", itemOrderQuantity="1",
                                            itemPriceSnapshot=OrderItemPriceSnapshotDTO
-                                           (pricingRule=OrderItemPricingRuleDTO(price="100.00")),
+                                           (pricingRule=OrderItemPricingRuleDTO(price="0.00")),
                                            purchaseOrder=software_owner_purchase
                                            )
 
+        order_properties = OrderPropertiesDTO(
+            communicationProfile="",
+            invoiceMode="AUTOMATIC",
+            invoiceTerm="NET -7",
+            billingPeriod="1 Week",
+            paymentProcessor="Cash",
+            paymentMode="MANUAL",
+            paymentTerm="NET 30",
+            paymentTermAlignment="BILLING_DATE",
+            fulfillmentMode="MANUAL",
+            fulfillmentTerm="Immediately"
+        )
+
         request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="WP06N4", name="renterSDK", id="orderRenterSDK2",
+            order=OrderDataDTO(accountId="ACCOUNT_ID_PLACEHOLDER", name="renterSDKx", id="ORDER_ID_PLACEHOLDER",
+                               billingStartDate="ORDER_START_DATE", orderStartDate="2024-09-04",
+                               properties=order_properties,
                                lines=[land_owner_line, software_owner_line]))
 
         response = exsited_sdk.order.create_with_purchase(request_data=request_data)
         print(response)
-        # ResponseToObj().process(response=response)
 
     except ABException as ab:
         print(ab)
@@ -212,5 +192,5 @@ def test_order_create_with_purchase_order():
 # test_order_create_with_property()
 # test_order_create_basic()
 # test_order_details()
-# test_order_cancel()
-test_order_create_with_purchase_order()
+test_order_cancel()
+# test_order_create_with_purchase_order()

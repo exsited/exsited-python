@@ -11,7 +11,7 @@ def test_invoice_create_basic():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
         request_data = InvoiceCreateDTO(invoice=InvoiceDataDTO(invoiceNote="Created From Python SDK"))
-        response = exsited_sdk.invoice.create(id="ORD-OSM5-000-0141", request_data=request_data)
+        response = exsited_sdk.invoice.create(id="ORDER_ID_PLACEHOLDER", request_data=request_data)
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -27,7 +27,6 @@ def test_invoice_list():
     try:
         response = exsited_sdk.invoice.list()
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -41,7 +40,7 @@ def test_invoice_details():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.details(id="INV-U80A-0-0117")
+        response = exsited_sdk.invoice.details(id="INVOICE_ID_PLACEHOLDER")
         print(response)
     except ABException as ab:
         print(ab)
@@ -56,7 +55,7 @@ def test_invoice_details_against_order():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.invoice_details_against_order(order_id="ORD-OSM5-000-0141")
+        response = exsited_sdk.invoice.invoice_details_against_order(order_id="ORDER_ID_PLACEHOLDER")
         print(response)
     except ABException as ab:
         print(ab)
@@ -71,7 +70,7 @@ def test_invoice_list_against_order():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.invoice_details_list_against_order(order_id="ORD-OSM5-000-0140")
+        response = exsited_sdk.invoice.invoice_details_list_against_order(order_id="ORDER_ID_PLACEHOLDER")
         print(response)
     except ABException as ab:
         print(ab)
@@ -79,4 +78,5 @@ def test_invoice_list_against_order():
         print(ab.raw_response)
 
 
-test_invoice_create_basic()
+# test_invoice_create_basic()
+test_invoice_details()

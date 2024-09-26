@@ -107,13 +107,13 @@ def test_account_create_basic():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    autobill_sdk: AutoBillSDK = AutoBillSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
         # You will edit the following request_data
         request_data = AccountCreateDTO(account=AccountDataDTO(name="Example Name", emailAddress="example@example.com"))
         
-        response = autobill_sdk.account.create(request_data=request_data)
+        response = exsited_sdk.account.create(request_data=request_data)
         print(response)
     except ABException as ab:
         print(ab)
@@ -148,12 +148,12 @@ def test_order_create_basic():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    autobill_sdk = AutoBillSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
         # You will edit the following request_data
         request_data = OrderCreateDTO(order=OrderDataDTO(accountId="30PS79").add_line(item_id="ITEM-0055", quantity="1"))
-        response = autobill_sdk.order.create(request_data=request_data)
+        response = exsited_sdk.order.create(request_data=request_data)
         print(response)
         
     except ABException as ab:

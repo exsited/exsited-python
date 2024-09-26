@@ -50,6 +50,11 @@ class ABRestProcessor:
     def _get_data(self, response: HTTPResponse, response_obj: ABBaseDTO, exception=True):
         response_data = response.data
         SDKConsole.log(response_data, is_print=SDKConfig.PRINT_RAW_RESPONSE)
+        if response.httpCode == 204:
+            return {
+                "success": True,
+                "status_code": 204
+            }
         if response.status != SDKConst.SUCCESS or not response_data:
             if exception:
                 self.process_error_response(response=response, response_data=response_data)
