@@ -58,6 +58,10 @@ class Account(ABRestProcessor):
         response = self.get(url=AccountApiUrl.ACCOUNT_CONTACTS.format(id=id), response_obj=AccountContactsDTO())
         return response
 
+    def get_contact_type(self, id: str, contact_type: str) -> AccountContactsDTO:
+        response = self.get(url=AccountApiUrl.ACCOUNT_CONTACT_TYPE.format(id=id, contact_type=contact_type), response_obj=AccountContactsDTO())
+        return response
+
     def update_contact(self, id: str, contact_type: str, request_data: AccountContactUpdateDTO) -> AccountContactsUpdateDTO:
         response = self.put(url=AccountApiUrl.ACCOUNT_CONTACT_UPDATE.format(id=id, contact_type=contact_type), request_obj=request_data, response_obj=AccountContactsUpdateDTO)
         return response

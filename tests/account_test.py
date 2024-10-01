@@ -20,6 +20,7 @@ def test_account_create_basic():
     try:
         request_data = AccountCreateDTO(account=AccountDataDTO(name="Test User", emailAddress="testuser@example.com"))
         response = exsited_sdk.account.create(request_data=request_data)
+        print(response)
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -263,7 +264,9 @@ def test_account_payment_card_direct_debit_methods_add():
             expiryMonth="12",
             expiryYear="2024",
         )
-        response = exsited_sdk.account.add_payment_card_direct_debit_method(account_id="ACCOUNT_ID", request_data=PaymentCardMethodsAddDTO().method(payment_method=payment_method))
+        response = exsited_sdk.account.add_payment_card_method(account_id="ACCOUNT_ID",
+                                                               request_data=PaymentCardMethodsAddDTO().method(
+                                                                   payment_method=payment_method))
         print(response)
     except ABException as ab:
         print(ab)
