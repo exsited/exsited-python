@@ -11,8 +11,8 @@ def test_invoice_create_basic():
     SDKConfig.PRINT_RAW_RESPONSE = False
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
-        request_data = InvoiceCreateDTO(invoice=InvoiceDataDTO(invoiceNote="Created From Python SDK"))
-        response = exsited_sdk.invoice.create(id="ORD-69VUT0-0181", request_data=request_data)
+        request_data = InvoiceCreateDTO(invoice=InvoiceDataDTO(invoiceNote=""))
+        response = exsited_sdk.invoice.create(id="", request_data=request_data)
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -42,7 +42,7 @@ def test_invoice_details():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.details(id="INV-JQY12I-0051")
+        response = exsited_sdk.invoice.details(id="")
         print(response)
     except ABException as ab:
         print(ab)
@@ -57,7 +57,7 @@ def test_invoice_information():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.information(id="INV-JQY12I-0051")
+        response = exsited_sdk.invoice.information(id="")
         print(response)
     except ABException as ab:
         print(ab)
@@ -72,7 +72,7 @@ def test_invoice_delete():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.delete(id="INV-2XR7V0-0416")
+        response = exsited_sdk.invoice.delete(id="")
         print(response)
         # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
@@ -89,15 +89,15 @@ def test_invoice_update_amend():
 
     try:
         line_dto = OrderLineDTO(
-            operation="UPDATE",
-            itemPrice="166.00",
-            itemDiscountAmount="150.00",
-            uuid="d9b49d38-f52a-4efb-a2f5-9d9423e22092", #From Line[uuid:]
+            operation="",
+            itemPrice="",
+            itemDiscountAmount="",
+            uuid="", #From Line[uuid:]
         )
 
         request_data = InvoiceCreateDTO(invoice=InvoiceDataDTO(lines=[line_dto]))
 
-        response = exsited_sdk.invoice.update_amend(id='INV-X011SE-0430', request_data=request_data)
+        response = exsited_sdk.invoice.update_amend(id='', request_data=request_data)
         print(response)
 
     except ABException as ab:
@@ -112,7 +112,7 @@ def test_invoice_against_account():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.invoice_account(accountId="GPLUFW")
+        response = exsited_sdk.invoice.invoice_account(accountId="")
         print(response)
     except ABException as ab:
         print(ab)
@@ -127,7 +127,7 @@ def test_invoice_details_against_order():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.invoice_details_against_order(order_id="ORD-28A3E1-0075")
+        response = exsited_sdk.invoice.invoice_details_against_order(order_id="")
         print(response)
     except ABException as ab:
         print(ab)
@@ -142,7 +142,7 @@ def test_invoice_list_against_order():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.invoice.invoice_details_list_against_order(order_id="ORD-OSM5-000-0140")
+        response = exsited_sdk.invoice.invoice_details_list_against_order(order_id="")
         print(response)
     except ABException as ab:
         print(ab)

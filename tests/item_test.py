@@ -25,7 +25,7 @@ def test_item_standard():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.standard(id='ITEM-0049')
+        response = exsited_sdk.item.standard(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -39,7 +39,7 @@ def test_item_information():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.information(id='ITEM-0049')
+        response = exsited_sdk.item.information(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -53,7 +53,7 @@ def test_get_item_sale():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.sale(id='ITEM-0007')
+        response = exsited_sdk.item.sale(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -67,7 +67,7 @@ def test_get_item_purchase():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.purchase(id='ITEM-0007')
+        response = exsited_sdk.item.purchase(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -81,7 +81,7 @@ def test_get_item_inventories():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.inventory(id='ITEM-0007')
+        response = exsited_sdk.item.inventory(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -97,61 +97,61 @@ def test_create_item():
     try:
         # Currencies
         currency_one = CurrenciesDTO(
-            name="AUD",
-            isUsedForSale="true",
-            isDefaultForSale="true",
-            isUsedForPurchase="true",
-            isDefaultForPurchase="true"
+            name="",
+            isUsedForSale="",
+            isDefaultForSale="",
+            isUsedForPurchase="",
+            isDefaultForPurchase=""
         )
         currency_two = CurrenciesDTO(
-            name="USD",
-            isUsedForSale="true",
-            isDefaultForSale="false",
-            isUsedForPurchase="true",
-            isDefaultForPurchase="false"
+            name="",
+            isUsedForSale="",
+            isDefaultForSale="",
+            isUsedForPurchase="",
+            isDefaultForPurchase=""
         )
         currencies = []
 
         # UOMs
         uom_one = UomDTO(
-            name="Grams",
+            name="",
             # isBase="true",
-            saleConversionRate="1",
-            purchaseConversionRate="5",
-            isUsedForSale="true",
-            isUsedForPurchase="true"
+            saleConversionRate="",
+            purchaseConversionRate="",
+            isUsedForSale="",
+            isUsedForPurchase=""
         )
         uom_two = UomDTO(
-            name="Kilogram",
+            name="",
             # isBase="false",
-            saleConversionRate="2",
-            purchaseConversionRate="10",
-            isUsedForSale="true",
-            isUsedForPurchase="true"
+            saleConversionRate="",
+            purchaseConversionRate="",
+            isUsedForSale="",
+            isUsedForPurchase=""
         )
         uoms = []
 
         # Sale charge properties
-        sale_charge_properties_one = SaleChargePropertiesDTO(name="fulfillment_mode", value="MANUAL")
-        sale_charge_properties_two = SaleChargePropertiesDTO(name="fulfillment_term", value="Net 14")
+        sale_charge_properties_one = SaleChargePropertiesDTO(name="", value="")
+        sale_charge_properties_two = SaleChargePropertiesDTO(name="", value="")
         sale_charge_properties = [sale_charge_properties_one, sale_charge_properties_two]
 
         # Sale charge
         sale_charge = SaleChargeDTO(
-            type="ONE_OFF",
+            type="",
             # pricePeriod=None,  # Not provided in the example
             properties=sale_charge_properties
         )
 
         # Sale pricing module
         sale_pricing_module = PricingModuleDTO(
-            price="15.000100",
-            currency="AUD",
-            uom="Grams"
+            price="",
+            currency="",
+            uom=""
         )
         sale_pricing = PricingDTO(
-            type="PER_UNIT_PRICING",
-            version="1",
+            type="",
+            version="",
             latestUsedPricingVersion="",
             pricingModule=[sale_pricing_module]
         )
@@ -159,65 +159,65 @@ def test_create_item():
         # Sale DTO
         sale_dto = SaleDTO(
             enabled="true",
-            invoiceNote="sale invoice notee",
-            width=DimensionDTO(uom="centimeter", value="100.000000"),
-            height=DimensionDTO(uom="centimeter", value="150.000000"),
-            length=DimensionDTO(uom="centimeter", value="-180.000000"),
-            weight=DimensionDTO(uom="kilogram", value="20.000005"),
-            accountingCode=AccountingCodeDTO(salesRevenue="Sales Revenue"),
-            defaultSalePrice="100.0",
-            taxExemptWhenSold="true",
-            pricingMethod="STANDARD",
-            pricingSchedules=["true"],
+            invoiceNote="",
+            width=DimensionDTO(uom="", value=""),
+            height=DimensionDTO(uom="", value=""),
+            length=DimensionDTO(uom="", value="-"),
+            weight=DimensionDTO(uom="", value=""),
+            accountingCode=AccountingCodeDTO(salesRevenue=""),
+            defaultSalePrice="",
+            taxExemptWhenSold="",
+            pricingMethod="",
+            pricingSchedules=[""],
             charge=sale_charge,
             paymentProperties=[
-                SaleChargePropertiesDTO(name="payment_processor", value=""),
-                SaleChargePropertiesDTO(name="payment_mode", value="MANUAL"),
-                SaleChargePropertiesDTO(name="payment_term", value="Net 30")
+                SaleChargePropertiesDTO(name="", value=""),
+                SaleChargePropertiesDTO(name="", value=""),
+                SaleChargePropertiesDTO(name="", value=" ")
             ],
             pricing=sale_pricing,
-            pricingLevels=[PricingLevelDTO(name="Wholesale")]
+            pricingLevels=[PricingLevelDTO(name="")]
         )
 
         # Purchase pricing module
         purchase_pricing_module_one = PricingModuleDTO(
-            price="15.000100",
-            currency="AUD",
-            uom="Grams"
+            price="",
+            currency="",
+            uom=""
         )
         purchase_pricing_module_two = PricingModuleDTO(
-            price="11.000100",
-            currency="USD",
-            uom="Kilogram"
+            price="",
+            currency="",
+            uom=""
         )
         purchase_pricing = PricingDTO(
-            type="PER_UNIT_PRICING",
+            type="",
             pricingModule=[purchase_pricing_module_one, purchase_pricing_module_two]
         )
 
         # Purchase DTO
         purchase_dto = PurchaseDTO(
-            enabled="true",
-            enableSupplierManagement="false",
-            purchaseOrderNote="Note",
-            defaultPurchasePrice="10.000000",
-            taxExemptWhenPurchase="true",
-            taxConfiguration=PurchaseTaxConfigurationDTO(purchasePriceEnteredIsInclusiveOfTax="false"),
+            enabled="",
+            enableSupplierManagement="",
+            purchaseOrderNote="",
+            defaultPurchasePrice="",
+            taxExemptWhenPurchase="",
+            taxConfiguration=PurchaseTaxConfigurationDTO(purchasePriceEnteredIsInclusiveOfTax=""),
             purchaseProperties=[
-                PurchasePropertiesDTO(name="receive_mode", value="MANUAL"),
-                PurchasePropertiesDTO(name="receive_term", value="NET 30")
+                PurchasePropertiesDTO(name="", value=""),
+                PurchasePropertiesDTO(name="", value="")
             ],
             pricing=purchase_pricing
         )
 
         # Create item data DTO
         item_data_dto = ItemDataDTO(
-            name="SDK Item",
-            displayName="from SDK",
-            description="description From SDK",
-            type="STANDARD",
-            origin="NET_SUITE",
-            invoiceNote="item invoice note 222",
+            name="",
+            displayName="",
+            description="",
+            type="",
+            origin="",
+            invoiceNote="",
             currencies=currencies,
             uoms=uoms,
             sale=sale_dto,
@@ -240,7 +240,7 @@ def test_item_reactivate():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.reactivate(id='ITEM-0007')
+        response = exsited_sdk.item.reactivate(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -254,7 +254,7 @@ def test_item_deactivate():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.deactivate(id='ITEM-0007')
+        response = exsited_sdk.item.deactivate(id='')
         print(response)
     except ABException as ab:
         print(ab)
@@ -268,7 +268,7 @@ def test_item_delete():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
 
-        response = exsited_sdk.item.delete(id='ITEM-0077')
+        response = exsited_sdk.item.delete(id='')
         print(response)
     except ABException as ab:
         print(ab)

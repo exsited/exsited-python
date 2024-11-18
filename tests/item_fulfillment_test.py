@@ -25,11 +25,11 @@ def test_item_fulfillment_create():
     SDKConfig.PRINT_RAW_RESPONSE = False
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
-        fulfillment = FulfillmentDTO(itemUuid="5c869d45-115b-43e6-9c95-bb5e5dbec951",
-                                     uuid="01a252fb-9d81-4ae1-8a3a-d0a45e350aa4", fulfillmentQuantity="1")
-        item_fulfillment = ItemFulfillmentDataDTO(status="SHIPPED", date="2024-10-28", note="Test",
+        fulfillment = FulfillmentDTO(itemUuid="",
+                                     uuid="", fulfillmentQuantity="")
+        item_fulfillment = ItemFulfillmentDataDTO(status="", date="", note="",
                                                   fulfillments=[fulfillment])
-        response = exsited_sdk.item_fulfillment.create(id="INV-QP38FA-0401", request_data=ItemFulfillmentCreateDTO(
+        response = exsited_sdk.item_fulfillment.create(id="", request_data=ItemFulfillmentCreateDTO(
             item_fulfillments=item_fulfillment))
         print(response)
     except ABException as ab:
@@ -43,7 +43,7 @@ def test_item_fulfillment_details():
     SDKConfig.PRINT_RAW_RESPONSE = False
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
-        response = exsited_sdk.item_fulfillment.details(id="FF-67081064")
+        response = exsited_sdk.item_fulfillment.details(id="")
         print(response)
     except ABException as ab:
         print(ab)
@@ -56,7 +56,7 @@ def test_item_invoice_fulfillment_list():
     SDKConfig.PRINT_RAW_RESPONSE = False
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
-        response = exsited_sdk.item_fulfillment.invoice_fulfillments(id="INV-QP38FA-0393")
+        response = exsited_sdk.item_fulfillment.invoice_fulfillments(id="")
         print(response)
     except ABException as ab:
         print(ab)
@@ -69,7 +69,7 @@ def test_item_invoice_fulfillment_by_uuid():
     SDKConfig.PRINT_RAW_RESPONSE = False
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
-        response = exsited_sdk.item_fulfillment.invoice_fulfillment_by_uuid(id="INV-QP38FA-0393", uuid="FF-70795451")
+        response = exsited_sdk.item_fulfillment.invoice_fulfillment_by_uuid(id="", uuid="")
         print(response)
     except ABException as ab:
         print(ab)

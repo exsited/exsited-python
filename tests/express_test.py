@@ -16,25 +16,25 @@ def test_express_order():
 
     try:
         order_line = OrderLineDTO(
-            itemId="addon_family",
-            itemOrderQuantity="1",
+            itemId="",
+            itemOrderQuantity="",
             itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                pricingRule=OrderItemPricingRuleDTO(price="50.00")
+                pricingRule=OrderItemPricingRuleDTO(price="")
             ),
             itemPriceTax=TaxDTO(
-                uuid="5da85c94-2c63-409b-a2ab-41094582df26",
-                code="FRE",
-                rate="1"
+                uuid="",
+                code="",
+                rate=""
             ),
-            packageName="monthly package",
-            itemName="addon family",
-            quantity="1",
-            accountingCode="Sales Revenue"
+            packageName="",
+            itemName="",
+            quantity="",
+            accountingCode=""
         )
 
         payment_applied = PaymentAppliedDTO(
-            processor="Cash",
-            amount="50"
+            processor="",
+            amount=""
         )
 
         payment = PaymentDTO(
@@ -46,39 +46,39 @@ def test_express_order():
         )
 
         contract_properties = ContractPropertiesDTO(
-            requireCustomerAcceptance="False",
-            requiresPaymentMethod="False",
-            initialContractTerm="1 Year",
-            renewAutomatically="True",
-            autoRenewalTerm="1 Week",
-            allowEarlyTermination="True",
-            applyEarlyTerminationCharge="False",
-            allowPostponement="True",
-            maximumDurationPerPostponement="1 Day",
-            maximumPostponementCount="1",
-            allowTrial="False",
-            startContractAfterTrialEnds="True",
-            trialPeriod="1 day",
-            allowDowngrade="True",
-            periodBeforeDowngrade="1 Day",
-            allowDowngradeCharge="False",
-            downgradeChargeType="Fixed",
-            downgradeChargeFixed="1.000000",
-            allowUpgrade="True"
+            requireCustomerAcceptance="",
+            requiresPaymentMethod="",
+            initialContractTerm="",
+            renewAutomatically="",
+            autoRenewalTerm="",
+            allowEarlyTermination="",
+            applyEarlyTerminationCharge="",
+            allowPostponement="",
+            maximumDurationPerPostponement="",
+            maximumPostponementCount="",
+            allowTrial="",
+            startContractAfterTrialEnds="",
+            trialPeriod="",
+            allowDowngrade="",
+            periodBeforeDowngrade="",
+            allowDowngradeCharge="",
+            downgradeChargeType="",
+            downgradeChargeFixed="",
+            allowUpgrade=""
         )
 
         # Create the order data
         order = OrderDTO(
             lines=[order_line],
             invoice=invoice,
-            allowContract="True",
+            allowContract="",
             contractProperties=contract_properties,
-            properties=OrderPropertiesDTO(billingPeriod="1 Month")
+            properties=OrderPropertiesDTO(billingPeriod="")
 
         )
 
         account = AccountDTO(
-            id="IE1DSN",
+            id="",
             order=order
         )
 

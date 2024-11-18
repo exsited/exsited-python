@@ -32,7 +32,7 @@ def test_purchase_order_details():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.purchase_order.details(id='ownerxyz12456')
+        response = exsited_sdk.purchase_order.details(id='')
         print(response)
         return response
         # ResponseToObj().process(response=response["purchase_order"])
@@ -50,38 +50,38 @@ def test_purchase_order_create():
 
     try:
         purchase_order_data = PurchaseOrderDataDTO(
-            currency="AUD",
-            issueDate="2024-10-31",
-            dueDate="2024-11-01",
-            expectedCompletionDate="2024-11-01",
-            priceTaxInclusive="true",
+            currency="",
+            issueDate="",
+            dueDate="",
+            expectedCompletionDate="",
+            priceTaxInclusive="",
             purchaseOrderNote="",
-            accountId="QJ2OWQ",
+            accountId="",
             lines=[
                 PurchaseOrderLineDTO(
-                    itemUuid="0d257e95-7a10-490f-a716-b77a2cdb2ea5",
-                    itemQuantity="1.000000",
+                    itemUuid="",
+                    itemQuantity="",
                     itemPriceSnapshot=PurchaseOrderItemPriceSnapshotDTO(
                         pricingRule=PurchaseOrderPricingRuleDTO(
-                            priceType="INCREMENTAL_PER_UNIT_PRICING",
-                            price="200.000000"
+                            priceType="",
+                            price=""
                         )
                     ),
                     itemPurchaseTaxConfiguration=PurchaseOrderItemPurchaseTaxConfigurationDTO(
                         purchasePriceIsTaxInclusive="true",
                         taxCode=PurchaseOrderTaxCodeDTO(
-                            uuid="d166b28c-395b-4692-87b9-7408a01b72c0",
-                            code="GST",
-                            rate="10.000000",
-                            link="https://app-stage.exsited.com/api/v1/taxes/d166b28c-395b-4692-87b9-7408a01b72c0"
+                            uuid="",
+                            code="",
+                            rate="",
+                            link=""
                         )
                     ),
-                    itemPriceTaxExempt="false",
+                    itemPriceTaxExempt="",
                     itemPriceTax=TaxDTO(
-                        uuid="d166b28c-395b-4692-87b9-7408a01b72c0",
-                        code="GST",
-                        rate="10.000000",
-                        link="https://app-stage.exsited.com/api/v1/taxes/d166b28c-395b-4692-87b9-7408a01b72c0"
+                        uuid="",
+                        code="",
+                        rate="",
+                        link=""
                     ),
                     purchaseOrderNote="",
                     itemAccountingCode=PurchaseOrderItemAccountingCodeDTO(
