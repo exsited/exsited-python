@@ -3,7 +3,8 @@ from ab_py.exsited.account.dto.account_dto import AccountCreateDTO, AccountDetai
     AccountUpdateInformationDTO, AccountContactsDTO, PaymentMethodsAddDTO, PaymentMethodsDetailsDTO, \
     PaymentCardMethodsAddDTO, \
     PaymentMethodsListDTO, AccountCancelDTO, AccountCancelDataDTO, AccountReactivateDataDTO, AccountReactivateDTO, \
-    AccountContactsTypeDTO, AccountContactUpdateDTO, AccountContactsUpdateDTO
+    AccountContactsTypeDTO, AccountContactUpdateDTO, AccountContactsUpdateDTO, AccountReactiveResponseDTO, \
+    AccountAddressesAddDTO
 from ab_py.exsited.account.dto.account_nested_dto import AccountContactsUpdate, ContactDTO
 from ab_py.exsited.common.common_enum import SortDirection
 from ab_py.common.sdk_util import SDKUtil
@@ -16,9 +17,8 @@ class Account(ABRestProcessor):
         response = self.post(url=AccountApiUrl.ACCOUNTS, request_obj=request_data, response_obj=AccountDetailsDTO())
         return response
 
-
-
-    def list(self, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) -> AccountListDTO:
+    def list(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> AccountListDTO:
         params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
         response = self.get(url=AccountApiUrl.ACCOUNTS, params=params, response_obj=AccountListDTO())
         return response
@@ -33,13 +33,14 @@ class Account(ABRestProcessor):
 
     def cancel(self, id: str, request_data: AccountCancelDataDTO):
         cancel_request = AccountCancelDTO(account=request_data)
-        response = self.post(url=AccountApiUrl.ACCOUNT_CANCEL.format(id=id), request_obj=cancel_request, response_obj=AccountDetailsDTO())
+        response = self.post(url=AccountApiUrl.ACCOUNT_CANCEL.format(id=id), request_obj=cancel_request,
+                             response_obj=AccountDetailsDTO())
         return response
 
     def reactivate(self, id: str, request_data: AccountReactivateDataDTO) -> AccountDetailsDTO:
         reactivate_request = AccountReactivateDTO(account=request_data)
         response = self.post(url=AccountApiUrl.ACCOUNT_REACTIVATE.format(id=id), request_obj=reactivate_request,
-                             response_obj=AccountDetailsDTO())
+                             response_obj=AccountReactiveResponseDTO())
         return response
 
     def delete(self, id: str):
@@ -47,41 +48,74 @@ class Account(ABRestProcessor):
         return response
 
     def contact_delete(self, id: str, contact_type: str):
-        response = self.delete_request(url=AccountApiUrl.ACCOUNT_CONTACT_DELETE.format(id=id, contact_type=contact_type))
+        response = self.delete_request(
+            url=AccountApiUrl.ACCOUNT_CONTACT_DELETE.format(id=id, contact_type=contact_type))
         return response
 
     def update_information(self, id: str, request_data: AccountUpdateInformationDTO) -> AccountDetailsDTO:
-        response = self.patch(url=AccountApiUrl.ACCOUNT_UPDATE_INFORMATION.format(id=id), request_obj=request_data, response_obj=AccountDetailsDTO())
+        response = self.patch(url=AccountApiUrl.ACCOUNT_UPDATE_INFORMATION.format(id=id), request_obj=request_data,
+                              response_obj=AccountDetailsDTO())
         return response
-    
+
     def get_contacts(self, id: str) -> AccountContactsDTO:
         response = self.get(url=AccountApiUrl.ACCOUNT_CONTACTS.format(id=id), response_obj=AccountContactsDTO())
         return response
 
     def get_contact_type(self, id: str, contact_type: str) -> AccountContactsDTO:
-        response = self.get(url=AccountApiUrl.ACCOUNT_CONTACT_TYPE.format(id=id, contact_type=contact_type), response_obj=AccountContactsDTO())
+        response = self.get(url=AccountApiUrl.ACCOUNT_CONTACT_TYPE.format(id=id, contact_type=contact_type),
+                            response_obj=AccountContactsDTO())
         return response
 
-    def update_contact(self, id: str, contact_type: str, request_data: AccountContactUpdateDTO) -> AccountContactsUpdateDTO:
-        response = self.put(url=AccountApiUrl.ACCOUNT_CONTACT_UPDATE.format(id=id, contact_type=contact_type), request_obj=request_data, response_obj=AccountContactsUpdateDTO)
+    def update_contact(self, id: str, contact_type: str,
+                       request_data: AccountContactUpdateDTO) -> AccountContactsUpdateDTO:
+        response = self.put(url=AccountApiUrl.ACCOUNT_CONTACT_UPDATE.format(id=id, contact_type=contact_type),
+                            request_obj=request_data, response_obj=AccountContactsUpdateDTO)
         return response
 
     def add_payment_method(self, account_id: str, request_data: PaymentMethodsAddDTO) -> PaymentMethodsDetailsDTO:
-        response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), request_obj=request_data, response_obj=PaymentMethodsDetailsDTO())
+        response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), request_obj=request_data,
+                             response_obj=PaymentMethodsDetailsDTO())
         return response
 
-    def add_payment_card_method(self, account_id: str, request_data: PaymentCardMethodsAddDTO) -> PaymentMethodsDetailsDTO:
-        response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), request_obj=request_data, response_obj=PaymentMethodsDetailsDTO())
+    def add_payment_card_method(self, account_id: str,
+                                request_data: PaymentCardMethodsAddDTO) -> PaymentMethodsDetailsDTO:
+        response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), request_obj=request_data,
+                             response_obj=PaymentMethodsDetailsDTO())
         return response
 
     def list_payment_method(self, account_id: str) -> PaymentMethodsListDTO:
-        response = self.get(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), response_obj=PaymentMethodsListDTO())
+        response = self.get(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id),
+                            response_obj=PaymentMethodsListDTO())
         return response
 
     def delete_payment_method(self, account_id: str, reference: str):
-        response = self.delete_request(url=AccountApiUrl.EACH_PAYMENT_METHODS.format(id=account_id, reference=reference))
+        response = self.delete_request(
+            url=AccountApiUrl.EACH_PAYMENT_METHODS.format(id=account_id, reference=reference))
         return response
 
     def payment_method_details(self, account_id: str, reference: str) -> PaymentMethodsDetailsDTO:
-        response = self.get(url=AccountApiUrl.EACH_PAYMENT_METHODS.format(id=account_id, reference=reference), response_obj=PaymentMethodsDetailsDTO())
+        response = self.get(url=AccountApiUrl.EACH_PAYMENT_METHODS.format(id=account_id, reference=reference),
+                            response_obj=PaymentMethodsDetailsDTO())
+        return response
+
+    def billing_preference_details(self, account_id: str) -> AccountDetailsDTO:
+        response = self.get(url=AccountApiUrl.ACCOUNT_BILLING_PREFERENCE.format(id=account_id),
+                            response_obj=AccountDetailsDTO())
+        return response
+
+    def add_addresses(self, id: str, request_data: AccountAddressesAddDTO) -> AccountDetailsDTO:
+        response = self.post(url=AccountApiUrl.ACCOUNT_ADDRESSES.format(id=id),
+                             request_obj=request_data, response_obj=AccountDetailsDTO())
+        return response
+
+    def update_payment_method(self, id: str, reference: str,
+                              request_data: PaymentMethodsAddDTO) -> PaymentMethodsDetailsDTO:
+        response = self.patch(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS_UPDATE.format(id=id, reference=reference),
+                              request_obj=request_data, response_obj=PaymentMethodsDetailsDTO())
+        return response
+
+    def modify_contact(self, id: str, contact_type: str,
+                       request_data: AccountContactUpdateDTO) -> AccountContactsUpdateDTO:
+        response = self.patch(url=AccountApiUrl.ACCOUNT_CONTACT_MODIFY.format(id=id, contact_type=contact_type),
+                              request_obj=request_data, response_obj=AccountContactsUpdateDTO())
         return response

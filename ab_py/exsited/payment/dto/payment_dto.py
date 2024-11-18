@@ -50,6 +50,7 @@ class PaymentDataDTO(ABBaseDTO):
     version: str = None
     customAttributes: list = None
     customObjects: list = None
+    giftCertificateApplied: list['GiftCertificateAppliedDTO'] = None
 
 
 @dataclass(kw_only=True)
@@ -81,3 +82,21 @@ class CardDirectDebitPaymentDataDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class CardDirectDebitPaymentCreateDTO(ABBaseDTO):
     payment: CardDirectDebitPaymentDataDTO
+
+
+@dataclass(kw_only=True)
+class PaginationDTO(ABBaseDTO):
+    records: int = None
+    limit: int = None
+    offset: int = None
+    previousPage: str = None
+    nextPage: str = None
+
+@dataclass(kw_only=True)
+class PaymentInvoiceDetailsDTO(ABBaseDTO):
+    payments: list[PaymentDataDTO]
+    pagination: PaginationDTO
+
+@dataclass(kw_only=True)
+class PaymentInvoiceResponseDTO(ABBaseDTO):
+    invoice: PaymentInvoiceDetailsDTO

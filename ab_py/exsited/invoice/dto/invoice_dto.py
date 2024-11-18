@@ -6,6 +6,48 @@ from ab_py.sdlize.ab_base_dto import ABBaseDTO
 
 
 @dataclass(kw_only=True)
+class LastPaymentDTO:
+    id: str = None
+    amount: str = None
+    created_at: str = None
+
+
+@dataclass(kw_only=True)
+class TaxDTO(ABBaseDTO):
+    uuid: str = None
+    code: str = None
+    rate: float = None
+
+@dataclass(kw_only=True)
+class LineItemValueDTO(ABBaseDTO):
+    tax: TaxDTO = None
+    accountingCode: str = None
+    lineItemName: str = None
+    lineItemInvoiceNote: str = None
+    lineItemQuantity: str = None
+    lineItemPrice: str = None
+    lineItemDiscountAmount: str = None
+
+
+@dataclass(kw_only=True)
+class LineItemOperationDTO(ABBaseDTO):
+    operation: str = None
+    uuid: str = None
+    value: LineItemValueDTO = None
+
+
+@dataclass(kw_only=True)
+class LineOperationDTO(ABBaseDTO):
+    operation: str = None
+    uuid: str = None
+    value: OrderLineDTO = None
+    itemOrderQuantity: str = None
+    itemPrice: str = None
+    itemDiscountAmount: str = None
+
+
+
+@dataclass(kw_only=True)
 class InvoiceDataDTO(ABBaseDTO):
     status: str = None
     id: str = None
@@ -43,6 +85,13 @@ class InvoiceDataDTO(ABBaseDTO):
     customForms: CustomFormsDTO = None
     currency: CurrencyDTO = None
 
+    lastPayment: LastPaymentDTO = None
+    kpis: dict = None
+
+    customAttributes: list = None
+    customObjects: list = None
+    customForm: CustomFormsDTO = None
+
 
 @dataclass(kw_only=True)
 class InvoiceDetailsDTO(ABBaseDTO):
@@ -58,3 +107,11 @@ class InvoiceCreateDTO(ABBaseDTO):
 class InvoiceListDTO(ABBaseDTO):
     invoices: list[InvoiceDataDTO] = None
     pagination: PaginationDTO = None
+
+
+@dataclass(kw_only=True)
+class InvoiceAccountDTO(ABBaseDTO):
+    account: InvoiceListDTO = None
+
+
+

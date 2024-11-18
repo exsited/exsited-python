@@ -9,7 +9,7 @@ from ab_py.exsited.account.dto.account_nested_dto import AccountingCodeDTO, Comm
 
 @dataclass(kw_only=True)
 class AccountDataDTO(ABBaseDTO):
-    name: str
+    name: str = None
     emailAddress: str = None
     status: str = None
     id: str = None
@@ -46,6 +46,10 @@ class AccountDataDTO(ABBaseDTO):
     customAttributes: list[CustomAttributesDTO] = None
     addresses: list[AddressDTO] = None
     customForms: CustomFormsDTO = None
+    eventUuid: str = None
+    customObjects: list = None
+    kpis: dict = None
+    contacts: list = None
 
 
 @dataclass(kw_only=True)
@@ -61,6 +65,11 @@ class AccountUpdateInformationDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class AccountDetailsDTO(ABBaseDTO):
     account: AccountDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountReactiveResponseDTO(ABBaseDTO):
+    eventUuid: str = None
 
 
 @dataclass(kw_only=True)
@@ -131,7 +140,17 @@ class AccountContactsTypeDTO(ABBaseDTO):
 class AccountContactUpdateDTO(ABBaseDTO):
     account: AccountContactUpdate = None
 
+
 @dataclass(kw_only=True)
 class AccountContactsUpdateDTO(ABBaseDTO):
     account: AccountContactsUpdate = None
 
+
+@dataclass(kw_only=True)
+class AccountAddressesAdd(ABBaseDTO):
+    addresses: list[AddressDTO] = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressesAddDTO(ABBaseDTO):
+    account: AccountAddressesAdd = None

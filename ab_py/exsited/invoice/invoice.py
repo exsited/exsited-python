@@ -1,5 +1,6 @@
 from ab_py.exsited.common.common_enum import SortDirection
-from ab_py.exsited.invoice.dto.invoice_dto import InvoiceDetailsDTO, InvoiceListDTO, InvoiceCreateDTO, InvoiceDataDTO
+from ab_py.exsited.invoice.dto.invoice_dto import InvoiceDetailsDTO, InvoiceListDTO, InvoiceCreateDTO, InvoiceDataDTO, \
+    InvoiceAccountDTO
 from ab_py.exsited.invoice.invoice_api_url import InvoiceApiUrl
 from ab_py.common.sdk_util import SDKUtil
 from ab_py.http.ab_rest_processor import ABRestProcessor
@@ -19,6 +20,23 @@ class Invoice(ABRestProcessor):
 
     def details(self, id: str):
         response = self.get(url=InvoiceApiUrl.INVOICES + f"/{id}", response_obj=InvoiceDetailsDTO())
+        return response
+
+    def information(self, id: str):
+        response = self.get(url=InvoiceApiUrl.INVOICE_INFORMATION.format(id=id), response_obj=InvoiceDetailsDTO())
+        return response
+
+    def delete(self, id: str):
+        response = self.delete_request(url=InvoiceApiUrl.INVOICE_DELETE.format(id=id))
+        return response
+
+    def update_amend(self, id: str, request_data: InvoiceCreateDTO) -> InvoiceDetailsDTO:
+        response = self.post(url=InvoiceApiUrl.INVOICE_UPDATE_AMEND.format(id=id), request_obj=request_data, response_obj=InvoiceDetailsDTO())
+        return response
+
+
+    def invoice_account(self, accountId: str):
+        response = self.get(url=InvoiceApiUrl.INVOICE_ACCOUNT.format(id=accountId), response_obj=InvoiceAccountDTO())
         return response
 
     def match_structure(self, invoice_data):

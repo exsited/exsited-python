@@ -11,3 +11,7 @@ class AccountApiUrl:
     ACCOUNT_CONTACT_DELETE = "/api/v3/accounts/{id}/contacts/{contact_type}"
     ACCOUNT_PAYMENT_METHODS = "/api/v2/accounts/{id}/payment-methods"
     EACH_PAYMENT_METHODS = "/api/v2/accounts/{id}/payment-methods/{reference}"
+    ACCOUNT_BILLING_PREFERENCE = "/api/v3/accounts/{id}/billing-preferences"
+    ACCOUNT_ADDRESSES = "/api/v3/accounts/{id}/addresses"
+    ACCOUNT_PAYMENT_METHODS_UPDATE = "/api/v3/accounts/{id}/payment-methods/{reference}"
+    ACCOUNT_CONTACT_MODIFY = "/api/v3/accounts/{id}/contacts/{contact_type}"

@@ -31,11 +31,13 @@ class PaymentMethodsDataDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class PaymentMethodsDTO(ABBaseDTO):
-    paymentMethod: PaymentMethodsDataDTO
+    id: str = None
+    paymentMethod: PaymentMethodsDataDTO = None
 
 
 @dataclass(kw_only=True)
 class PaymentMethodListDTO(ABBaseDTO):
+    id: str = None
     paymentMethods: list[PaymentMethodsDataDTO] = None
 
 
@@ -96,7 +98,7 @@ class AccountingCodeDTO(ABBaseDTO):
     accountReceivable: str = None
 
 
-@dataclass(kw_only=True) #contact <<<
+@dataclass(kw_only=True)
 class SalutationDTO(ABBaseDTO):
     id: int = None
     name: str = None
@@ -118,11 +120,12 @@ class EmailDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class PhoneDTO(ABBaseDTO):
-    country_code: str = None
+    countryCode: str = None
     areaCode: str = None
     number: str = None
     full: str = None
     doNotEmail: str = None
+    doNotCall: str = None
 
 
 @dataclass(kw_only=True)

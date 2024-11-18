@@ -1,5 +1,5 @@
 from ab_py.exsited.payment.dto.payment_dto import PaymentDetailsDTO, PaymentCreateDTO, CardPaymentCreateDTO, \
-    CardDirectDebitPaymentCreateDTO
+    CardDirectDebitPaymentCreateDTO, PaymentInvoiceResponseDTO
 from ab_py.exsited.payment.payment_api_url import PaymentApiUrl
 from ab_py.common.sdk_util import SDKUtil
 from ab_py.http.ab_rest_processor import ABRestProcessor
@@ -17,4 +17,8 @@ class Payment(ABRestProcessor):
     def create_direct_debit(self, invoice_id: str, request_data: CardDirectDebitPaymentCreateDTO) -> PaymentDetailsDTO:
         response = self.post(url=PaymentApiUrl.PAYMENT_CREATE_DIRECT_DEBIT.format(invoice_id=invoice_id),
                              request_obj=request_data, response_obj=PaymentDetailsDTO())
+        return response
+
+    def details(self, id: str) -> PaymentInvoiceResponseDTO:
+        response = self.get(url=PaymentApiUrl.PAYMENT_DETAILS_INVOICE.format(id=id), response_obj=PaymentInvoiceResponseDTO)
         return response

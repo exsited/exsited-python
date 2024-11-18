@@ -23,6 +23,8 @@ class TaxDTO(ABBaseDTO):
     rate: str = None
     link: str = None
 
+    amount: str = None
+
 
 @dataclass(kw_only=True)
 class PaginationDTO(ABBaseDTO):

@@ -1,11 +1,16 @@
 from ab_py.exsited.account.account import Account
 from ab_py.exsited.auth.dto.token_dto import RequestTokenDTO
+from ab_py.exsited.gift_certificates.gift_certificates import GiftCertificates
+from ab_py.exsited.express.express import Express
 from ab_py.exsited.invoice.invoice import Invoice
+from ab_py.exsited.item.item import Item
+from ab_py.exsited.item_fulfillment.item_fulfillment import ItemFulfillment
 from ab_py.exsited.order.order import Order
 from ab_py.exsited.purchase_order.purchase_order import PurchaseOrder
 from ab_py.exsited.setting.setting import Setting
 
 from ab_py.exsited.payment.payment import Payment
+
 
 class ExsitedSDK:
     _request_token_dto: RequestTokenDTO = None
@@ -14,9 +19,13 @@ class ExsitedSDK:
     invoice: Invoice = None
     setting: Setting = None
     payment: Payment = None
+    express: Express = None
     purchase_order: PurchaseOrder = None
-
-    def __init__(self, exsited_url: str = None, grant_type: str = None, client_id: str = None, client_secret: str = None, redirect_uri: str = None):
+    item: Item = None
+    item_fulfillment: ItemFulfillment = None
+    gift_certificates: GiftCertificates = None
+    def __init__(self, exsited_url: str = None, grant_type: str = None, client_id: str = None,
+                 client_secret: str = None, redirect_uri: str = None):
         if grant_type and client_id and client_secret and redirect_uri:
             self._request_token_dto = RequestTokenDTO(
                 grantType=grant_type,
@@ -33,7 +42,11 @@ class ExsitedSDK:
         self.invoice = Invoice(request_token_dto=self._request_token_dto)
         self.setting = Setting(request_token_dto=self._request_token_dto)
         self.payment = Payment(request_token_dto=self._request_token_dto)
+        self.express = Express(request_token_dto=self._request_token_dto)
         self.purchase_order = PurchaseOrder(request_token_dto=self._request_token_dto)
+        self.item = Item(request_token_dto=self._request_token_dto)
+        self.item_fulfillment = ItemFulfillment(request_token_dto=self._request_token_dto)
+        self.gift_certificates = GiftCertificates(request_token_dto=self._request_token_dto)
 
     def init_sdk(self, request_token_dto: RequestTokenDTO) -> 'ExsitedSDK':
         self._request_token_dto = request_token_dto
