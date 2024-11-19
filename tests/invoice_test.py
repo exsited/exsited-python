@@ -1,9 +1,9 @@
-from ab_py.exsited.exsited_sdk import ExsitedSDK
-from ab_py.common.ab_exception import ABException
-from ab_py.common.sdk_conf import SDKConfig
-from ab_py.exsited.order.dto.order_nested_dto import OrderLineDTO
+from exsited.exsited.exsited_sdk import ExsitedSDK
+from exsited.common.ab_exception import ABException
+from exsited.common.sdk_conf import SDKConfig
+from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO
 from tests.common.common_data import CommonData
-from ab_py.exsited.invoice.dto.invoice_dto import InvoiceCreateDTO, InvoiceDataDTO
+from exsited.exsited.invoice.dto.invoice_dto import InvoiceCreateDTO, InvoiceDataDTO
 
 
 def test_invoice_create_basic():

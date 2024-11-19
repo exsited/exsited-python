@@ -1,4 +1,4 @@
-from ab_py.exsited.auth.dto.token_dto import RequestTokenDTO
+from exsited.exsited.auth.dto.token_dto import RequestTokenDTO
 
 
 class CommonData:

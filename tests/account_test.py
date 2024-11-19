@@ -1,14 +1,14 @@
-from ab_py.exsited.account.dto.account_dto import AccountDataDTO, AccountCreateDTO, AccountUpdateInformationDTO, \
+from exsited.exsited.account.dto.account_dto import AccountDataDTO, AccountCreateDTO, AccountUpdateInformationDTO, \
     PaymentMethodsAddDTO, PaymentCardMethodsAddDTO, AccountCancelDataDTO, AccountReactivateDataDTO, \
     AccountContactUpdateDTO, AccountCancelDTO, AccountAddressesAddDTO, AccountAddressesAdd
-from ab_py.exsited.account.dto.account_nested_dto import PaymentMethodsDataDTO, PaymentCardMethodsDataDTO, ContactDTO, \
+from exsited.exsited.account.dto.account_nested_dto import PaymentMethodsDataDTO, PaymentCardMethodsDataDTO, ContactDTO, \
     EmailDTO, PhoneDTO, AccountContactUpdate, PaymentMethodsDTO
-from ab_py.exsited.account.dto.account_nested_dto import PaymentMethodsDataDTO, PaymentCardMethodsDataDTO, \
+from exsited.exsited.account.dto.account_nested_dto import PaymentMethodsDataDTO, PaymentCardMethodsDataDTO, \
     PaymentCardDirectDebitDataDTO, AdditionalFieldsDTO
-from ab_py.exsited.common.dto.common_dto import AddressDTO
-from ab_py.exsited.exsited_sdk import ExsitedSDK
-from ab_py.common.ab_exception import ABException
-from ab_py.common.sdk_conf import SDKConfig
+from exsited.exsited.common.dto.common_dto import AddressDTO
+from exsited.exsited.exsited_sdk import ExsitedSDK
+from exsited.common.ab_exception import ABException
+from exsited.common.sdk_conf import SDKConfig
 from tests.common.common_data import CommonData
 
 

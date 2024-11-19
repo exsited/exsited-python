@@ -1,7 +1,7 @@
-from ab_py.common.ab_exception import ABException
-from ab_py.common.sdk_conf import SDKConfig
-from ab_py.exsited.exsited_sdk import ExsitedSDK
-from ab_py.exsited.gift_certificates.dto.gift_certificates_dto import GiftCertificateDetailsDTO, GiftCertificateDTO
+from exsited.common.ab_exception import ABException
+from exsited.common.sdk_conf import SDKConfig
+from exsited.exsited.exsited_sdk import ExsitedSDK
+from exsited.exsited.gift_certificates.dto.gift_certificates_dto import GiftCertificateDetailsDTO, GiftCertificateDTO
 from tests.common.common_data import CommonData
 
 

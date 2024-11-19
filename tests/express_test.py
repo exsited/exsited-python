@@ -1,10 +1,10 @@
-from ab_py.exsited.common.dto.common_dto import TaxDTO
-from ab_py.exsited.express.dto.express_dto import ItemPriceSnapshotDTO, PricingRuleDTO, ItemPriceTaxDTO, PaymentDTO, \
+from exsited.exsited.common.dto.common_dto import TaxDTO
+from exsited.exsited.express.dto.express_dto import ItemPriceSnapshotDTO, PricingRuleDTO, ItemPriceTaxDTO, PaymentDTO, \
     PaymentAppliedDTO, InvoiceDTO, OrderDTO, AccountDTO, ExpressDTO
-from ab_py.exsited.exsited_sdk import ExsitedSDK
-from ab_py.common.sdk_conf import SDKConfig
+from exsited.exsited.exsited_sdk import ExsitedSDK
+from exsited.common.sdk_conf import SDKConfig
 from tests.common.common_data import CommonData
-from ab_py.exsited.order.dto.order_nested_dto import OrderPropertiesDTO, OrderLineDTO, ContractPropertiesDTO, \
+from exsited.exsited.order.dto.order_nested_dto import OrderPropertiesDTO, OrderLineDTO, ContractPropertiesDTO, \
     OrderItemPriceSnapshotDTO, OrderItemPricingRuleDTO
 
 
