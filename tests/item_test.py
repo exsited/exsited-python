@@ -95,7 +95,7 @@ def test_create_item():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        # Currencies
+
         currency_one = CurrenciesDTO(
             name="",
             isUsedForSale="",
@@ -112,7 +112,7 @@ def test_create_item():
         )
         currencies = []
 
-        # UOMs
+
         uom_one = UomDTO(
             name="",
             # isBase="true",
@@ -131,19 +131,18 @@ def test_create_item():
         )
         uoms = []
 
-        # Sale charge properties
+
         sale_charge_properties_one = SaleChargePropertiesDTO(name="", value="")
         sale_charge_properties_two = SaleChargePropertiesDTO(name="", value="")
         sale_charge_properties = [sale_charge_properties_one, sale_charge_properties_two]
 
-        # Sale charge
         sale_charge = SaleChargeDTO(
             type="",
             # pricePeriod=None,  # Not provided in the example
             properties=sale_charge_properties
         )
 
-        # Sale pricing module
+
         sale_pricing_module = PricingModuleDTO(
             price="",
             currency="",
@@ -156,7 +155,7 @@ def test_create_item():
             pricingModule=[sale_pricing_module]
         )
 
-        # Sale DTO
+
         sale_dto = SaleDTO(
             enabled="true",
             invoiceNote="",
@@ -179,7 +178,7 @@ def test_create_item():
             pricingLevels=[PricingLevelDTO(name="")]
         )
 
-        # Purchase pricing module
+
         purchase_pricing_module_one = PricingModuleDTO(
             price="",
             currency="",
@@ -195,7 +194,7 @@ def test_create_item():
             pricingModule=[purchase_pricing_module_one, purchase_pricing_module_two]
         )
 
-        # Purchase DTO
+
         purchase_dto = PurchaseDTO(
             enabled="",
             enableSupplierManagement="",
@@ -210,7 +209,7 @@ def test_create_item():
             pricing=purchase_pricing
         )
 
-        # Create item data DTO
+
         item_data_dto = ItemDataDTO(
             name="",
             displayName="",
