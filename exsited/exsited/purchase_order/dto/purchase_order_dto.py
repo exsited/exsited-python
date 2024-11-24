@@ -43,18 +43,18 @@ class PurchaseOrderItemPurchaseTaxConfigurationDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class KPIDTO(ABBaseDTO):
-    totalExpense: float = 0
-    estimatedTotal: float = 0
-    totalOutstanding: float = 0
-    totalOverdue: float = 0
-    lastInvoiceIssueDate: str = ""
-    lastInvoiceTotal: float = 0
-    totalPurchaseInvoice: float = 0
-    lastReactivatedOn: str = ""
-    lastCalcelledOn: str = ""
-    lastChangedOn: str = ""
-    lastDeletedOn: str = ""
-    issueDate: str = ""
+    totalExpense: float = None
+    estimatedTotal: float = None
+    totalOutstanding: float = None
+    totalOverdue: float = None
+    lastInvoiceIssueDate: str = None
+    lastInvoiceTotal: float = None
+    totalPurchaseInvoice: float = None
+    lastReactivatedOn: str = None
+    lastCalcelledOn: str = None
+    lastChangedOn: str = None
+    lastDeletedOn: str = None
+    issueDate: str = None
 
 @dataclass(kw_only=True)
 class PurchaseOrderItemAccountingCodeDTO(ABBaseDTO):
@@ -103,8 +103,8 @@ class PurchaseOrderDTO(ABBaseDTO):
     lastUpdatedOn: str = None
     uuid: str = None
     version: str = None
-    customAttributes: list = None  # Added to match response
-    customObjects: list = None  # Added to match response
+    customAttributes: list = None
+    customObjects: list = None
     lines: list[PurchaseOrderLineDTO] = None
     kpis: KPIDTO = None
 

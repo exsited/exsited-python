@@ -67,7 +67,6 @@ def test_express_order():
             allowUpgrade=""
         )
 
-        # Create the order data
         order = OrderDTO(
             lines=[order_line],
             invoice=invoice,

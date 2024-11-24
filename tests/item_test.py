@@ -138,7 +138,7 @@ def test_create_item():
 
         sale_charge = SaleChargeDTO(
             type="",
-            # pricePeriod=None,  # Not provided in the example
+            # pricePeriod=None,
             properties=sale_charge_properties
         )
 
