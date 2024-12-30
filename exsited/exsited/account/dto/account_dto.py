@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 from exsited.exsited.common.dto.common_dto import CurrencyDTO, TimeZoneDTO, PaginationDTO, CustomAttributesDTO, TaxDTO, \
-    AddressDTO, CustomFormsDTO
+    AddressDTO, CustomFormsDTO, CustomObjectDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 from exsited.exsited.account.dto.account_nested_dto import AccountingCodeDTO, CommunicationPreferenceDTO, \
     PaymentMethodsDataDTO, BillingPreferencesDTO, PaymentMethodsDTO, PaymentCardMethodsDTO, PaymentCardMethodsDataDTO, \
-    PaymentMethodListDTO, AccountContacts, AccountContactsType, AccountContactsUpdate, AccountContactUpdate
-
+    PaymentMethodListDTO, AccountContacts, AccountContactsType, AccountContactsUpdate, AccountContactUpdate, ContactDTO, \
+    PricingLevelDTO
 
 @dataclass(kw_only=True)
 class AccountDataDTO(ABBaseDTO):
@@ -34,22 +34,22 @@ class AccountDataDTO(ABBaseDTO):
     manager: str = None
     referralTracking: str = None
     salesRep: str = None
-    pricingLevel: str = None
+    pricingLevel: PricingLevelDTO = None
 
     currency: CurrencyDTO = None
     timeZone: TimeZoneDTO = None
     tax: TaxDTO = None
     accountingCode: AccountingCodeDTO = None
-    communicationPreference: CommunicationPreferenceDTO = None
+    communicationPreference: list[CommunicationPreferenceDTO] = None
     paymentMethods: list[PaymentMethodsDataDTO] = None
     billingPreferences: BillingPreferencesDTO = None
     customAttributes: list[CustomAttributesDTO] = None
     addresses: list[AddressDTO] = None
     customForms: CustomFormsDTO = None
     eventUuid: str = None
-    customObjects: list = None
+    customObjects: list[CustomObjectDTO] = None
     kpis: dict = None
-    contacts: list = None
+    contacts: list[ContactDTO] = None
 
 
 @dataclass(kw_only=True)
@@ -69,6 +69,10 @@ class AccountDetailsDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class AccountReactiveResponseDTO(ABBaseDTO):
+    eventUuid: str = None
+
+@dataclass(kw_only=True)
+class AccountCancelResponseDTO(ABBaseDTO):
     eventUuid: str = None
 
 

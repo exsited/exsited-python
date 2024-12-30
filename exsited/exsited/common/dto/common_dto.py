@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 
-
 @dataclass(kw_only=True)
 class CurrencyDTO(ABBaseDTO):
     uuid: str = None
@@ -42,18 +41,26 @@ class AddressDTO(ABBaseDTO):
     addressLine3: str = None
     addressLine4: str = None
     addressLine5: str = None
-    post_code: str = None
+    postCode: str = None
     city: str = None
     state: str = None
     country: str = None
     isDefaultBilling: bool = None
     isDefaultShipping: bool = None
+    uuid: str = None
 
 
 @dataclass(kw_only=True)
 class CustomAttributesDTO(ABBaseDTO):
     name: str = None
     value: str = None
+
+
+@dataclass(kw_only=True)
+class CustomObjectDTO(ABBaseDTO):
+    name: str = None
+    uuid: str = None
+    link: str = None
 
 
 @dataclass(kw_only=True)

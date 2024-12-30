@@ -1,12 +1,18 @@
 from dataclasses import dataclass
-from exsited.sdlize.ab_base_dto import ABBaseDTO
+from typing import Union
 
+from exsited.sdlize.ab_base_dto import ABBaseDTO
 
 @dataclass(kw_only=True)
 class PaymentProcessorDetailsDTO(ABBaseDTO):
     uuid: str = None
     name: str = None
     link: str = None
+
+
+@dataclass(kw_only=True)
+class SpecifiedOrdersDTO(ABBaseDTO):
+    orderId: str = None
 
 
 @dataclass(kw_only=True)
@@ -24,9 +30,19 @@ class PaymentMethodsDataDTO(ABBaseDTO):
     lastUpdatedOn: str = None
     uuid: str = None
     version: str = None
-    specifiedOrders: str = None
+    specifiedOrders: list[Union[str, SpecifiedOrdersDTO]] = None
     useForSpecifiedOrders: str = None
     processor: PaymentProcessorDetailsDTO = None
+
+    cardType: str = None
+    token: str = None
+    cardNumber: str = None
+    expiryMonth: str = None
+    expiryYear: str = None
+    cardCvv: str = None
+    nameOnCard: str = None
+    lastUsedResult: str = None
+    errorCountSinceLastSuccess: str = None
 
 
 @dataclass(kw_only=True)
@@ -135,6 +151,50 @@ class CustomAttributeDTO(ABBaseDTO):
 
 
 @dataclass(kw_only=True)
+class ContactRequestDTO(ABBaseDTO):
+    type: str = None
+    typeDisplayName: str = None
+    billingContact: bool = None
+    shippingContact: bool = None
+    salutation: SalutationDTO = None
+    designation: DesignationDTO = None
+    firstName: str = None
+    middleName: str = None
+    lastName: str = None
+    email: EmailDTO = None
+    addressLine_1: str = None
+    addressLine_2: str = None
+    addressLine_3: str = None
+    addressLine_4: str = None
+    addressLine_5: str = None
+    postCode: str = None
+    city: str = None
+    state: str = None
+    country: str = None
+    phone: PhoneDTO = None
+    try:
+        fax:  PhoneDTO = None
+        mobile:  PhoneDTO = None
+    except:
+        fax: str = None
+        mobile: str = None
+    receiveBillingInformation: str = None
+    createdBy: str = None
+    createdOn: str = None
+    lastUpdatedBy: str = None
+    lastUpdatedOn: str = None
+    uuid: str = None
+    version: str = None
+    customAttributes: list[CustomAttributeDTO] = None
+
+
+@dataclass(kw_only=True)
+class PricingLevelDTO(ABBaseDTO):
+    name: str = None
+    uuid: str = None
+
+
+@dataclass(kw_only=True)
 class ContactDTO(ABBaseDTO):
     type: str = None
     typeDisplayName: str = None
@@ -156,8 +216,12 @@ class ContactDTO(ABBaseDTO):
     state: str = None
     country: str = None
     phone: PhoneDTO = None
-    fax: str = None
-    mobile: str = None
+    try:
+        fax:  PhoneDTO = None
+        mobile:  PhoneDTO = None
+    except:
+        fax: str = None
+        mobile: str = None
     receiveBillingInformation: str = None
     createdBy: str = None
     createdOn: str = None
