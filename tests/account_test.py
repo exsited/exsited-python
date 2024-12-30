@@ -22,7 +22,7 @@ def test_account_create_basic():
         request_data = AccountCreateDTO(
             account=AccountDataDTO(name="", emailAddress=""))
         response = exsited_sdk.account.create(request_data=request_data)
-        # ResponseToObj().process(response=response)
+        print(response)
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -38,7 +38,6 @@ def test_account_list_basic():
     try:
         response = exsited_sdk.account.list()
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -54,7 +53,6 @@ def test_account_details():
     try:
         response = exsited_sdk.account.details(id="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -70,13 +68,10 @@ def test_account_details_information():
     try:
         response = exsited_sdk.account.details_information(id="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
-
-
 
 def test_account_cancel():
     SDKConfig.PRINT_REQUEST_DATA = False
@@ -118,8 +113,7 @@ def test_account_update_info():
 
     try:
         request_data = AccountUpdateInformationDTO(
-            account=AccountDataDTO(name="", emailAddress="",
-                                   displayName="", description="test "))
+            account=AccountDataDTO(name="", emailAddress="", displayName="", description="test "))
         response = exsited_sdk.account.update_information(id="", request_data=request_data)
         print(response)
     except ABException as ab:
@@ -137,7 +131,6 @@ def test_account_delete():
     try:
         response = exsited_sdk.account.delete(id="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -181,14 +174,12 @@ def test_account_contact_update():
     exsited_sdk = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        contact_dto = ContactDTO(firstName="", lastName="", email=EmailDTO(address=""),
-                                 phone=PhoneDTO(number=""))
+        contact_dto = ContactDTO(firstName="", lastName="", email=EmailDTO(address=""), phone=PhoneDTO(number=""))
         request_data = AccountContactUpdateDTO(account=AccountContactUpdate(contact=contact_dto))
-        print("Request Data:", request_data)
+        print(request_data)
 
-        response = exsited_sdk.account.update_contact(id="", contact_type="",
-                                                      request_data=request_data)
-        print("Response Data:", response)
+        response = exsited_sdk.account.update_contact(id="", contact_type="", request_data=request_data)
+        print(response)
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -204,7 +195,6 @@ def test_account_contact_delete():
     try:
         response = exsited_sdk.account.contact_delete(id="", contact_type="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -212,7 +202,7 @@ def test_account_contact_delete():
 
 
 def test_account_payment_methods_add():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -224,9 +214,7 @@ def test_account_payment_methods_add():
             paymentProcessor="",
             reference="",
         )
-        response = exsited_sdk.account.add_payment_method(account_id="",
-                                                          request_data=PaymentMethodsAddDTO().method(
-                                                              payment_method=payment_method))
+        response = exsited_sdk.account.add_payment_method(account_id="", request_data=PaymentMethodsAddDTO().method(payment_method=payment_method))
         print(response)
     except ABException as ab:
         print(ab)
@@ -235,7 +223,7 @@ def test_account_payment_methods_add():
 
 
 def test_account_payment_card_methods_add():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -252,9 +240,7 @@ def test_account_payment_card_methods_add():
             expiryMonth="",
             expiryYear="",
         )
-        response = exsited_sdk.account.add_payment_card_method(account_id="",
-                                                               request_data=PaymentCardMethodsAddDTO().method(
-                                                                   payment_method=payment_method))
+        response = exsited_sdk.account.add_payment_card_method(account_id="", request_data=PaymentCardMethodsAddDTO().method(payment_method=payment_method))
         print(response)
     except ABException as ab:
         print(ab)
@@ -263,7 +249,7 @@ def test_account_payment_card_methods_add():
 
 
 def test_account_payment_card_direct_debit_methods_add():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -279,9 +265,7 @@ def test_account_payment_card_direct_debit_methods_add():
             reference="",
             additionalFields=AdditionalFieldsDTO(hostIp=""),
         )
-        response = exsited_sdk.account.add_payment_card_method(account_id="",
-                                                               request_data=PaymentCardMethodsAddDTO().method(
-                                                                   payment_method=payment_method))
+        response = exsited_sdk.account.add_payment_card_method(account_id="", request_data=PaymentCardMethodsAddDTO().method(payment_method=payment_method))
         print(response)
     except ABException as ab:
         print(ab)
@@ -298,7 +282,6 @@ def test_list_payment_methods():
     try:
         response = exsited_sdk.account.list_payment_method(account_id="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -314,7 +297,6 @@ def test_delete_payment_methods():
     try:
         response = exsited_sdk.account.delete_payment_method(account_id="", reference="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -330,7 +312,6 @@ def test_payment_method_details():
     try:
         response = exsited_sdk.account.payment_method_details(account_id="", reference="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -350,113 +331,3 @@ def test_get_billing_preferences():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
-
-
-def test_add_addresses():
-    SDKConfig.PRINT_REQUEST_DATA = False
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        address_one = AddressDTO(
-            addressLine1="",
-            addressLine2="",
-            addressLine3="",
-            addressLine4="",
-            addressLine5="",
-            post_code="",
-            city="",
-            state="",
-            country="",
-            isDefaultBilling=False,
-            isDefaultShipping=False
-        )
-        request_obj = AccountAddressesAddDTO(
-            account=AccountAddressesAdd(addresses=[address_one])
-        )
-        response = exsited_sdk.account.add_addresses(id="", request_data=request_obj)
-        print(response)
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-def test_update_payment_methods():
-    SDKConfig.PRINT_REQUEST_DATA = False
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        payment_method = PaymentMethodsDataDTO(reference="")
-        request_obj = PaymentMethodsAddDTO(
-            account=PaymentMethodsDTO(paymentMethod=payment_method)
-        )
-        response = exsited_sdk.account.update_payment_method(id="", reference="",  request_data=request_obj)
-        print(response)
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-def test_account_contact_modify():
-    SDKConfig.PRINT_REQUEST_DATA = False
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        contact_dto = ContactDTO(firstName="")
-        request_data = AccountContactUpdateDTO(account=AccountContactUpdate(contact=contact_dto))
-
-        response = exsited_sdk.account.modify_contact(id="", contact_type="",
-                                                      request_data=request_data)
-        print("Response Data:", response)
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-# test_payment_method_details()
-test_account_create_basic()
-# test_payment_method_details()
-#test_account_create_basic()
-##test_account_details()
-#test_account_delete()
-#test_account_update_info()
-#test_account_contacts()
-#test_account_contacts_type()
-#test_account_contact_update()
-#test_account_reactivate()
-# test_account_contact_delete()
-# test_account_delete()
-# test_account_update_info()
-# test_account_contacts()
-# test_account_contacts_type()
-# test_account_contact_update()
-# test_account_reactivate()
-# test_account_contact_delete()
-# test_get_billing_preferences()
-# test_add_addresses()
-# test_update_payment_methods()
-# test_account_contact_modify()
-#test_account_delete()
-#test_account_update_info()
-#test_account_contacts()
-#test_account_contacts_type()
-#test_account_contact_update()
-# test_account_reactivate()
-# test_account_contact_delete()
-
-#test_account_delete()
-#test_account_update_info()
-#test_account_contacts()
-#test_account_contacts_type()
-#test_account_contact_update()
-#test_account_reactivate()
-# test_account_contact_delete()
-# test_account_payment_methods_add()
