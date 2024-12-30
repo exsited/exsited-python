@@ -102,20 +102,3 @@ class Account(ABRestProcessor):
         response = self.get(url=AccountApiUrl.ACCOUNT_BILLING_PREFERENCE.format(id=account_id),
                             response_obj=AccountDetailsDTO())
         return response
-
-    def add_addresses(self, id: str, request_data: AccountAddressesAddDTO) -> AccountDetailsDTO:
-        response = self.post(url=AccountApiUrl.ACCOUNT_ADDRESSES.format(id=id),
-                             request_obj=request_data, response_obj=AccountDetailsDTO())
-        return response
-
-    def update_payment_method(self, id: str, reference: str,
-                              request_data: PaymentMethodsAddDTO) -> PaymentMethodsDetailsDTO:
-        response = self.patch(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS_UPDATE.format(id=id, reference=reference),
-                              request_obj=request_data, response_obj=PaymentMethodsDetailsDTO())
-        return response
-
-    def modify_contact(self, id: str, contact_type: str,
-                       request_data: AccountContactUpdateDTO) -> AccountContactsUpdateDTO:
-        response = self.patch(url=AccountApiUrl.ACCOUNT_CONTACT_MODIFY.format(id=id, contact_type=contact_type),
-                              request_obj=request_data, response_obj=AccountContactsUpdateDTO())
-        return response
