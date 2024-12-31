@@ -4,7 +4,7 @@ from exsited.exsited.account.dto.account_dto import AccountCreateDTO, AccountDet
     PaymentCardMethodsAddDTO, \
     PaymentMethodsListDTO, AccountCancelDTO, AccountCancelDataDTO, AccountReactivateDataDTO, AccountReactivateDTO, \
     AccountContactsTypeDTO, AccountContactUpdateDTO, AccountContactsUpdateDTO, AccountReactiveResponseDTO, \
-    AccountAddressesAddDTO
+    AccountAddressesAddDTO, AccountCancelResponseDTO
 from exsited.exsited.account.dto.account_nested_dto import AccountContactsUpdate, ContactDTO
 from exsited.exsited.common.common_enum import SortDirection
 from exsited.common.sdk_util import SDKUtil
@@ -24,7 +24,7 @@ class Account(ABRestProcessor):
         return response
 
     def details(self, id: str) -> AccountDetailsDTO:
-        response = self.get(url=AccountApiUrl.ACCOUNTS + f"/{id}", response_obj=AccountDetailsDTO())
+        response = self.get(url=AccountApiUrl.ACCOUNTS_V3 + f"/{id}", response_obj=AccountDetailsDTO())
         return response
 
     def details_information(self, id: str) -> AccountDetailsDTO:
@@ -34,7 +34,7 @@ class Account(ABRestProcessor):
     def cancel(self, id: str, request_data: AccountCancelDataDTO):
         cancel_request = AccountCancelDTO(account=request_data)
         response = self.post(url=AccountApiUrl.ACCOUNT_CANCEL.format(id=id), request_obj=cancel_request,
-                             response_obj=AccountDetailsDTO())
+                             response_obj=AccountCancelResponseDTO())
         return response
 
     def reactivate(self, id: str, request_data: AccountReactivateDataDTO) -> AccountDetailsDTO:
