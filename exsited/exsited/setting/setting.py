@@ -51,40 +51,6 @@ class Setting(ABRestProcessor):
         response = self.get(url=SettingApiUrl.SETTINGS_DISCOUNT_PROFILES, params=params, response_obj=DiscountProfilesResponseDTO())
         return response
 
-    def get_settings_warehouses(self, limit: int = None, offset: int = None, direction: SortDirection = None,
-             order_by: str = None) -> WarehousesResponseDTO:
-        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
-        response = self.get(url=SettingApiUrl.SETTINGS_WAREHOUSES, params=params, response_obj=WarehousesResponseDTO())
-        return response
-
-    def get_settings_variations(self, limit: int = None, offset: int = None, direction: SortDirection = None,
-             order_by: str = None) -> VariationsResponseDTO:
-        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
-        response = self.get(url=SettingApiUrl.SETTINGS_VARIATIONS, params=params, response_obj=VariationsResponseDTO())
-        return response
-
-
-    def get_settings_components(self, limit: int = None, offset: int = None, direction: SortDirection = None,
-             order_by: str = None) -> ComponentResponseDTO:
-        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
-        response = self.get(url=SettingApiUrl.SETTINGS_COMPONENT, params=params, response_obj=ComponentResponseDTO())
-        return response
-
-    def get_settings_shipping_profiles(self, limit: int = None, offset: int = None, direction: SortDirection = None,
-             order_by: str = None) -> ShippingProfilesResponseDTO:
-        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
-        response = self.get(url=SettingApiUrl.SETTINGS_SHIPPING_PROFILES, params=params, response_obj=ShippingProfilesResponseDTO())
-        return response
-
-    def variation_create(self, request_data: VariationCreateRequestDTO) -> VariationsResponseDTO:
-        response = self.post(url=SettingApiUrl.SETTINGS_VARIATIONS_CREATE, request_obj=request_data, response_obj=VariationsResponseDTO())
-        return response
-
-    def variation_update(self, uuid: str, request_data: VariationCreateRequestDTO) -> VariationUpdateResponseDTO:
-        response = self.patch(url=SettingApiUrl.SETTINGS_VARIATIONS_UPDATE.format(uuid=uuid), request_obj=request_data,
-                              response_obj=VariationUpdateResponseDTO())
-        return response
-
 
 
 
