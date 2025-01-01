@@ -1,7 +1,7 @@
 
 from exsited.exsited.common.common_enum import SortDirection
 from exsited.exsited.purchase_order.dto.purchase_order_dto import PurchaseOrderDetailsDTO, PurchaseOrderListDTO, \
-    PurchaseOrderDTO, PurchaseOrderCreateDTO
+    PurchaseOrderDTO, PurchaseOrderCreateDTO, PurchaseOrderDataDTO, PurchaseOrderLineUuidDetailsDTO
 from exsited.exsited.purchase_order.purchase_order_api_url import PurchaseOrderApiUrl
 from exsited.common.sdk_util import SDKUtil
 from exsited.http.ab_rest_processor import ABRestProcessor
@@ -17,6 +17,37 @@ class PurchaseOrder(ABRestProcessor):
 
     def details(self, id: str) -> PurchaseOrderDetailsDTO:
         response = self.get(url=PurchaseOrderApiUrl.PURCHASE_ORDER_DETAILS.format(id=id),
+                            response_obj=PurchaseOrderDetailsDTO())
+        return response
+
+    def delete(self, id: str) -> PurchaseOrderDetailsDTO:
+        response = self.delete_request(url=PurchaseOrderApiUrl.PURCHASE_ORDER_DELETE.format(id=id),
+                            response_obj=PurchaseOrderDetailsDTO())
+        return response
+
+    def reactivate(self, id: str) -> PurchaseOrderDetailsDTO:
+
+        response = self.post(url=PurchaseOrderApiUrl.PURCHASE_ORDER_REACTIVATE.format(id=id),
+                             response_obj=PurchaseOrderDetailsDTO())
+        return response
+
+    def cancel(self, id: str) -> PurchaseOrderDetailsDTO:
+        response = self.post(url=PurchaseOrderApiUrl.PURCHASE_ORDER_CANCEL.format(id=id),
+                             response_obj=PurchaseOrderDetailsDTO())
+        return response
+
+    def information(self, id: str) -> PurchaseOrderDetailsDTO:
+        response = self.get(url=PurchaseOrderApiUrl.PURCHASE_ORDER_INFO.format(id=id),
+                            response_obj=PurchaseOrderDetailsDTO())
+        return response
+
+    def line_uuid(self, id: str, uuid:str) -> PurchaseOrderLineUuidDetailsDTO:
+        response = self.get(url=PurchaseOrderApiUrl.PURCHASE_ORDER_LINE_UUID.format(id=id, uuid=uuid),
+                            response_obj=PurchaseOrderLineUuidDetailsDTO())
+        return response
+
+    def po_line(self, id: str) -> PurchaseOrderDetailsDTO:
+        response = self.get(url=PurchaseOrderApiUrl.PURCHASE_ORDER_LINE.format(id=id),
                             response_obj=PurchaseOrderDetailsDTO())
         return response
 
