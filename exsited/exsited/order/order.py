@@ -70,26 +70,6 @@ class Order(ABRestProcessor):
                              response_obj=OrderDetailsDTO())
         return response
 
-    def upgrade(self, order_id: str, request_data: OrderUpgradeDTO) -> OrderDetailsDTO:
-        response = self.post(url=OrderApiUrl.ORDER_UPGRADE.format(id=order_id), request_obj=request_data,
-                             response_obj=OrderDetailsDTO())
-        return response
-
-    def upgrade_preview(self, order_id: str, request_data: OrderUpgradeDTO) -> OrderUpgradeDowngradeDTO:
-        response = self.post(url=OrderApiUrl.ORDER_UPGRADE_PREVIEW.format(id=order_id), request_obj=request_data,
-                             response_obj=OrderUpgradeDowngradeDTO())
-        return response
-
-    def downgrade(self, order_id: str, request_data: OrderUpgradeDTO) -> OrderDowngradeDetailsDTO:
-        response = self.post(url=OrderApiUrl.ORDER_DOWNGRADE.format(id=order_id), request_obj=request_data,
-                             response_obj=OrderDowngradeDetailsDTO())
-        return response
-
-    def downgrade_preview(self, order_id: str, request_data: OrderUpgradeDTO) -> OrderUpgradeDowngradeDTO:
-        response = self.post(url=OrderApiUrl.ORDER_DOWNGRADE_PREVIEW.format(id=order_id), request_obj=request_data,
-                             response_obj=OrderUpgradeDowngradeDTO())
-        return response
-
     def reactivate(self, id: str, effective_date: str) -> OrderCancelResponseDTO:
         response = self.post(url=OrderApiUrl.ORDER_REACTIVATE.format(id=id),
                              json_dict={"order": {"effective_date": effective_date}},
