@@ -80,12 +80,6 @@ class Order(ABRestProcessor):
         response = self.post(url=OrderApiUrl.ORDER_PREORDER, request_obj=request_data, response_obj=OrderDetailsDTO())
         return response
 
-    def change(self, id: str, request_data: OrderCreateDTO) -> OrderDetailsDTO:
-        response = self.post(url=OrderApiUrl.ORDER_CHANGE.format(id=id),
-                             request_obj=request_data,
-                             response_obj=OrderDetailsDTO())
-        return response
-
     def delete(self, id: str):
         response = self.delete_request(url=OrderApiUrl.ORDER_DELETE.format(id=id), response_obj={})
         return response
