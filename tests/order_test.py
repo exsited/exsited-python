@@ -21,7 +21,7 @@ def test_order_create_basic():
 
     try:
         request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="").add_line(item_id="", quantity="1"))
+            order=OrderDataDTO(accountId="").add_line(item_id="", quantity=""))
         response = exsited_sdk.order.create(request_data=request_data)
         print(response)
 
@@ -40,13 +40,13 @@ def test_order_create_basic():
 
 
 def test_order_create_with_property():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
     autobill_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
     try:
         order_properties = OrderPropertiesDTO(
-            invoiceMode="AUTOMATIC",
-            paymentMode="MANUAL",
+            invoiceMode="",
+            paymentMode="",
         )
         order_data = OrderDataDTO(
             accountId="",
@@ -159,7 +159,7 @@ def test_order_usage_add():
         request_data = UsageCreateDTO(
             usage=UsageDataDTO(chargeItemUuid="",
                                chargingPeriod="", #Date
-                               quantity="10",
+                               quantity="",
                                startTime="", #Date
                                endTime="", #Date
                                type="INCREMENTAL",
@@ -181,7 +181,7 @@ def test_order_usage_modify():
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
-    request_data = UsageCreateDTO(usage=UsageDataDTO(quantity="1", startTime="", endTime=""))
+    request_data = UsageCreateDTO(usage=UsageDataDTO(quantity="", startTime="", endTime=""))
 
     try:
         response = exsited_sdk.order.usage_modify(uuid='', request_data=request_data)
@@ -199,7 +199,7 @@ def test_order_usage_update():
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
-    request_data = UsageCreateDTO(usage=UsageDataDTO(quantity="1", startTime="", endTime=""))
+    request_data = UsageCreateDTO(usage=UsageDataDTO(quantity="", startTime="", endTime=""))
 
     try:
         response = exsited_sdk.order.usage_update(uuid='', request_data=request_data)
@@ -236,48 +236,48 @@ def test_order_create_with_purchase_order():
 
     try:
 
-        land_owner_purchase = OrderPurchaseDTO(createPo="true",
+        land_owner_purchase = OrderPurchaseDTO(createPo="",
                                                poInformation=POInformationDTO(id="", accountId="",
-                                                                              currency="AUD", itemQuantity="1",
+                                                                              currency="", itemQuantity="",
                                                                               itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                                                                   (pricingRule=OrderItemPricingRuleDTO(
-                                                                                  price="100.00"))))
-        land_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="1",
+                                                                                  price=""))))
+        land_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="",
                                        itemPriceSnapshot=OrderItemPriceSnapshotDTO
-                                       (pricingRule=OrderItemPricingRuleDTO(price="50.00")),
+                                       (pricingRule=OrderItemPricingRuleDTO(price="")),
                                        purchaseOrder=land_owner_purchase
                                        )
 
-        software_owner_purchase = OrderPurchaseDTO(createPo="true",
+        software_owner_purchase = OrderPurchaseDTO(createPo="",
                                                    poInformation=POInformationDTO(id="", accountId="",
-                                                                                  currency="AUD",
-                                                                                  itemQuantity="1",
+                                                                                  currency="",
+                                                                                  itemQuantity="",
                                                                                   itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                                                                       (
                                                                                       pricingRule=OrderItemPricingRuleDTO(
-                                                                                          price="25.00"))))
-        software_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="1",
+                                                                                          price=""))))
+        software_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="",
                                            itemPriceSnapshot=OrderItemPriceSnapshotDTO
-                                           (pricingRule=OrderItemPricingRuleDTO(price="10.00")),
+                                           (pricingRule=OrderItemPricingRuleDTO(price="")),
                                            purchaseOrder=software_owner_purchase
                                            )
 
         order_properties = OrderPropertiesDTO(
             communicationProfile="",
-            invoiceMode="AUTOMATIC",
-            invoiceTerm="NET -7",
-            billingPeriod="1 Week",
-            paymentProcessor="Cash",
-            paymentMode="MANUAL",
-            paymentTerm="NET 30",
-            paymentTermAlignment="BILLING_DATE",
-            fulfillmentMode="MANUAL",
-            fulfillmentTerm="Immediately"
+            invoiceMode="",
+            invoiceTerm="",
+            billingPeriod="",
+            paymentProcessor="",
+            paymentMode="",
+            paymentTerm="",
+            paymentTermAlignment="",
+            fulfillmentMode="",
+            fulfillmentTerm=""
         )
 
         request_data = OrderCreateDTO(
             order=OrderDataDTO(accountId="", name="", id="",
-                               billingStartDate="ORDER_START_DATE", orderStartDate="",
+                               billingStartDate="", orderStartDate="",
                                properties=order_properties,
                                lines=[land_owner_line, software_owner_line]))
 
@@ -299,36 +299,36 @@ def test_order_create_with_contract():
     try:
         request_data = OrderCreateDTO(
             order=OrderDataDTO(
-                # id="",
-                accountId="1U5S3S",
-                allowContract="True",
+                id="",
+                accountId="",
+                allowContract="",
                 contractProperties=ContractPropertiesDTO(
-                    requireCustomerAcceptance="True",
-                    requiresPaymentMethod="False",
-                    initialContractTerm="1 Year",
-                    renewAutomatically="False",
-                    autoRenewalTerm="1 Week",
-                    allowEarlyTermination="True",
-                    earlyTerminationMinimumPeriod="1 Day",
-                    applyEarlyTerminationCharge="False",
-                    allowPostponement="True",
-                    maximumDurationPerPostponement="1 Day",
-                    maximumPostponementCount="1",
-                    allowTrial="True",
-                    startContractAfterTrialEnds="true",
-                    trialPeriod="1 Day",
-                    allowDowngrade="False",
-                    periodBeforeDowngrade="1 Day",
-                    allowUpgrade="False",
-                    terminationNoticePeriod="1 week"
+                    requireCustomerAcceptance="",
+                    requiresPaymentMethod="",
+                    initialContractTerm="",
+                    renewAutomatically="",
+                    autoRenewalTerm="",
+                    allowEarlyTermination="",
+                    earlyTerminationMinimumPeriod="",
+                    applyEarlyTerminationCharge="",
+                    allowPostponement="",
+                    maximumDurationPerPostponement="",
+                    maximumPostponementCount="",
+                    allowTrial="",
+                    startContractAfterTrialEnds="",
+                    trialPeriod="",
+                    allowDowngrade="",
+                    periodBeforeDowngrade="",
+                    allowUpgrade="",
+                    terminationNoticePeriod=""
                 ),
                 lines=[
                     OrderLineDTO(
-                        itemId="ITEM-0009",
-                        packageName="Pack-1",
-                        itemOrderQuantity="1",
+                        itemId="",
+                        packageName="",
+                        itemOrderQuantity="",
                         itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                            pricingRule=OrderItemPricingRuleDTO(price="10.00")
+                            pricingRule=OrderItemPricingRuleDTO(price="")
                         )
                     )
                 ]
@@ -368,8 +368,8 @@ def test_order_preorder():
 
     try:
         request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="", preOrder="true", priceTaxInclusive="true").
-            add_line(item_id="", quantity="1"))
+            order=OrderDataDTO(accountId="", preOrder="", priceTaxInclusive="").
+            add_line(item_id="", quantity=""))
         response = exsited_sdk.order.preorder(request_data=request_data)
         print(response)
 
@@ -488,7 +488,7 @@ def test_order_update_information():
                 name="",
                 displayName="",
                 description="",
-                manager="Administrator",
+                manager="",
                 communicationPreference=communication_preference_one
             )
         )
@@ -528,16 +528,16 @@ def test_update_order_billing_preference():
 
     try:
         order_properties = OrderPropertiesDTO(
-            communicationProfile="AutoBill Communication Profile",
-            invoiceMode="AUTOMATIC",
-            invoiceTerm="Billing Start DATE",
-            billingPeriod="1 Month",
-            paymentProcessor="Bank Deposit",
-            paymentMode="MANUAL",
-            paymentTerm="Net 15",
-            paymentTermAlignment="BILLING_DATE",
-            fulfillmentMode="MANUAL",
-            fulfillmentTerm="IMMEDIATELY"
+            communicationProfile="",
+            invoiceMode="",
+            invoiceTerm="",
+            billingPeriod="",
+            paymentProcessor="",
+            paymentMode="",
+            paymentTerm="",
+            paymentTermAlignment="",
+            fulfillmentMode="",
+            fulfillmentTerm=""
         )
         request_data = OrderCreateDTO(order=OrderDataDTO(properties=order_properties))
         response = exsited_sdk.order.update_billing_preference(id="", request_data=request_data)
@@ -566,5 +566,3 @@ def test_order_relinquish():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
-
-test_order_create_with_contract()
