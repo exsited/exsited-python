@@ -109,6 +109,7 @@ class OrderDowngradeDetailsDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class OrderDetailsDTO(ABBaseDTO):
     order: OrderDataDTO = None
+    eventUuid: str = None
 
 
 @dataclass(kw_only=True)
