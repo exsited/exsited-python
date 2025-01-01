@@ -97,7 +97,7 @@ def test_payment_create_basic():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        payment_applied = PaymentAppliedDTO(processor="Cash", amount="20.00", reference="")
+        payment_applied = PaymentAppliedDTO(processor="", amount="", reference="")
         payment_data = PaymentDataDTO(date="", paymentApplied=[payment_applied], note="")
         request_data = PaymentCreateDTO(payment=payment_data)
 
