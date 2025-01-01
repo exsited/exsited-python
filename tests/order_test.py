@@ -13,27 +13,26 @@ from exsited.exsited.order.dto.order_nested_dto import OrderPropertiesDTO, Order
 from exsited.exsited.order.dto.order_nested_dto import OrderPropertiesDTO, OrderPurchaseDTO, POInformationDTO, \
     OrderItemPriceSnapshotDTO, OrderItemPricingRuleDTO, OrderLineDTO, ContractPropertiesDTO
 
-
 def test_order_create_basic():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
         request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="").add_line(item_id="", quantity=""))
+            order=OrderDataDTO(accountId="").add_line(item_id="", quantity="1"))
         response = exsited_sdk.order.create(request_data=request_data)
         print(response)
-        # ResponseToObj().process(response=response)
 
-        if response.order:
-            account_id = response.order.accountId
-            order_id = response.order.id
-            for line in response.order.lines:
-                if line.itemChargeType == 'METERED':
-                    SaveToDB.process(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
-                                     _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
+        # if response.order:
+        #     account_id = response.order.accountId
+        #     order_id = response.order.id
+        #     for line in response.order.lines:
+        #         if line.itemChargeType == 'METERED':
+        #             SaveToDB.process(_account_id=account_id, _order_id=order_id, _item_id=line.itemId,
+        #                              _item_name=line.itemName, _charge_item_uuid=line.chargeItemUuid)
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -51,10 +50,10 @@ def test_order_create_with_property():
         )
         order_data = OrderDataDTO(
             accountId="",
-            id="",
+            id="",  #Order ID
             properties=order_properties
         )
-        order_data.add_line(item_id="", quantity="", price=000)
+        order_data.add_line(item_id="", quantity="", price=10)
         request_data = OrderCreateDTO(order=order_data)
         response = autobill_sdk.order.create(request_data=request_data)
         print(response)
@@ -73,7 +72,7 @@ def test_order_list_basic():
     try:
         response = exsited_sdk.order.list()
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -90,11 +89,11 @@ def test_order_details(id: str):
         response = exsited_sdk.order.details(id=id)
         print(response)
         return response
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
-        # print(ab)
-        # print(ab.get_errors())
-        # print(ab.raw_response)
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
         error_code = None
         if ab.get_errors() and "errors" in ab.raw_response:
             error_code = ab.raw_response["errors"][0].get("code", None)
@@ -111,7 +110,7 @@ def test_order_usages_details():
         response = exsited_sdk.order.usage_details(uuid='')
         print(response)
         return response
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -127,7 +126,7 @@ def test_order_usages_delete():
     try:
         response = exsited_sdk.order.usage_delete(uuid="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -135,15 +134,15 @@ def test_order_usages_delete():
 
 
 def test_order_cancel():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.order.cancel(id="", effective_date="")
+        response = exsited_sdk.order.cancel(id="", effective_date="") # Order ID and DATE (YYYY-MM-DD)
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -151,7 +150,7 @@ def test_order_cancel():
 
 
 def test_order_usage_add():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -159,14 +158,17 @@ def test_order_usage_add():
     try:
         request_data = UsageCreateDTO(
             usage=UsageDataDTO(chargeItemUuid="",
-                               chargingPeriod="",
-                               quantity="",
-                               startTime="",
-                               endTime="",
-                               type="",
+                               chargingPeriod="", #Date
+                               quantity="10",
+                               startTime="", #Date
+                               endTime="", #Date
+                               type="INCREMENTAL",
                                )
         )
+
         response = exsited_sdk.order.add_usage(request_data=request_data)
+        print(response)
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -179,8 +181,7 @@ def test_order_usage_modify():
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
-
-    request_data = UsageCreateDTO(usage=UsageDataDTO( quantity="",startTime="",endTime=""))
+    request_data = UsageCreateDTO(usage=UsageDataDTO(quantity="1", startTime="", endTime=""))
 
     try:
         response = exsited_sdk.order.usage_modify(uuid='', request_data=request_data)
@@ -198,13 +199,13 @@ def test_order_usage_update():
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
-
-    request_data = UsageCreateDTO(usage=UsageDataDTO( quantity="",startTime="",endTime=""))
+    request_data = UsageCreateDTO(usage=UsageDataDTO(quantity="1", startTime="", endTime=""))
 
     try:
         response = exsited_sdk.order.usage_update(uuid='', request_data=request_data)
         print(response)
         return response
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -220,7 +221,7 @@ def test_order_usage_list():
     try:
         response = exsited_sdk.order.usage_list()
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -228,7 +229,7 @@ def test_order_usage_list():
 
 
 def test_order_create_with_purchase_order():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -237,52 +238,51 @@ def test_order_create_with_purchase_order():
 
         land_owner_purchase = OrderPurchaseDTO(createPo="true",
                                                poInformation=POInformationDTO(id="", accountId="",
-                                                                              currency="", itemQuantity="",
+                                                                              currency="AUD", itemQuantity="1",
                                                                               itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                                                                   (pricingRule=OrderItemPricingRuleDTO(
-                                                                                  price=""))))
-        land_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="",
+                                                                                  price="100.00"))))
+        land_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="1",
                                        itemPriceSnapshot=OrderItemPriceSnapshotDTO
-                                       (pricingRule=OrderItemPricingRuleDTO(price="")),
+                                       (pricingRule=OrderItemPricingRuleDTO(price="50.00")),
                                        purchaseOrder=land_owner_purchase
                                        )
 
         software_owner_purchase = OrderPurchaseDTO(createPo="true",
                                                    poInformation=POInformationDTO(id="", accountId="",
-                                                                                  currency="",
-                                                                                  itemQuantity="",
+                                                                                  currency="AUD",
+                                                                                  itemQuantity="1",
                                                                                   itemPriceSnapshot=OrderItemPriceSnapshotDTO
                                                                                       (
                                                                                       pricingRule=OrderItemPricingRuleDTO(
-                                                                                          price=""))))
+                                                                                          price="25.00"))))
         software_owner_line = OrderLineDTO(itemId="", itemOrderQuantity="1",
                                            itemPriceSnapshot=OrderItemPriceSnapshotDTO
-                                           (pricingRule=OrderItemPricingRuleDTO(price="")),
+                                           (pricingRule=OrderItemPricingRuleDTO(price="10.00")),
                                            purchaseOrder=software_owner_purchase
                                            )
 
         order_properties = OrderPropertiesDTO(
             communicationProfile="",
-            invoiceMode="",
-            invoiceTerm="",
-            billingPeriod="",
-            paymentProcessor="",
-            paymentMode="",
-            paymentTerm="",
-            paymentTermAlignment="",
-            fulfillmentMode="",
-            fulfillmentTerm=""
+            invoiceMode="AUTOMATIC",
+            invoiceTerm="NET -7",
+            billingPeriod="1 Week",
+            paymentProcessor="Cash",
+            paymentMode="MANUAL",
+            paymentTerm="NET 30",
+            paymentTermAlignment="BILLING_DATE",
+            fulfillmentMode="MANUAL",
+            fulfillmentTerm="Immediately"
         )
 
         request_data = OrderCreateDTO(
             order=OrderDataDTO(accountId="", name="", id="",
-                               billingStartDate="", orderStartDate="",
+                               billingStartDate="ORDER_START_DATE", orderStartDate="",
                                properties=order_properties,
                                lines=[land_owner_line, software_owner_line]))
 
         response = exsited_sdk.order.create_with_purchase(request_data=request_data)
         print(response)
-        # ResponseToObj().process(response=response)
 
     except ABException as ab:
         print(ab)
@@ -291,45 +291,44 @@ def test_order_create_with_purchase_order():
 
 
 def test_order_create_with_contract():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-
         request_data = OrderCreateDTO(
             order=OrderDataDTO(
-                id="",
-                accountId="",
-                allowContract="",
+                # id="",
+                accountId="1U5S3S",
+                allowContract="True",
                 contractProperties=ContractPropertiesDTO(
-                    requireCustomerAcceptance="",
-                    requiresPaymentMethod="",
-                    initialContractTerm="1 ",
-                    renewAutomatically="",
-                    autoRenewalTerm="",
-                    allowEarlyTermination="",
-                    earlyTerminationMinimumPeriod="",
-                    applyEarlyTerminationCharge="",
-                    allowPostponement="",
-                    maximumDurationPerPostponement="",
-                    maximumPostponementCount="",
-                    allowTrial="",
-                    startContractAfterTrialEnds="",
-                    trialPeriod="",
-                    allowDowngrade="",
-                    periodBeforeDowngrade="",
-                    allowUpgrade="",
-                    terminationNoticePeriod=""
+                    requireCustomerAcceptance="True",
+                    requiresPaymentMethod="False",
+                    initialContractTerm="1 Year",
+                    renewAutomatically="False",
+                    autoRenewalTerm="1 Week",
+                    allowEarlyTermination="True",
+                    earlyTerminationMinimumPeriod="1 Day",
+                    applyEarlyTerminationCharge="False",
+                    allowPostponement="True",
+                    maximumDurationPerPostponement="1 Day",
+                    maximumPostponementCount="1",
+                    allowTrial="True",
+                    startContractAfterTrialEnds="true",
+                    trialPeriod="1 Day",
+                    allowDowngrade="False",
+                    periodBeforeDowngrade="1 Day",
+                    allowUpgrade="False",
+                    terminationNoticePeriod="1 week"
                 ),
                 lines=[
                     OrderLineDTO(
-                        itemId="",
-                        packageName="",
-                        itemOrderQuantity="",
+                        itemId="ITEM-0009",
+                        packageName="Pack-1",
+                        itemOrderQuantity="1",
                         itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                            pricingRule=OrderItemPricingRuleDTO(price="")
+                            pricingRule=OrderItemPricingRuleDTO(price="10.00")
                         )
                     )
                 ]
@@ -339,207 +338,6 @@ def test_order_create_with_contract():
         response = exsited_sdk.order.create_with_contract(request_data=request_data)
         print(response)
 
-
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-def test_order_family_upgrade():
-    SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        order_line = OrderLineDTO(
-            itemId="",
-            itemName="",
-            chargeItemUuid="",
-            packageName="",
-            quantity="",
-            itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                pricingRule=OrderItemPricingRuleDTO(price="")
-            ),
-            discount="",
-            shippingCost="",
-            uom="",
-            warehouse="",
-            isTaxExemptWhenSold="",
-            itemPriceTax=TaxDTO(
-                uuid="",
-                code="",
-                rate=""
-            ),
-            accountingCode=" ",
-            itemInvoiceNote="",
-            itemDescription="",
-            itemCustomAttributes=[
-                {"name": "cus_attr_number", "value": ""},
-                {"name": "cus_attr_string", "value": ""}
-            ]
-        )
-
-        request_data = OrderUpgradeDTO(
-            effectiveDate="",
-            lines=[order_line]
-        )
-
-        response = exsited_sdk.order.upgrade(order_id="", request_data=request_data)
-
-        print(response)
-
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-def test_order_family_downgrade():
-    SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        order_line = OrderLineDTO(
-            itemId="",
-            itemName="",
-            chargeItemUuid="",
-            packageName="",
-            quantity="",
-            itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                pricingRule=OrderItemPricingRuleDTO(price="")
-            ),
-            discount="",
-            shippingCost="",
-            uom="",
-            warehouse="",
-            isTaxExemptWhenSold="",
-            itemPriceTax=TaxDTO(
-                uuid="",
-                code="",
-                rate=""
-            ),
-            accountingCode=" ",
-            itemInvoiceNote="",
-            itemDescription="",
-            itemCustomAttributes=[
-                {"name": "cus_attr_number", "value": ""},
-                {"name": "cus_attr_string", "value": ""}
-            ]
-        )
-
-        request_data = OrderUpgradeDTO(
-            effectiveDate="",
-            lines=[order_line]
-        )
-
-        response = exsited_sdk.order.downgrade(order_id="", request_data=request_data)
-
-        print(response)
-
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-def test_order_family_upgrade_preview():
-    SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        order_line = OrderLineDTO(
-            itemId="",
-            itemName="",
-            chargeItemUuid="",
-            packageName="",
-            quantity="",
-            itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                pricingRule=OrderItemPricingRuleDTO(price="")
-            ),
-            discount="",
-            shippingCost="",
-            uom="",
-            warehouse="",
-            isTaxExemptWhenSold="",
-            itemPriceTax=TaxDTO(
-                uuid="",
-                code="",
-                rate=""
-            ),
-            accountingCode="",
-            itemInvoiceNote="",
-            itemDescription="",
-            itemCustomAttributes=[
-                {"name": "cus_attr_number", "value": ""},
-                {"name": "cus_attr_string", "value": ""}
-            ]
-        )
-
-        request_data = OrderUpgradeDTO(
-            effectiveDate="",
-            lines=[order_line]
-        )
-
-        response = exsited_sdk.order.upgrade_preview(order_id="", request_data=request_data)
-
-        print(response)
-
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
-def test_order_family_downgrade_preview():
-    SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        order_line = OrderLineDTO(
-            itemId="",
-            itemName="",
-            chargeItemUuid="",
-            packageName="",
-            quantity="",
-            itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                pricingRule=OrderItemPricingRuleDTO(price="")
-            ),
-            discount="",
-            shippingCost="",
-            uom="",
-            warehouse="",
-            isTaxExemptWhenSold="",
-            itemPriceTax=TaxDTO(
-                uuid="",
-                code="",
-                rate=""
-            ),
-            accountingCode="",
-            itemInvoiceNote="",
-            itemDescription="",
-            itemCustomAttributes=[
-                {"name": "cus_attr_number", "value": ""},
-                {"name": "cus_attr_string", "value": ""}
-            ]
-        )
-
-        request_data = OrderUpgradeDTO(
-            effectiveDate="",
-            lines=[order_line]
-        )
-
-        response = exsited_sdk.order.downgrade_preview(order_id="", request_data=request_data)
-
-        print(response)
-
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -547,7 +345,7 @@ def test_order_family_downgrade_preview():
 
 
 def test_order_reactivate():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -555,7 +353,7 @@ def test_order_reactivate():
     try:
         response = exsited_sdk.order.reactivate(id="", effective_date="")
         print(response)
-        # ResponseToObj().process(response=response["accounts"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -563,15 +361,15 @@ def test_order_reactivate():
 
 
 def test_order_preorder():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
         request_data = OrderCreateDTO(
-            order=OrderDataDTO(accountId="", preOrder="", priceTaxInclusive="").
-            add_line(item_id="", quantity=""))
+            order=OrderDataDTO(accountId="", preOrder="true", priceTaxInclusive="true").
+            add_line(item_id="", quantity="1"))
         response = exsited_sdk.order.preorder(request_data=request_data)
         print(response)
 
@@ -581,30 +379,8 @@ def test_order_preorder():
         print(ab.raw_response)
 
 
-def test_order_change():
-    SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
-
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
-
-    try:
-        line = OrderLineDTO(op="", uuid="", itemOrderQuantity="",
-                            itemPriceSnapshot=OrderItemPriceSnapshotDTO(
-                                pricingRule=OrderItemPricingRuleDTO(price="")))
-
-        request_data = OrderCreateDTO(order=OrderDataDTO(effectiveDate="", lines=[line]))
-
-        response = exsited_sdk.order.change(id="", request_data=request_data)
-        print(response)
-
-    except ABException as ab:
-        print(ab)
-        print(ab.get_errors())
-        print(ab.raw_response)
-
-
 def test_order_delete():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -620,7 +396,7 @@ def test_order_delete():
 
 
 def test_order_get_information():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -636,7 +412,7 @@ def test_order_get_information():
 
 
 def test_order_get_billing_preferences():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -652,7 +428,7 @@ def test_order_get_billing_preferences():
 
 
 def test_order_get_lines():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -668,7 +444,7 @@ def test_order_get_lines():
 
 
 def test_get_order_by_account():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -684,14 +460,13 @@ def test_get_order_by_account():
 
 
 def test_get_order_lines_by_charge_uuid():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        response = exsited_sdk.order.lines_charge(id="",
-                                                  charge_uuid="")
+        response = exsited_sdk.order.lines_charge(id="", charge_uuid="")
         print(response)
 
     except ABException as ab:
@@ -701,20 +476,20 @@ def test_get_order_lines_by_charge_uuid():
 
 
 def test_order_update_information():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        communication_preference_one = CommunicationPreferenceDTO(media="EMAIL", isEnabled=True)
+        communication_preference_one = [CommunicationPreferenceDTO(media="EMAIL", isEnabled=True)]
         request_data = OrderCreateDTO(
             order=OrderDataDTO(
                 name="",
                 displayName="",
                 description="",
-                manager="",
-
+                manager="Administrator",
+                communicationPreference=communication_preference_one
             )
         )
 
@@ -728,7 +503,7 @@ def test_order_update_information():
 
 
 def test_update_order_line_information():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -736,9 +511,7 @@ def test_update_order_line_information():
     try:
         line_data = OrderLineDTO(itemName="", itemInvoiceNote="", itemDescription="")
         request_data = OrderCreateDTO(order=OrderDataDTO(line=line_data))
-        response = exsited_sdk.order.update_line_information(id="",
-                                                             uuid="",
-                                                             request_data=request_data)
+        response = exsited_sdk.order.update_line_information(id="", uuid="", request_data=request_data)
         print(response)
 
     except ABException as ab:
@@ -748,27 +521,26 @@ def test_update_order_line_information():
 
 
 def test_update_order_billing_preference():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
         order_properties = OrderPropertiesDTO(
-            communicationProfile="",
-            invoiceMode="",
-            invoiceTerm="",
-            billingPeriod="",
-            paymentProcessor="",
-            paymentMode="",
-            paymentTerm="",
-            paymentTermAlignment="",
-            fulfillmentMode="",
-            fulfillmentTerm=""
+            communicationProfile="AutoBill Communication Profile",
+            invoiceMode="AUTOMATIC",
+            invoiceTerm="Billing Start DATE",
+            billingPeriod="1 Month",
+            paymentProcessor="Bank Deposit",
+            paymentMode="MANUAL",
+            paymentTerm="Net 15",
+            paymentTermAlignment="BILLING_DATE",
+            fulfillmentMode="MANUAL",
+            fulfillmentTerm="IMMEDIATELY"
         )
         request_data = OrderCreateDTO(order=OrderDataDTO(properties=order_properties))
-        response = exsited_sdk.order.update_billing_preference(id="",
-                                                               request_data=request_data)
+        response = exsited_sdk.order.update_billing_preference(id="", request_data=request_data)
         print(response)
 
     except ABException as ab:
@@ -778,7 +550,7 @@ def test_update_order_billing_preference():
 
 
 def test_order_relinquish():
-    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
@@ -795,38 +567,4 @@ def test_order_relinquish():
         print(ab.get_errors())
         print(ab.raw_response)
 
-
-# test_order_create_with_property()
-# test_order_create_basic()
-# test_order_details()
-test_order_cancel()
-# test_order_create_with_purchase_order()
-# test_order_create_with_contract()
-# test_order_reactivate()
-# test_order_get_information()
-# test_order_get_billing_preferences()
-# test_order_get_lines()
-# test_get_order_by_account()
-# test_get_order_lines_by_charge_uuid()
-test_get_order_lines_by_charge_uuid()
-test_order_preorder()
-# test_order_preorder()
-# test_order_preorder()
-# test_order_change()
-# test_order_family_downgrade_preview()
-# test_order_family_upgrade_preview()
-# test_order_family_upgrade()
-# test_order_family_downgrade()
-# test_order_delete()
-# test_update_order_line_information()
-test_order_relinquish()
-# test_order_create_with_contract()
-# test_order_usage_list()
-# test_order_usages_details()
-# test_order_usage_modify()
-# test_order_usage_update()
-# test_order_usages_delete()
-
-# test_order_delete()
-# test_update_order_line_information()
-test_order_relinquish()
+test_order_create_with_contract()
