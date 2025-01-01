@@ -1,6 +1,9 @@
 from exsited.common.sdk_util import SDKUtil
 from exsited.exsited.common.common_enum import SortDirection
-from exsited.exsited.setting.dto.setting_dto import SettingPaymentProcessorListDTO
+from exsited.exsited.setting.dto.setting_dto import SettingPaymentProcessorListDTO, SettingPricingLevelsListDTO, \
+    ItemGroupListDTO, CurrenciesResponseDTO, TaxesResponseDTO, DiscountProfilesResponseDTO, WarehousesResponseDTO, \
+    VariationsResponseDTO, ComponentResponseDTO, ShippingProfilesResponseDTO, VariationCreateRequestDTO, \
+    VariationUpdateResponseDTO
 from exsited.http.ab_rest_processor import ABRestProcessor
 from exsited.exsited.setting.setting_api_url import SettingApiUrl
 
@@ -17,3 +20,37 @@ class Setting(ABRestProcessor):
         params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
         response = self.get(url=SettingApiUrl.SETTINGS_PAYMENT_PROCESSOR, params=params, response_obj=SettingPaymentProcessorListDTO())
         return response
+
+    def get_settings_pricing_levels(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> SettingPricingLevelsListDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_PRICING_LEVELS, params=params, response_obj=SettingPricingLevelsListDTO())
+        return response
+
+    def get_settings_item_group(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> ItemGroupListDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_ITEM_GROUPS, params=params, response_obj=ItemGroupListDTO())
+        return response
+
+    def get_settings_currencies(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> CurrenciesResponseDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_CURRENCIES, params=params, response_obj=CurrenciesResponseDTO())
+        return response
+
+    def get_settings_taxes(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> TaxesResponseDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_TAXES, params=params, response_obj=TaxesResponseDTO())
+        return response
+
+    def get_settings_discount_profiles(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> DiscountProfilesResponseDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_DISCOUNT_PROFILES, params=params, response_obj=DiscountProfilesResponseDTO())
+        return response
+
+
+
+
