@@ -26,6 +26,7 @@ class CreditNoteDTO(ABBaseDTO):
     updatedBy: str = None
     updatedOn: str = None
     uuid: str = None
+    accountId: str = None
 
 
 @dataclass(kw_only=True)

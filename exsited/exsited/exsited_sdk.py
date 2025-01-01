@@ -22,19 +22,13 @@ class ExsitedSDK:
     setting: Setting = None
     payment: Payment = None
     express: Express = None
-    refund: Refund = None
     purchase_order: PurchaseOrder = None
-    purchase_invoice: PurchaseInvoice = None
     item_receipt: ItemReceipt = None
     item: Item = None
     item_fulfillment: ItemFulfillment = None
     gift_certificates: GiftCertificates = None
     credit_note: CreditNote = None
-    custom_objects_in_account: CustomObjectsInAccount = None
-    return_merchandise_authorisations: ReturnMerchandiseAuthorisations = None
-    purchase_refunds: PurchaseRefunds = None
-    purchase_payments: PurchasePayments = None
-    purchase_credit_notes: PurchaseCreditNotes = None
+
     def __init__(self, exsited_url: str = None, grant_type: str = None, client_id: str = None,
                  client_secret: str = None, redirect_uri: str = None):
         if grant_type and client_id and client_secret and redirect_uri:
@@ -54,19 +48,12 @@ class ExsitedSDK:
         self.setting = Setting(request_token_dto=self._request_token_dto)
         self.payment = Payment(request_token_dto=self._request_token_dto)
         self.express = Express(request_token_dto=self._request_token_dto)
-        self.refund = Refund(request_token_dto=self._request_token_dto)
         self.purchase_order = PurchaseOrder(request_token_dto=self._request_token_dto)
-        self.purchase_invoice = PurchaseInvoice(request_token_dto=self._request_token_dto)
         self.item_receipt = ItemReceipt(request_token_dto=self._request_token_dto)
         self.item = Item(request_token_dto=self._request_token_dto)
         self.item_fulfillment = ItemFulfillment(request_token_dto=self._request_token_dto)
         self.gift_certificates = GiftCertificates(request_token_dto=self._request_token_dto)
         self.credit_note = CreditNote(request_token_dto=self._request_token_dto)
-        self.custom_objects_in_account = CustomObjectsInAccount(request_token_dto=self._request_token_dto)
-        self.return_merchandise_authorisations = ReturnMerchandiseAuthorisations(request_token_dto=self._request_token_dto)
-        self.purchase_refunds = PurchaseRefunds(request_token_dto=self._request_token_dto)
-        self.purchase_payments = PurchasePayments(request_token_dto=self._request_token_dto)
-        self.purchase_credit_notes = PurchaseCreditNotes(request_token_dto=self._request_token_dto)
 
     def init_sdk(self, request_token_dto: RequestTokenDTO) -> 'ExsitedSDK':
         self._request_token_dto = request_token_dto
