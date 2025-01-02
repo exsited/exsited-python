@@ -48,6 +48,22 @@ class AddressDTO(ABBaseDTO):
     isDefaultBilling: bool = None
     isDefaultShipping: bool = None
     uuid: str = None
+    name: str = None
+
+@dataclass(kw_only=True)
+class ShippingProfileDTO(ABBaseDTO):
+    uuid: str = None
+    status: str = None
+    name: str = None
+    displayName: str = None
+    description: str = None
+    invoiceNote: str = None
+    type: str = None
+    fixedAmount: str = None
+    isTaxExempt: str = None
+    isTaxInclusive: str = None
+    taxConfiguration: TaxDTO = None
+    accountingCode: str = None
 
 
 @dataclass(kw_only=True)

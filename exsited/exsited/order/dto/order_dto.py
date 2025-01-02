@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 
 from exsited.exsited.account.dto.account_nested_dto import CommunicationPreferenceDTO
-from exsited.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, TimeZoneDTO, TaxDTO, PaginationDTO
+from exsited.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, TimeZoneDTO, TaxDTO, PaginationDTO, \
+    AddressDTO, ShippingProfileDTO
 from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO, OrderItemPriceSnapshotDTO, OrderPropertiesDTO, \
-    ContractPropertiesDTO, UpgradeDowngradePreviewDTO, KpisDTO
+    ContractPropertiesDTO, UpgradeDowngradePreviewDTO, KpisDTO, DiscountProfileDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 
 
@@ -52,6 +53,8 @@ class OrderDataDTO(ABBaseDTO):
     billingStartDate: str = None
     orderStartDate: str = None
     nextBillingFromDate: str = None
+    nextBillingFromDateUtc: str = None
+    trialRequiresPaymentMethod: str = None
     priceTaxInclusive: str = None
     createdBy: str = None
     createdOn: str = None
@@ -66,9 +69,9 @@ class OrderDataDTO(ABBaseDTO):
     properties: OrderPropertiesDTO = None
 
     contractProperties: ContractPropertiesDTO = None
-    billingAddress: dict = None
-    shippingAddress: dict = None
-    shippingProfile: dict = None
+    billingAddress: AddressDTO = None
+    shippingAddress: AddressDTO = None
+    shippingProfile: ShippingProfileDTO = None
     defaultWarehouse: str = None
     customObjects: list = None
     isTaxExemptWhenSold: str = None
@@ -80,7 +83,7 @@ class OrderDataDTO(ABBaseDTO):
     line: OrderLineDTO = None
     customAttributes: list[CustomAttributesDataDTO] = None
     customerPurchaseOrderId: str = None
-    discountProfile: str = None
+    discountProfile: DiscountProfileDTO = None
 
     def add_line(self, item_id: str, quantity: str, price: str = None):
         line = OrderLineDTO(itemId=item_id, itemOrderQuantity=quantity)
@@ -106,6 +109,7 @@ class OrderDowngradeDetailsDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class OrderDetailsDTO(ABBaseDTO):
     order: OrderDataDTO = None
+    eventUuid: str = None
 
 
 @dataclass(kw_only=True)

@@ -38,4 +38,3 @@ class UsageModifyDataDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class UsageUpdateDataDTO(ABBaseDTO):
     usage: UsageDataDTO = None
-

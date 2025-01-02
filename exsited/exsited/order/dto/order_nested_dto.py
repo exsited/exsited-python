@@ -63,6 +63,31 @@ class OrderPurchaseDTO(ABBaseDTO):
     createPo: str = None
     poInformation: POInformationDTO = None
 
+@dataclass(kw_only=True)
+class PreOrderStockDetailsDTO(ABBaseDTO):
+    pendingReserve: str = None
+    reserved: str = None
+    sold: str = None
+
+
+@dataclass(kw_only=True)
+class DiscountProfileDTO(ABBaseDTO):
+    name: str = None
+    uuid: str = None
+    type: str = None
+    amount: str = None
+    redemptionCode: str = None
+
+
+@dataclass(kw_only=True)
+class SalesRevenueDetailsDTO(ABBaseDTO):
+    salesRevenue: str = None
+
+@dataclass(kw_only=True)
+class itemCustomAttributesDataDTO(ABBaseDTO):
+    name: str = None
+    value: str = None
+
 
 @dataclass(kw_only=True)
 class OrderLineDTO(ABBaseDTO):
@@ -85,7 +110,7 @@ class OrderLineDTO(ABBaseDTO):
     purchaseOrder: OrderPurchaseDTO = None
     packageName: str = None
     itemSerialOrBatchNumber: str = None
-    itemCustomAttributes: list = None
+    itemCustomAttributes: list[itemCustomAttributesDataDTO] = None
     op: str = None
     uuid: str = None
     itemProperties: OrderItemPropertiesDTO = None
@@ -108,8 +133,6 @@ class OrderLineDTO(ABBaseDTO):
     taxAmount: str = None
     operation: str = None
 
-    itemCustomAttributes: list[dict] = None
-    itemProperties: dict = None
     itemSerialOrBatchNumber: str = None
     discount: str = None
     uom: str = None
@@ -120,7 +143,9 @@ class OrderLineDTO(ABBaseDTO):
     except:
         accountingCode: str = None
 
-    itemAccountingCode: dict = None
+    itemAccountingCode: OrderItemAccountingCodeDTO = None
+    preOrderStockDetails: PreOrderStockDetailsDTO = None
+    expectedDeliveryDate: str = None
 
 
 
@@ -160,6 +185,7 @@ class ContractPropertiesDTO(ABBaseDTO):
     startContractAfterTrialEnds: str = None
     trialPeriod: str = None
     trialEndDate: str = None
+    trialRequiresPaymentMethod: str = None
     allowDowngrade: str = None
     periodBeforeDowngrade: str = None
     allowDowngradeCharge: str = None
@@ -192,8 +218,6 @@ class UpgradeDowngradePreviewDTO(ABBaseDTO):
     shippingTotal: str = None
     total: str = None
     currency: str = None
-
-
 
 
 @dataclass(kw_only=True)
