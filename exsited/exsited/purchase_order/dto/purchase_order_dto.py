@@ -103,8 +103,8 @@ class PurchaseOrderDTO(ABBaseDTO):
     lastUpdatedOn: str = None
     uuid: str = None
     version: str = None
-    customAttributes: list = None
-    customObjects: list = None
+    customAttributes: list = None  # Added to match response
+    customObjects: list = None  # Added to match response
     lines: list[PurchaseOrderLineDTO] = None
     kpis: KPIDTO = None
 
@@ -132,10 +132,23 @@ class PurchaseOrderDataDTO(ABBaseDTO):
     customObjects: list = None
     lines: list[PurchaseOrderLineDTO] = None
 
+    effectiveDate: str = None
+
+
+@dataclass(kw_only=True)
+class PurchaseOrderLineUuidDTO(ABBaseDTO):
+    line: PurchaseOrderLineDTO = None
+
+
 
 @dataclass(kw_only=True)
 class PurchaseOrderDetailsDTO(ABBaseDTO):
     purchaseOrder: PurchaseOrderDTO = None
+
+
+@dataclass(kw_only=True)
+class PurchaseOrderLineUuidDetailsDTO(ABBaseDTO):
+    purchaseOrder: PurchaseOrderLineUuidDTO = None
 
 
 @dataclass(kw_only=True)

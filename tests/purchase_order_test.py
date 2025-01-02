@@ -18,7 +18,7 @@ def test_purchase_order_list_basic():
     try:
         response = exsited_sdk.purchase_order.list()
         print(response)
-        # ResponseToObj().process(response=response["purchase_orders"][0])
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -35,7 +35,104 @@ def test_purchase_order_details():
         response = exsited_sdk.purchase_order.details(id='')
         print(response)
         return response
-        # ResponseToObj().process(response=response["purchase_order"])
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
+def test_purchase_order_reactivate():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.purchase_order.reactivate(id="")
+        print(response)
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
+def test_purchase_order_cancel():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.purchase_order.cancel(id="")
+        print(response)
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
+def test_purchase_order_delete():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.purchase_order.delete(id='')
+        print(response)
+        return response
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
+def test_purchase_order_information():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.purchase_order.information(id='')
+        print(response)
+        return response
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+def test_purchase_order_line_uuid():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.purchase_order.line_uuid(id='', uuid='')
+        print(response)
+        return response
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
+def test_purchase_order_line():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.purchase_order.po_line(id='')
+        print(response)
+        return response
+
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
@@ -54,7 +151,7 @@ def test_purchase_order_create():
             issueDate="",
             dueDate="",
             expectedCompletionDate="",
-            priceTaxInclusive="",
+            priceTaxInclusive="False",
             purchaseOrderNote="",
             accountId="",
             lines=[
@@ -68,7 +165,7 @@ def test_purchase_order_create():
                         )
                     ),
                     itemPurchaseTaxConfiguration=PurchaseOrderItemPurchaseTaxConfigurationDTO(
-                        purchasePriceIsTaxInclusive="true",
+                        purchasePriceIsTaxInclusive="False",
                         taxCode=PurchaseOrderTaxCodeDTO(
                             uuid="",
                             code="",
@@ -76,7 +173,7 @@ def test_purchase_order_create():
                             link=""
                         )
                     ),
-                    itemPriceTaxExempt="",
+                    itemPriceTaxExempt="false",
                     itemPriceTax=TaxDTO(
                         uuid="",
                         code="",
@@ -98,9 +195,3 @@ def test_purchase_order_create():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
-
-
-
-test_purchase_order_list_basic()
-# test_purchase_order_details()
-# test_purchase_order_create()
