@@ -51,6 +51,16 @@ class Setting(ABRestProcessor):
         response = self.get(url=SettingApiUrl.SETTINGS_DISCOUNT_PROFILES, params=params, response_obj=DiscountProfilesResponseDTO())
         return response
 
+    def get_settings_warehouses(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> WarehousesResponseDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_WAREHOUSES, params=params, response_obj=WarehousesResponseDTO())
+        return response
 
+    def get_settings_shipping_profiles(self, limit: int = None, offset: int = None, direction: SortDirection = None,
+             order_by: str = None) -> ShippingProfilesResponseDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=SettingApiUrl.SETTINGS_SHIPPING_PROFILES, params=params, response_obj=ShippingProfilesResponseDTO())
+        return response
 
 
