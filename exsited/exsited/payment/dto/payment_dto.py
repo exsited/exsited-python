@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from exsited.exsited.common.dto.common_dto import CustomAttributesDTO, CustomObjectDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 
 @dataclass(kw_only=True)
@@ -21,6 +22,14 @@ class CardPaymentAppliedDTO(PaymentAppliedDTO):
 class CreditAppliedDTO(ABBaseDTO):
     id: str = None
     amount: str = None
+    code: str = None
+
+
+@dataclass(kw_only=True)
+class giftCertificateAppliedDTO(ABBaseDTO):
+    code: str = None
+    amount: str = None
+
 
 @dataclass(kw_only=True)
 class InvoiceDTO(ABBaseDTO):
@@ -48,9 +57,10 @@ class PaymentDataDTO(ABBaseDTO):
     lastUpdatedOn: str = None
     uuid: str = None
     version: str = None
-    customAttributes: list = None
-    customObjects: list = None
-    giftCertificateApplied: list['GiftCertificateAppliedDTO'] = None
+    saleOrderId: str = None
+    customAttributes: list[CustomAttributesDTO] = None
+    customObjects: list[CustomObjectDTO] = None
+    giftCertificateApplied: list[giftCertificateAppliedDTO] = None
 
 
 @dataclass(kw_only=True)
@@ -63,11 +73,11 @@ class PaymentDetailsDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class PaymentCreateDTO(ABBaseDTO):
-    payment: PaymentDataDTO
+    payment: PaymentDataDTO = None
 
 @dataclass(kw_only=True)
 class CardPaymentCreateDTO(ABBaseDTO):
-    payment: CardPaymentDataDTO
+    payment: CardPaymentDataDTO = None
 
 # New DTO for the given payload
 @dataclass(kw_only=True)
@@ -81,7 +91,7 @@ class CardDirectDebitPaymentDataDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class CardDirectDebitPaymentCreateDTO(ABBaseDTO):
-    payment: CardDirectDebitPaymentDataDTO
+    payment: CardDirectDebitPaymentDataDTO = None
 
 
 @dataclass(kw_only=True)
@@ -93,10 +103,72 @@ class PaginationDTO(ABBaseDTO):
     nextPage: str = None
 
 @dataclass(kw_only=True)
-class PaymentInvoiceDetailsDTO(ABBaseDTO):
-    payments: list[PaymentDataDTO]
-    pagination: PaginationDTO
+class PaymentListDTO(ABBaseDTO):
+    payments: list[PaymentDataDTO] = None
+    pagination: PaginationDTO = None
+
 
 @dataclass(kw_only=True)
 class PaymentInvoiceResponseDTO(ABBaseDTO):
-    invoice: PaymentInvoiceDetailsDTO
+    invoice: PaymentListDTO = None
+
+
+@dataclass(kw_only=True)
+class PaymentAccountResponseDTO(ABBaseDTO):
+    account: PaymentListDTO = None
+
+
+@dataclass(kw_only=True)
+class PaymentOrderResponseDTO(ABBaseDTO):
+    order: PaymentListDTO = None
+
+
+
+@dataclass(kw_only=True)
+class CustomAttributeDTO:
+    name: str
+    value: str
+
+@dataclass(kw_only=True)
+class InvoiceMultipleDTO:
+    id: str
+    amount: str
+
+@dataclass(kw_only=True)
+class CreditAppliedDTO:
+    id: str
+    amount: str
+
+@dataclass(kw_only=True)
+class GiftCertificateDTO:
+    code: str
+    applied: str
+
+@dataclass(kw_only=True)
+class AdditionalFieldsDTO:
+    hostIp: str
+
+@dataclass(kw_only=True)
+class PaymentAppliedMultipleDTO:
+    processor: str
+    amount: str
+    cardType: str
+    token: str
+    cardNumber: str
+    expiryMonth: str
+    expiryYear: str
+    additionalFields: list[AdditionalFieldsDTO] = None
+
+@dataclass(kw_only=True)
+class PaymentMultipleDataDTO:
+    id: str
+    invoices: list[InvoiceMultipleDTO]
+    date: str
+    paymentApplied: PaymentAppliedMultipleDTO
+    creditApplied: list[CreditAppliedDTO]
+    giftCertificates: list[GiftCertificateDTO]
+    customAttributes: list[CustomAttributeDTO]
+
+@dataclass(kw_only=True)
+class PaymentMultipleRequestDTO(ABBaseDTO):
+    payment: PaymentMultipleDataDTO = None
