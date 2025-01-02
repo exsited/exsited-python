@@ -88,6 +88,9 @@ class itemCustomAttributesDataDTO(ABBaseDTO):
     name: str = None
     value: str = None
 
+@dataclass(kw_only=True)
+class AccountingCodeDTO(ABBaseDTO):
+    salesRevenue: str = None
 
 @dataclass(kw_only=True)
 class OrderLineDTO(ABBaseDTO):
@@ -133,13 +136,13 @@ class OrderLineDTO(ABBaseDTO):
     taxAmount: str = None
     operation: str = None
 
-    itemSerialOrBatchNumber: str = None
+
     discount: str = None
     uom: str = None
     warehouse: str = None
     quantity: str = None
     try:
-        accountingCode: dict = None
+        accountingCode: AccountingCodeDTO = None
     except:
         accountingCode: str = None
 
@@ -218,6 +221,8 @@ class UpgradeDowngradePreviewDTO(ABBaseDTO):
     shippingTotal: str = None
     total: str = None
     currency: str = None
+
+
 
 
 @dataclass(kw_only=True)
