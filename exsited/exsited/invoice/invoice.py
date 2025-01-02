@@ -1,6 +1,6 @@
 from exsited.exsited.common.common_enum import SortDirection
 from exsited.exsited.invoice.dto.invoice_dto import InvoiceDetailsDTO, InvoiceListDTO, InvoiceCreateDTO, InvoiceDataDTO, \
-    InvoiceAccountDTO
+    InvoiceAccountDTO, InvoiceOrderDetailsDTO, InvoiceOrderListDTO
 from exsited.exsited.invoice.invoice_api_url import InvoiceApiUrl
 from exsited.common.sdk_util import SDKUtil
 from exsited.http.ab_rest_processor import ABRestProcessor
@@ -28,10 +28,6 @@ class Invoice(ABRestProcessor):
 
     def delete(self, id: str):
         response = self.delete_request(url=InvoiceApiUrl.INVOICE_DELETE.format(id=id))
-        return response
-
-    def update_amend(self, id: str, request_data: InvoiceCreateDTO) -> InvoiceDetailsDTO:
-        response = self.post(url=InvoiceApiUrl.INVOICE_UPDATE_AMEND.format(id=id), request_obj=request_data, response_obj=InvoiceDetailsDTO())
         return response
 
 
@@ -78,41 +74,12 @@ class Invoice(ABRestProcessor):
 
         return invoice_dict
 
-    def invoice_details_against_order(self, order_id: str):
-        raw_response = self.get(url=InvoiceApiUrl.EACH_INVOICE.format(id=order_id))
+    def invoice_details_against_order_v3(self, order_id: str, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) ->InvoiceOrderDetailsDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=InvoiceApiUrl.EACH_INVOICE_V3.format(id=order_id), params=params, response_obj=InvoiceOrderDetailsDTO())
+        return response.order.invoices[-1]
 
-        if raw_response and 'order' in raw_response and 'invoices' in raw_response['order']:
-            invoices = raw_response['order']['invoices']
-            if invoices:
-                invoice_datas = invoices[0]
-
-                invoice_dict = self.match_structure(invoice_datas)
-                invoice_details = InvoiceDetailsDTO(invoice=InvoiceDataDTO(**invoice_dict))
-
-            else:
-                invoice_details = InvoiceDetailsDTO(invoice=None)
-        else:
-            invoice_details = InvoiceDetailsDTO(invoice=None)
-
-        return invoice_details
-
-    def invoice_details_list_against_order(self, order_id: str):
-        raw_response = self.get(url=InvoiceApiUrl.EACH_INVOICE.format(id=order_id))
-
-        if raw_response and 'order' in raw_response and 'invoices' in raw_response['order']:
-            invoices = raw_response['order']['invoices']
-            if invoices:
-                invoice_details_list = list()
-                for invoice in range(0, len(invoices)):
-                    invoice_datas = invoices[invoice]
-
-                    invoice_dict = self.match_structure(invoice_datas)
-                    invoice_details = InvoiceDetailsDTO(invoice=InvoiceDataDTO(**invoice_dict))
-                    invoice_details_list.append(invoice_details)
-
-            else:
-                invoice_details_list = InvoiceDetailsDTO(invoice=None)
-        else:
-            invoice_details_list = InvoiceDetailsDTO(invoice=None)
-
-        return invoice_details_list
+    def invoice_list_against_order_v3(self, order_id: str, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) ->InvoiceOrderListDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=InvoiceApiUrl.EACH_INVOICE_V3.format(id=order_id), params=params, response_obj=InvoiceOrderListDTO())
+        return response
