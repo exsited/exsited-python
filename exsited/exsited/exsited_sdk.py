@@ -7,8 +7,8 @@ from exsited.exsited.item.item import Item
 from exsited.exsited.item_fulfillment.item_fulfillment import ItemFulfillment
 from exsited.exsited.order.order import Order
 from exsited.exsited.purchase_order.purchase_order import PurchaseOrder
+from exsited.exsited.refund.refund import Refund
 from exsited.exsited.setting.setting import Setting
-
 from exsited.exsited.payment.payment import Payment
 
 
@@ -20,6 +20,7 @@ class ExsitedSDK:
     setting: Setting = None
     payment: Payment = None
     express: Express = None
+    refund: Refund = None
     purchase_order: PurchaseOrder = None
     item: Item = None
     item_fulfillment: ItemFulfillment = None
@@ -43,6 +44,7 @@ class ExsitedSDK:
         self.setting = Setting(request_token_dto=self._request_token_dto)
         self.payment = Payment(request_token_dto=self._request_token_dto)
         self.express = Express(request_token_dto=self._request_token_dto)
+        self.refund = Refund(request_token_dto=self._request_token_dto)
         self.purchase_order = PurchaseOrder(request_token_dto=self._request_token_dto)
         self.item = Item(request_token_dto=self._request_token_dto)
         self.item_fulfillment = ItemFulfillment(request_token_dto=self._request_token_dto)
