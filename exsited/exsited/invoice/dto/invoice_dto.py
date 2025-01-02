@@ -1,15 +1,15 @@
 from dataclasses import dataclass
-
-from exsited.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, PaginationDTO
+from exsited.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, PaginationDTO, CustomAttributesDTO, \
+    CustomObjectDTO
 from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 
 
 @dataclass(kw_only=True)
-class LastPaymentDTO:
+class LastPaymentDTO(ABBaseDTO):
     id: str = None
     amount: str = None
-    created_at: str = None
+    createdAt: str = None
 
 
 @dataclass(kw_only=True)
@@ -46,6 +46,20 @@ class LineOperationDTO(ABBaseDTO):
     itemDiscountAmount: str = None
 
 
+@dataclass(kw_only=True)
+class KpisDTO(ABBaseDTO):
+    outstanding: str = None
+    overdue: str = None
+    lastPaymentDate: str = None
+    paymentApplied: str = None
+    creditApplied: str = None
+    creditIssued: str = None
+    lastReactivatedOn: str = None
+    lastCancelledOn: str = None
+    lastAmendedOn: str = None
+    voidedOn: str = None
+    deletedOn: str = None
+
 
 @dataclass(kw_only=True)
 class InvoiceDataDTO(ABBaseDTO):
@@ -62,6 +76,8 @@ class InvoiceDataDTO(ABBaseDTO):
     dueDate: str = None
     alternateDueDate: str = None
     subtotal: str = None
+    shippingCost: str = None
+    accountName: str = None
     tax: str = None
     taxTotal: str = None
     total: str = None
@@ -86,10 +102,10 @@ class InvoiceDataDTO(ABBaseDTO):
     currency: CurrencyDTO = None
 
     lastPayment: LastPaymentDTO = None
-    kpis: dict = None
+    kpis: KpisDTO = None
 
-    customAttributes: list = None
-    customObjects: list = None
+    customAttributes: list[CustomAttributesDTO] = None
+    customObjects: list[CustomObjectDTO] = None
     customForm: CustomFormsDTO = None
 
 
@@ -112,6 +128,15 @@ class InvoiceListDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class InvoiceAccountDTO(ABBaseDTO):
     account: InvoiceListDTO = None
+
+@dataclass(kw_only=True)
+class InvoiceOrderDetailsDTO(ABBaseDTO):
+    order: InvoiceListDTO = None
+
+
+@dataclass(kw_only=True)
+class InvoiceOrderListDTO(ABBaseDTO):
+    order: InvoiceListDTO = None
 
 
 

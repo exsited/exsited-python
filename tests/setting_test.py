@@ -86,3 +86,33 @@ def test_get_settings_discount_profiles():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
+
+def test_get_settings_warehouses():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.setting.get_settings_warehouses()
+        print(response)
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+def test_get_settings_shipping_profiles():
+    SDKConfig.PRINT_REQUEST_DATA = False
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        response = exsited_sdk.setting.get_settings_shipping_profiles()
+        print(response)
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
