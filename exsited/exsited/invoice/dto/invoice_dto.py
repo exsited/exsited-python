@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-
 from exsited.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, PaginationDTO, CustomAttributesDTO, \
     CustomObjectDTO
 from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO
