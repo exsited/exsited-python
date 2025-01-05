@@ -1,6 +1,6 @@
 from exsited.exsited.common.common_enum import SortDirection
 from exsited.exsited.invoice.dto.invoice_dto import InvoiceDetailsDTO, InvoiceListDTO, InvoiceCreateDTO, InvoiceDataDTO, \
-    InvoiceAccountDTO
+    InvoiceAccountDTO, InvoiceOrderDetailsDTO, InvoiceOrderListDTO
 from exsited.exsited.invoice.invoice_api_url import InvoiceApiUrl
 from exsited.common.sdk_util import SDKUtil
 from exsited.http.ab_rest_processor import ABRestProcessor
@@ -29,11 +29,6 @@ class Invoice(ABRestProcessor):
     def delete(self, id: str):
         response = self.delete_request(url=InvoiceApiUrl.INVOICE_DELETE.format(id=id))
         return response
-
-    def update_amend(self, id: str, request_data: InvoiceCreateDTO) -> InvoiceDetailsDTO:
-        response = self.post(url=InvoiceApiUrl.INVOICE_UPDATE_AMEND.format(id=id), request_obj=request_data, response_obj=InvoiceDetailsDTO())
-        return response
-
 
     def invoice_account(self, accountId: str):
         response = self.get(url=InvoiceApiUrl.INVOICE_ACCOUNT.format(id=accountId), response_obj=InvoiceAccountDTO())
@@ -116,3 +111,13 @@ class Invoice(ABRestProcessor):
             invoice_details_list = InvoiceDetailsDTO(invoice=None)
 
         return invoice_details_list
+
+    def invoice_details_against_order_v3(self, order_id: str, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) ->InvoiceOrderDetailsDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=InvoiceApiUrl.EACH_INVOICE_V3.format(id=order_id), params=params, response_obj=InvoiceOrderDetailsDTO())
+        return response.order.invoices[-1]
+
+    def invoice_list_against_order_v3(self, order_id: str, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) ->InvoiceOrderListDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=InvoiceApiUrl.EACH_INVOICE_V3.format(id=order_id), params=params, response_obj=InvoiceOrderListDTO())
+        return response
