@@ -17,6 +17,10 @@ class Account(ABRestProcessor):
         response = self.post(url=AccountApiUrl.ACCOUNTS, request_obj=request_data, response_obj=AccountDetailsDTO())
         return response
 
+    def create_v3(self, request_data: AccountCreateDTO) -> AccountDetailsDTO:
+        response = self.post(url=AccountApiUrl.ACCOUNTS_V3, request_obj=request_data, response_obj=AccountDetailsDTO())
+        return response
+
     def list(self, limit: int = None, offset: int = None, direction: SortDirection = None,
              order_by: str = None) -> AccountListDTO:
         params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
@@ -40,6 +44,12 @@ class Account(ABRestProcessor):
     def reactivate(self, id: str, request_data: AccountReactivateDataDTO) -> AccountDetailsDTO:
         reactivate_request = AccountReactivateDTO(account=request_data)
         response = self.post(url=AccountApiUrl.ACCOUNT_REACTIVATE.format(id=id), request_obj=reactivate_request,
+                             response_obj=AccountReactiveResponseDTO())
+        return response
+
+    def reactivate_v3(self, id: str, request_data: AccountReactivateDataDTO) -> AccountDetailsDTO:
+        reactivate_request = AccountReactivateDTO(account=request_data)
+        response = self.post(url=AccountApiUrl.ACCOUNT_REACTIVATE_V3.format(id=id), request_obj=reactivate_request,
                              response_obj=AccountReactiveResponseDTO())
         return response
 
@@ -72,6 +82,12 @@ class Account(ABRestProcessor):
                             request_obj=request_data, response_obj=AccountContactsUpdateDTO)
         return response
 
+    def update_contact_v3(self, id: str, contact_type: str,
+                       request_data: AccountContactUpdateDTO) -> AccountContactsUpdateDTO:
+        response = self.put(url=AccountApiUrl.ACCOUNT_CONTACT_UPDATE_V3.format(id=id, contact_type=contact_type),
+                            request_obj=request_data, response_obj=AccountContactsUpdateDTO)
+        return response
+
     def add_payment_method(self, account_id: str, request_data: PaymentMethodsAddDTO) -> PaymentMethodsDetailsDTO:
         response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), request_obj=request_data,
                              response_obj=PaymentMethodsDetailsDTO())
@@ -80,6 +96,12 @@ class Account(ABRestProcessor):
     def add_payment_card_method(self, account_id: str,
                                 request_data: PaymentCardMethodsAddDTO) -> PaymentMethodsDetailsDTO:
         response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS.format(id=account_id), request_obj=request_data,
+                             response_obj=PaymentMethodsDetailsDTO())
+        return response
+
+    def add_payment_card_method_v3(self, account_id: str,
+                                request_data: PaymentCardMethodsAddDTO) -> PaymentMethodsDetailsDTO:
+        response = self.post(url=AccountApiUrl.ACCOUNT_PAYMENT_METHODS_V3.format(id=account_id), request_obj=request_data,
                              response_obj=PaymentMethodsDetailsDTO())
         return response
 
@@ -92,6 +114,12 @@ class Account(ABRestProcessor):
         response = self.delete_request(
             url=AccountApiUrl.EACH_PAYMENT_METHODS.format(id=account_id, reference=reference))
         return response
+
+    def delete_payment_method_v3(self, account_id: str, reference: str):
+        response = self.delete_request(
+            url=AccountApiUrl.EACH_PAYMENT_METHODS_V3.format(id=account_id, reference=reference))
+        return response
+
 
     def payment_method_details(self, account_id: str, reference: str) -> PaymentMethodsDetailsDTO:
         response = self.get(url=AccountApiUrl.EACH_PAYMENT_METHODS.format(id=account_id, reference=reference),

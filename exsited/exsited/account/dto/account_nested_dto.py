@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from typing import Union
-
 from exsited.sdlize.ab_base_dto import ABBaseDTO
+from typing import Union
 
 @dataclass(kw_only=True)
 class PaymentProcessorDetailsDTO(ABBaseDTO):
