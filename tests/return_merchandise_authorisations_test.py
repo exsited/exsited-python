@@ -114,7 +114,6 @@ def test_return_merchandise_authorisations_receive_details():
         print(ab.get_errors())
         print(ab.raw_response)
 
-
 def test_invoice_return_merchandise_authorisations_list():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
