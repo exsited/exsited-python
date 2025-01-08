@@ -7,6 +7,7 @@ from exsited.exsited.account.dto.account_nested_dto import AccountingCodeDTO, Co
     PaymentMethodListDTO, AccountContacts, AccountContactsType, AccountContactsUpdate, AccountContactUpdate, ContactDTO, \
     PricingLevelDTO
 
+
 @dataclass(kw_only=True)
 class AccountDataDTO(ABBaseDTO):
     name: str = None
