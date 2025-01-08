@@ -157,14 +157,13 @@ def test_settings_variations_update():
     try:
         request_data = VariationCreateRequestDTO(
             variations=VariationCreateDataDTO(
-                name="dimention 34",
-                displayName="dimention 34",
-                description="Bryan 4Adams - (Everything I Do) UPDATE2",
-                options=[OptionDTO(name="NobabU4PDATEsdk", order=0)]
+                name="",
+                displayName="",
+                description="",
+                options=[OptionDTO(name="", order=0)]
             ))
 
-        response = exsited_sdk.setting.variation_update(uuid="80ce7d37-beb5-4eff-af33-f98323a70a5e",
-                                                        request_data=request_data)
+        response = exsited_sdk.setting.variation_update(uuid="", request_data=request_data)
         print(response)
 
     except ABException as ab:
