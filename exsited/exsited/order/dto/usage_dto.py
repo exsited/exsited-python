@@ -26,6 +26,13 @@ class UsageDataDTO(ABBaseDTO):
 class UsageCreateDTO(ABBaseDTO):
     usage: UsageDataDTO = None
 
+
+@dataclass(kw_only=True)
+class MultipleUsageCreateDTO(ABBaseDTO):
+    usages: list[UsageDataDTO] = None
+    pagination: PaginationDTO = None
+
+
 @dataclass(kw_only=True)
 class UsageListDTO(ABBaseDTO):
     usages: list[UsageDataDTO] = None

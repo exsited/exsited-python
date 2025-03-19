@@ -1,7 +1,7 @@
 class OrderApiUrl:
     ORDERS = "/api/v2/orders"
     ORDER_CANCEL = "/api/v2/orders/{id}/cancel"
-    USAGE_ADD = "/api/v2/usages"
+    USAGE_ADD = "/api/v3/usages"
     CONTRACT_ORDER_CREATE = "/api/v2/orders"
     ORDER_REACTIVATE = "/api/v2/orders/{id}/reactivate"
     ORDER_PREORDER = "/api/v2/orders/preorder"
