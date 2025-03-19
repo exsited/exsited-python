@@ -118,19 +118,28 @@ def test_order_usages_details():
 
 def test_order_multiple_usage_add():
     SDKConfig.PRINT_REQUEST_DATA = True
-    SDKConfig.PRINT_RAW_RESPONSE = False
+    SDKConfig.PRINT_RAW_RESPONSE = True
 
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
         request_data = MultipleUsageCreateDTO(
-            usages=[UsageDataDTO(chargeItemUuid="c3e9127a-4c84-4f04-b43c-17763ade10e7",
-                               chargingPeriod="2025-02-16-2025-03-15",
-                               quantity="2",
-                               startTime="2025-02-17 05:48:01",
-                               endTime="2025-02-18 06:55:01",
-                               type="INCREMENTAL",
-                               )]
+            usages=[UsageDataDTO(chargeItemUuid="",
+                               chargingPeriod="",
+                               quantity="",
+                               startTime="",
+                               endTime="",
+                               type="",
+                               ),
+                    UsageDataDTO(chargeItemUuid="",
+                                 chargingPeriod="",
+                                 quantity="",
+                                 startTime="",
+                                 endTime="",
+                                 type="",
+                                 )
+                    ],
+
         )
         response = exsited_sdk.order.add_multiple_usage(request_data=request_data)
         print(response)
@@ -589,3 +598,6 @@ def test_order_relinquish():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
+
+
+test_order_multiple_usage_add()
