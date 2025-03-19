@@ -2,7 +2,7 @@ from exsited.exsited.account.dto.account_nested_dto import CommunicationPreferen
 from exsited.exsited.common.dto.common_dto import TaxDTO
 from exsited.exsited.exsited_sdk import ExsitedSDK
 from exsited.exsited.order.dto.order_dto import OrderCreateDTO, OrderDataDTO
-from exsited.exsited.order.dto.usage_dto import UsageCreateDTO, UsageDataDTO
+from exsited.exsited.order.dto.usage_dto import UsageCreateDTO, UsageDataDTO, MultipleUsageCreateDTO
 from exsited.common.ab_exception import ABException
 from exsited.common.sdk_conf import SDKConfig
 from order_usage_db.save_to_db import SaveToDB
@@ -111,6 +111,29 @@ def test_order_usages_details():
         print(response)
         return response
 
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+def test_order_multiple_usage_add():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = False
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+
+    try:
+        request_data = MultipleUsageCreateDTO(
+            usages=[UsageDataDTO(chargeItemUuid="c3e9127a-4c84-4f04-b43c-17763ade10e7",
+                               chargingPeriod="2025-02-16-2025-03-15",
+                               quantity="2",
+                               startTime="2025-02-17 05:48:01",
+                               endTime="2025-02-18 06:55:01",
+                               type="INCREMENTAL",
+                               )]
+        )
+        response = exsited_sdk.order.add_multiple_usage(request_data=request_data)
+        print(response)
     except ABException as ab:
         print(ab)
         print(ab.get_errors())
