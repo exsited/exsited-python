@@ -124,13 +124,13 @@ def test_order_multiple_usage_add():
 
     try:
         request_data = MultipleUsageCreateDTO(
-            usages=[UsageDataDTO(chargeItemUuid="c3e9127a-4c84-4f04-b43c-17763ade10e7",
-                               chargingPeriod="2025-02-16-2025-03-15",
-                               quantity="2",
-                               startTime="2025-02-17 05:48:01",
-                               endTime="2025-02-18 06:55:01",
-                               type="INCREMENTAL",
-                               )]
+            usages=[UsageDataDTO(chargeItemUuid="CHARGE_ITEM_UUID",
+                                 chargingPeriod="CHARGING_PERIOD",
+                                 quantity="QUANTITY",
+                                 startTime="START_TIME",
+                                 endTime="END_TIME",
+                                 type="USAGE_TYPE",
+                                 )]
         )
         response = exsited_sdk.order.add_multiple_usage(request_data=request_data)
         print(response)
