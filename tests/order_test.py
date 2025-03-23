@@ -130,6 +130,7 @@ def test_order_multiple_usage_add():
                                  startTime="START_TIME",
                                  endTime="END_TIME",
                                  type="USAGE_TYPE",
+                                 usageReference="REFERENCE",
                                  )]
         )
         response = exsited_sdk.order.add_multiple_usage(request_data=request_data)
