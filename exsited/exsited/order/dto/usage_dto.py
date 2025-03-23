@@ -20,6 +20,7 @@ class UsageDataDTO(ABBaseDTO):
     lastUpdatedBy: str = None
     lastUpdatedOn: str = None
     customAttributes: list[CustomAttributesDTO] = None
+    usageReference: str = None
 
 
 @dataclass(kw_only=True)
@@ -31,6 +32,12 @@ class UsageCreateDTO(ABBaseDTO):
 class MultipleUsageCreateDTO(ABBaseDTO):
     usages: list[UsageDataDTO] = None
     pagination: PaginationDTO = None
+
+
+@dataclass(kw_only=True)
+class MultipleUsageResponseDTO(ABBaseDTO):
+    success: list[UsageDataDTO] = None
+    failed: list[UsageDataDTO] = None
 
 
 @dataclass(kw_only=True)

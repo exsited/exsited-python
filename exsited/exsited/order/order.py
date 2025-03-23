@@ -6,7 +6,7 @@ from exsited.exsited.order.dto.order_dto import OrderCreateDTO, OrderDetailsDTO,
     AccountOrdersResponseDTO
 from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO
 from exsited.exsited.order.dto.usage_dto import UsageCreateDTO, UsageDataDTO, UsageListDTO, UsageModifyDataDTO, \
-    UsageUpdateDataDTO, MultipleUsageCreateDTO
+    UsageUpdateDataDTO, MultipleUsageCreateDTO, MultipleUsageResponseDTO
 from exsited.exsited.order.order_api_url import OrderApiUrl
 from exsited.common.sdk_util import SDKUtil
 from exsited.http.ab_rest_processor import ABRestProcessor
@@ -29,8 +29,9 @@ class Order(ABRestProcessor):
         response = self.get(url=OrderApiUrl.USAGE_LIST, params=params, response_obj=UsageListDTO())
         return response
 
-    def add_multiple_usage(self, request_data: MultipleUsageCreateDTO) -> MultipleUsageCreateDTO:
-        response = self.post(url=OrderApiUrl.USAGE_ADD, request_obj=request_data, response_obj=MultipleUsageCreateDTO())
+    def add_multiple_usage(self, request_data: MultipleUsageCreateDTO) -> MultipleUsageResponseDTO:
+        response = self.post(url=OrderApiUrl.USAGE_ADD, request_obj=request_data,
+                             response_obj=MultipleUsageResponseDTO())
         return response
 
     def details(self, id: str) -> OrderDetailsDTO:
