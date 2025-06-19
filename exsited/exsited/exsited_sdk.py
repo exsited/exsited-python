@@ -2,6 +2,7 @@ from exsited.exsited.account.account import Account
 from exsited.exsited.auth.dto.token_dto import RequestTokenDTO
 from exsited.exsited.credit_note.credit_note import CreditNote
 from exsited.exsited.gift_certificates.gift_certificates import GiftCertificates
+from exsited.exsited.integration.integration import Integration
 from exsited.exsited.invoice.invoice import Invoice
 from exsited.exsited.order.order import Order
 from exsited.exsited.purchase_order.purchase_order import PurchaseOrder
@@ -24,6 +25,7 @@ class ExsitedSDK:
     gift_certificates: GiftCertificates = None
     credit_note: CreditNote = None
     return_merchandise_authorisations: ReturnMerchandiseAuthorisations = None
+    integration: Integration = None
 
     def __init__(self, exsited_url: str = None, grant_type: str = None, client_id: str = None,
                  client_secret: str = None, redirect_uri: str = None):
@@ -48,6 +50,7 @@ class ExsitedSDK:
         self.gift_certificates = GiftCertificates(request_token_dto=self._request_token_dto)
         self.credit_note = CreditNote(request_token_dto=self._request_token_dto)
         self.return_merchandise_authorisations = ReturnMerchandiseAuthorisations(request_token_dto=self._request_token_dto)
+        self.integration = Integration(request_token_dto=self._request_token_dto)
 
     def init_sdk(self, request_token_dto: RequestTokenDTO) -> 'ExsitedSDK':
         self._request_token_dto = request_token_dto
