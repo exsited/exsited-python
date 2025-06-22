@@ -83,6 +83,7 @@ class IntegrationPaginationDTO(ABBaseDTO):
     limit: int = None
     offset: int = None
     hasMore: str = None
+    nextOffset: str = None
 
 
 
