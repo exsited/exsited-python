@@ -11,8 +11,8 @@ def test_get_integration_linked_objects_account():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        provider_name = "aro_flo"
-        response = exsited_sdk.integration.get_list_linked_objects_by_account(provider_name=provider_name)
+        provider_uuid = "provider_uuid"
+        response = exsited_sdk.integration.get_list_linked_objects_by_account(provider_uuid=provider_uuid)
         print(response)
 
     except ABException as ab:
@@ -27,9 +27,9 @@ def test_get_integration_linked_objects_account_details():
     exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
 
     try:
-        provider_name = "aro_flo"
-        linked_account_uuid = "90a7259e-a73b-4d1c-9504-658fe8249ffb"
-        response = exsited_sdk.integration.get_linked_objects_by_account_details(provider_name=provider_name, linked_account_uuid=linked_account_uuid)
+        provider_uuid = "provider_uuid"
+        linked_account_uuid = "linked_account_uuid"
+        response = exsited_sdk.integration.get_linked_objects_by_account_details(provider_uuid=provider_uuid, linked_account_uuid=linked_account_uuid)
         print(response)
 
     except ABException as ab:

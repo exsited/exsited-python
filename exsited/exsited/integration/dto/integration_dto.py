@@ -73,9 +73,17 @@ class IntegrationConnectionGetResponseDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class FieldMappedPropertiesDTO(ABBaseDTO):
-    quotedMargin: str = None
-    lifeSupport: str = None
-    nmiNumber: str = None
+    name: str = None
+    value: str = None
+
+
+@dataclass(kw_only=True)
+class IntegrationPaginationDTO(ABBaseDTO):
+    resultCount: int = None
+    limit: int = None
+    offset: int = None
+    hasMore: str = None
+
 
 
 @dataclass(kw_only=True)
@@ -89,18 +97,28 @@ class LinkedAccountDTO(ABBaseDTO):
     createdOn: str = None
     lastUpdatedBy: str = None
     lastUpdatedOn: str = None
-    manager: str = None
-    fieldMappedProperties: FieldMappedPropertiesDTO = None
-    ekoProjectName: str = None
-    ekoProjectId: str = None
-    ekoProjectStatus: str = None
-    ekoProjectSubStatus: str = None
+    fieldMappedProperties: list[FieldMappedPropertiesDTO] = None
+    projectId: str = None
+    projectName: str = None
+    projectNumber: str = None
+    projectRefNo: str = None
+    projectDescription: str = None
+    projectType: str = None
+    projectStartDate: str = None
+    projectEndDate: str = None
+    projectStatus: str = None
+    projectSubStatus: str = None
+    projectLocation: str = None
+    projectContact: str = None
+    projectManager: str = None
+    projectOwner: str = None
+    associatedClientName: str = None
 
 
 @dataclass(kw_only=True)
 class LinkedAccountsResponseDTO(ABBaseDTO):
     linkedAccounts: list[LinkedAccountDTO] = None
-    pagination: PaginationDTO = None
+    pagination: IntegrationPaginationDTO = None
 
 
 @dataclass(kw_only=True)
