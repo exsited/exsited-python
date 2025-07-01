@@ -7,6 +7,8 @@ from exsited.common.sdk_util import SDKUtil
 from exsited.http.ab_rest_processor import ABRestProcessor
 
 class Payment(ABRestProcessor):
+    def __init__(self, request_token_dto, file_token_mgr=None):
+        super().__init__(request_token_dto, file_token_mgr)
 
     def create(self, invoice_id: str, request_data: PaymentCreateDTO) -> PaymentDetailsDTO:
         response = self.post(url=PaymentApiUrl.PAYMENT_CREATE.format(invoice_id=invoice_id), request_obj=request_data, response_obj=PaymentDetailsDTO())

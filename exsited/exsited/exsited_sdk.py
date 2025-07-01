@@ -2,8 +2,8 @@ from exsited.exsited.account.account import Account
 from exsited.exsited.auth.dto.token_dto import RequestTokenDTO
 from exsited.exsited.credit_note.credit_note import CreditNote
 from exsited.exsited.gift_certificates.gift_certificates import GiftCertificates
-from exsited.exsited.integration.integration import Integration
 from exsited.exsited.invoice.invoice import Invoice
+from exsited.exsited.integration.integration import Integration
 from exsited.exsited.order.order import Order
 from exsited.exsited.purchase_order.purchase_order import PurchaseOrder
 from exsited.exsited.refund.refund import Refund
@@ -39,20 +39,24 @@ class ExsitedSDK:
             )
             self._init_endpoints()
 
-    def _init_endpoints(self):
-        self.account = Account(request_token_dto=self._request_token_dto)
-        self.order = Order(request_token_dto=self._request_token_dto)
-        self.invoice = Invoice(request_token_dto=self._request_token_dto)
-        self.setting = Setting(request_token_dto=self._request_token_dto)
-        self.payment = Payment(request_token_dto=self._request_token_dto)
-        self.refund = Refund(request_token_dto=self._request_token_dto)
-        self.purchase_order = PurchaseOrder(request_token_dto=self._request_token_dto)
-        self.gift_certificates = GiftCertificates(request_token_dto=self._request_token_dto)
-        self.credit_note = CreditNote(request_token_dto=self._request_token_dto)
-        self.return_merchandise_authorisations = ReturnMerchandiseAuthorisations(request_token_dto=self._request_token_dto)
-        self.integration = Integration(request_token_dto=self._request_token_dto)
+    def _init_endpoints(self, file_token_mgr=None):
+        self.account = Account(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.order = Order(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.invoice = Invoice(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.setting = Setting(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.payment = Payment(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.refund = Refund(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.purchase_order = PurchaseOrder(request_token_dto=self._request_token_dto,
+                                            file_token_mgr=file_token_mgr)
+        self.gift_certificates = GiftCertificates(request_token_dto=self._request_token_dto,
+                                                  file_token_mgr=file_token_mgr)
+        self.credit_note = CreditNote(request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.return_merchandise_authorisations = ReturnMerchandiseAuthorisations(
+            request_token_dto=self._request_token_dto, file_token_mgr=file_token_mgr)
+        self.integration = Integration(request_token_dto=self._request_token_dto,
+                                                  file_token_mgr=file_token_mgr)
 
-    def init_sdk(self, request_token_dto: RequestTokenDTO) -> 'ExsitedSDK':
+    def init_sdk(self, request_token_dto: RequestTokenDTO, file_token_mgr=None) -> 'ExsitedSDK':
         self._request_token_dto = request_token_dto
-        self._init_endpoints()
+        self._init_endpoints(file_token_mgr=file_token_mgr)
         return self

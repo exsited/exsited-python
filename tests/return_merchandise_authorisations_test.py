@@ -1,3 +1,5 @@
+from exsited.http.file_token_manager import FileTokenManager
+
 from exsited.exsited.exsited_sdk import ExsitedSDK
 from exsited.common.ab_exception import ABException
 from exsited.common.sdk_conf import SDKConfig
@@ -14,7 +16,13 @@ def test_return_merchandise_authorisations_list():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.return_merchandise_authorisations.list()
@@ -30,7 +38,13 @@ def test_return_merchandise_authorisations_receive_list():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.return_merchandise_authorisations.receive_list(id='', rma_id='')
@@ -46,7 +60,13 @@ def test_return_merchandise_authorisations_details():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.return_merchandise_authorisations.details(id="")
@@ -62,7 +82,13 @@ def test_return_merchandise_authorisations_create():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         request_data = CreateReturnMerchandiseAuthorisationDTO(
@@ -83,7 +109,13 @@ def test_receive_return_merchandise_authorisations_create():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         request_data = CreateReceiveReturnMerchandiseAuthorisationsDTO(
@@ -103,7 +135,13 @@ def test_return_merchandise_authorisations_receive_details():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.return_merchandise_authorisations.receive_details(id='', rma_id='', rec_id='')
@@ -118,7 +156,13 @@ def test_invoice_return_merchandise_authorisations_list():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.return_merchandise_authorisations.invoice_list(id="")
@@ -134,7 +178,13 @@ def test_invoice_return_merchandise_authorisations_details():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.return_merchandise_authorisations.invoice_rma_details(id="", rma_id='')

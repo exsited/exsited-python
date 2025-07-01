@@ -1,3 +1,5 @@
+from exsited.http.file_token_manager import FileTokenManager
+
 from exsited.exsited.common.dto.common_dto import TaxDTO
 from exsited.exsited.exsited_sdk import ExsitedSDK
 from exsited.exsited.purchase_order.dto.purchase_order_dto import PurchaseOrderListDTO, PurchaseOrderDetailsDTO, \
@@ -13,7 +15,13 @@ def test_purchase_order_list_basic():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.list()
@@ -29,7 +37,13 @@ def test_purchase_order_details():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.details(id='')
@@ -46,7 +60,13 @@ def test_purchase_order_reactivate():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.reactivate(id="")
@@ -61,7 +81,13 @@ def test_purchase_order_cancel():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.cancel(id="")
@@ -76,7 +102,13 @@ def test_purchase_order_delete():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.delete(id='')
@@ -93,7 +125,13 @@ def test_purchase_order_information():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.information(id='')
@@ -109,7 +147,13 @@ def test_purchase_order_line_uuid():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.line_uuid(id='', uuid='')
@@ -126,7 +170,13 @@ def test_purchase_order_line():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         response = exsited_sdk.purchase_order.po_line(id='')
@@ -143,7 +193,13 @@ def test_purchase_order_create():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         purchase_order_data = PurchaseOrderDataDTO(

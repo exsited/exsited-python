@@ -13,7 +13,8 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 
 
 class Order(ABRestProcessor):
-
+    def __init__(self, request_token_dto, file_token_mgr=None):
+        super().__init__(request_token_dto, file_token_mgr)
     def create(self, request_data: OrderCreateDTO) -> OrderDetailsDTO:
         response = self.post(url=OrderApiUrl.ORDERS, request_obj=request_data, response_obj=OrderDetailsDTO())
         return response

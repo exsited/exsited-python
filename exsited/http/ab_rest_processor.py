@@ -1,3 +1,6 @@
+from datetime import datetime
+import os
+import threading
 from dataclasses import dataclass
 from exsited.exsited.auth.auth_api_url import AuthApiUrl
 from exsited.exsited.auth.dto.token_dto import TokenResponseDTO, RequestTokenDTO, RefreshTokenDTO
@@ -9,6 +12,7 @@ from exsited.common.sdk_util import SDKUtil
 from exsited.http.http_const import RequestType
 from exsited.http.http_requester import HTTPRequester, HTTPResponse
 from exsited.sdlize.ab_base_dto import ABBaseDTO
+
 
 
 @dataclass
@@ -23,12 +27,16 @@ class HTTPRequestData:
 
 
 class ABRestProcessor:
-    http_requester: HTTPRequester = HTTPRequester()
-    rest_token: TokenResponseDTO = None
-    request_token_dto: RequestTokenDTO = None
+    MAX_RETRIES = 3
+    RETRYABLE_HTTP_CODES = [500, 502, 503, 504, 401, 400]
 
-    def __init__(self, request_token_dto: RequestTokenDTO):
+    def __init__(self, request_token_dto: RequestTokenDTO, file_token_mgr=None):
         self.request_token_dto = request_token_dto
+        self._token_lock = threading.Lock()
+        self.file_token_mgr = file_token_mgr
+        self.rest_token: TokenResponseDTO = None
+        self.http_requester = HTTPRequester()
+
 
     def process_error_response(self, response: HTTPResponse, response_data: dict):
         exception_message = "Something happened wrong!"
@@ -70,24 +78,57 @@ class ABRestProcessor:
         self.rest_token = response
 
     def _init_auth(self):
+        if self.file_token_mgr and self.file_token_mgr.is_token_valid():
+            token = self.file_token_mgr.get_token()
+            self.rest_token = TokenResponseDTO(accessToken=token, refreshToken="dummy")
+            self.http_requester.add_bearer_token(token)
+            return
+
         api_response = self.http_requester.post(url=AuthApiUrl.GET_TOKEN, json_dict=self.request_token_dto.to_dict())
         self._set_token(api_response=api_response)
 
+        if self.file_token_mgr:
+            self.file_token_mgr.set_token(
+                self.rest_token.accessToken,
+                self.rest_token.refreshToken,
+                api_response.data.get("expires_in", api_response.data["expires_in"])
+            )
+
     def _renew_token(self):
+        with self._token_lock:
+            if self.file_token_mgr:
+                self.file_token_mgr.clear_token()  # Clear file so next _init_auth() fetches fresh
+            self._init_auth()
+        self.http_requester.add_bearer_token(self.rest_token.accessToken)
+
+    def _ensure_token(self):
+        if self.file_token_mgr:
+            # Ensures valid token (only one process refreshes it if expired)
+            self.file_token_mgr.ensure_token_ready(refresh_callback=self._init_auth)
+            token = self.file_token_mgr.get_token()
+            self.http_requester.add_bearer_token(token)
+
+    def _renew_token_v1(self):
         refresh_token = RefreshTokenDTO(
             clientId=self.request_token_dto.clientId,
             clientSecret=self.request_token_dto.clientSecret,
             redirectUri=self.request_token_dto.redirectUri,
             refreshToken=self.rest_token.refreshToken
         )
+        # SDKConsole.log(f"[{os.getpid()}] Refreshing token: {refresh_token}")
         api_response = self.http_requester.post(url=AuthApiUrl.GET_TOKEN, json_dict=refresh_token.to_dict())
-        self._set_token(api_response=api_response)
+        if api_response.httpCode == 400:
+            with self._token_lock:
+                # SDKConsole.log(f"[{os.getpid()}] Token refresh failed, falling back to _init_auth")
+                self._init_auth()
+        else:
+            self._set_token(api_response=api_response)
+
+        self.http_requester.add_bearer_token(self.rest_token.accessToken)
 
     def _init_config(self):
         self.http_requester.baseUrl = self.request_token_dto.exsitedUrl
-        if not self.rest_token or not self.rest_token.accessToken:
-            self._init_auth()
-        self.http_requester.add_bearer_token(self.rest_token.accessToken)
+        self._ensure_token()
 
     def _send_request(self, request_data: HTTPRequestData) -> HTTPResponse:
         response = None
@@ -103,14 +144,28 @@ class ABRestProcessor:
             response = self.http_requester.get(url=request_data.url, params=request_data.params)
         request_summary = f"URL: {self.http_requester.baseUrl} \nURL Postfix: {request_data.url} \nparams: {request_data.params} \nJSON Data: {request_data.json_dict}"
         SDKConsole.log(message=request_summary, is_print=SDKConfig.PRINT_REQUEST_DATA)
+
         return response
 
     def process_rest_request(self, request_data: HTTPRequestData, response_obj: ABBaseDTO = None):
         self._init_config()
-        response: HTTPResponse = self._send_request(request_data=request_data)
-        if response.httpCode == 401:
-            self._renew_token()
+
+        attempt = 0
+        while attempt < self.MAX_RETRIES:
             response: HTTPResponse = self._send_request(request_data=request_data)
+
+            if response.httpCode == 401:
+                self._renew_token()
+                response = self._send_request(request_data=request_data)
+
+            if response.httpCode not in self.RETRYABLE_HTTP_CODES:
+                break
+
+            attempt += 1
+            if attempt < self.MAX_RETRIES:
+                SDKConsole.log(f"Retrying request (attempt {attempt + 1}) due to error {response.httpCode}",
+                               is_print=True)
+
         return self._get_data(response=response, response_obj=response_obj, exception=request_data.exception)
 
     def get(self, url: str, params: dict = None, response_obj: ABBaseDTO = None, exception: bool = True):

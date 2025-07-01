@@ -1,3 +1,5 @@
+from exsited.http.file_token_manager import FileTokenManager
+
 from exsited.common.ab_exception import ABException
 from exsited.common.sdk_conf import SDKConfig
 from exsited.exsited.exsited_sdk import ExsitedSDK
@@ -8,7 +10,13 @@ from tests.common.common_data import CommonData
 def test_get_integration_linked_objects_account():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         provider_uuid = "provider_uuid"
@@ -24,7 +32,13 @@ def test_get_integration_linked_objects_account():
 def test_get_integration_linked_objects_account_details():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         provider_uuid = "provider_uuid"

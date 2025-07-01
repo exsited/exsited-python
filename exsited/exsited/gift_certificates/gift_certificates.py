@@ -8,6 +8,8 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 
 
 class GiftCertificates(ABRestProcessor):
+    def __init__(self, request_token_dto, file_token_mgr=None):
+        super().__init__(request_token_dto, file_token_mgr)
 
     def list(self, limit: int = None, offset: int = None, direction: SortDirection = None,
              order_by: str = None) -> GiftCertificatesListResponseDTO:

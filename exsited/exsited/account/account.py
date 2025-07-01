@@ -13,6 +13,9 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 
 class Account(ABRestProcessor):
 
+    def __init__(self, request_token_dto, file_token_mgr=None):
+        super().__init__(request_token_dto, file_token_mgr)
+
     def create(self, request_data: AccountCreateDTO) -> AccountDetailsDTO:
         response = self.post(url=AccountApiUrl.ACCOUNTS, request_obj=request_data, response_obj=AccountDetailsDTO())
         return response

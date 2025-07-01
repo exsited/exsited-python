@@ -7,6 +7,9 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 
 class Integration(ABRestProcessor):
 
+    def __init__(self, request_token_dto, file_token_mgr=None):
+        super().__init__(request_token_dto, file_token_mgr)
+
     def get_list_linked_objects_by_account(self, provider_uuid: str, limit: int = None, offset: int = None, direction: SortDirection = None,
                                            order_by: str = None) -> LinkedAccountsResponseDTO:
         params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)

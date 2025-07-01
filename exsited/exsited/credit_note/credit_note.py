@@ -7,6 +7,8 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 
 
 class CreditNote(ABRestProcessor):
+    def __init__(self, request_token_dto, file_token_mgr=None):
+        super().__init__(request_token_dto, file_token_mgr)
     def details(self, id: str) -> CreditNoteDetailsDTO:
         response = self.get(url=CreditNoteApiUrl.DETAILS.format(id=id), response_obj=CreditNoteDetailsDTO())
         return response
