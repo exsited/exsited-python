@@ -39,7 +39,7 @@ class ABRestProcessor:
 
 
     def process_error_response(self, response: HTTPResponse, response_data: dict):
-        exception_message = "Something happened wrong!"
+        exception_message = "Something went wrong!"
         http_code = response.httpCode
         if http_code == 400:
             exception_message = "Validation Errors"
