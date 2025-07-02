@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
-from exsited.exsited.account.dto.account_nested_dto import CommunicationPreferenceDTO
+from exsited.exsited.account.dto.account_nested_dto import CommunicationPreferenceDTO, PaymentMethodsDataDTO
 from exsited.exsited.common.dto.common_dto import CustomFormsDTO, CurrencyDTO, TimeZoneDTO, TaxDTO, PaginationDTO, \
     AddressDTO, ShippingProfileDTO
 from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO, OrderItemPriceSnapshotDTO, OrderPropertiesDTO, \
-    ContractPropertiesDTO, UpgradeDowngradePreviewDTO, KpisDTO, DiscountProfileDTO
+    ContractPropertiesDTO, UpgradeDowngradePreviewDTO, KpisDTO, DiscountProfileDTO, ContractAdjustmentPreviewDTO, \
+    InvoiceExpressDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 
 
@@ -64,7 +65,10 @@ class OrderDataDTO(ABBaseDTO):
 
     lines: list[OrderLineDTO] = None
     customForms: CustomFormsDTO = None
-    currency: CurrencyDTO = None
+    try:
+        currency: CurrencyDTO = None
+    except:
+        currency: str = None
     timeZone: TimeZoneDTO = None
     properties: OrderPropertiesDTO = None
 
@@ -84,6 +88,17 @@ class OrderDataDTO(ABBaseDTO):
     customAttributes: list[CustomAttributesDataDTO] = None
     customerPurchaseOrderId: str = None
     discountProfile: DiscountProfileDTO = None
+
+    accountName: str = None
+    currencyId: str = None
+    total: str = None
+    subtotal: str = None
+    tax: str = None
+
+    invoiceId: str = None
+    paymentId: str = None
+    invoice: InvoiceExpressDTO = None
+
 
     def add_line(self, item_id: str, quantity: str, price: str = None):
         line = OrderLineDTO(itemId=item_id, itemOrderQuantity=quantity)
@@ -120,6 +135,7 @@ class OrderListDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class OrderCancelResponseDTO(ABBaseDTO):
+    eventUuid: str = None
     order: OrderDataDTO = None
 
 
@@ -131,3 +147,67 @@ class AccountOrdersResponseDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class OrderUpgradeDowngradeDTO(ABBaseDTO):
     preview: UpgradeDowngradePreviewDTO = None
+
+
+@dataclass(kw_only=True)
+class OrderUpgradeDTO(ABBaseDTO):
+    effectiveDate: str = None
+    effectiveImmediately: str = None
+    redemptionCode: str = None
+    discountPercentage: str = None
+    lines: list[OrderLineDTO] = None
+
+
+@dataclass(kw_only=True)
+class OrderUpgradePreviewDTO(ABBaseDTO):
+    effectiveDate: str = None
+    effectiveImmediately: str = None
+    redemptionCode: str = None
+    discountPercentage: str = None
+    lines: list[OrderLineDTO] = None
+    properties: OrderPropertiesDTO = None
+
+
+@dataclass(kw_only=True)
+class OrderDowngradeDTO(ABBaseDTO):
+    effectiveDate: str = None
+    effectiveImmediately: str = None
+    redemptionCode: str = None
+    discountPercentage: str = None
+    lines: list[OrderLineDTO] = None
+    properties: OrderPropertiesDTO = None
+
+
+@dataclass(kw_only=True)
+class OrderDowngradePreviewDTO(ABBaseDTO):
+    effectiveDate: str = None
+    effectiveImmediately: str = None
+    redemptionCode: str = None
+    discountPercentage: str = None
+    lines: list[OrderLineDTO] = None
+    properties: OrderPropertiesDTO = None
+
+
+@dataclass(kw_only=True)
+class ContractAdjustmentPreviewRequestDTO(ABBaseDTO):
+    effectiveDate: str = None
+    effectiveImmediately: str = None
+    redemptionCode: str = None
+    discountPercentage: str = None
+    lines: list[OrderLineDTO] = None
+    properties: OrderPropertiesDTO = None
+
+
+@dataclass(kw_only=True)
+class ContractAdjustmentPreviewResponseDTO(ABBaseDTO):
+    preview: ContractAdjustmentPreviewDTO = None
+
+
+@dataclass(kw_only=True)
+class OrderPaymentMethodDataDTO(ABBaseDTO):
+    paymentMethods: list[PaymentMethodsDataDTO] = None
+
+@dataclass(kw_only=True)
+class OrderPaymentMethodsResponseDTO(ABBaseDTO):
+    order: OrderPaymentMethodDataDTO = None
+

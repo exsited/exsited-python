@@ -1,11 +1,15 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from exsited.exsited.common.dto.common_dto import CurrencyDTO, TimeZoneDTO, PaginationDTO, CustomAttributesDTO, TaxDTO, \
     AddressDTO, CustomFormsDTO, CustomObjectDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 from exsited.exsited.account.dto.account_nested_dto import AccountingCodeDTO, CommunicationPreferenceDTO, \
     PaymentMethodsDataDTO, BillingPreferencesDTO, PaymentMethodsDTO, PaymentCardMethodsDTO, PaymentCardMethodsDataDTO, \
+    PaymentMethodListDTO, AccountContacts, AccountContactsType, AccountContactsUpdate, AccountContactUpdate, \
+    AcccountAddressDTO, NoteDataDTO, NoteFileDataDTO, NoteFileUuidDataDTO, AccountImageDataDTO, \
+    AccountBillingPreferencesDetailsDTO, \
+    AccountBillingPreferencesResponseDetailsDTO, AccountAddressRequestDetailsDTO, AccountAddressResponseDetailsDTO, \
     PaymentMethodListDTO, AccountContacts, AccountContactsType, AccountContactsUpdate, AccountContactUpdate, ContactDTO, \
-    PricingLevelDTO
+    PricingLevelDTO, AcccountAddressRequestDTO, ContactRequestDTO
 
 
 @dataclass(kw_only=True)
@@ -45,12 +49,56 @@ class AccountDataDTO(ABBaseDTO):
     paymentMethods: list[PaymentMethodsDataDTO] = None
     billingPreferences: BillingPreferencesDTO = None
     customAttributes: list[CustomAttributesDTO] = None
-    addresses: list[AddressDTO] = None
+    try:
+        addresses: list[AcccountAddressDTO] = None
+        contacts: list[ContactDTO] = None
+    except:
+        addresses: list[AcccountAddressRequestDTO] = None
+        contacts: list[ContactRequestDTO] = None
     customForms: CustomFormsDTO = None
     eventUuid: str = None
     customObjects: list[CustomObjectDTO] = None
     kpis: dict = None
-    contacts: list[ContactDTO] = None
+
+
+
+@dataclass(kw_only=True)
+class AccountAddressDataDTO(ABBaseDTO):
+    id: str = None
+    addresses: list[AcccountAddressDTO] = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteDataDTO(ABBaseDTO):
+    notes: list[NoteDataDTO] = None
+    pagination: PaginationDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteResponseDataDTO(ABBaseDTO):
+    notes: NoteDataDTO = None
+
+
+
+@dataclass(kw_only=True)
+class AccountAddressUuidDataDTO(ABBaseDTO):
+    id: str = None
+    addresses: AcccountAddressDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteUuidDataDTO(ABBaseDTO):
+    note: NoteDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteUuidFileDataDTO(ABBaseDTO):
+    note: NoteFileDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteUuidFileUuidDataDTO(ABBaseDTO):
+    note: NoteFileUuidDataDTO = None
 
 
 @dataclass(kw_only=True)
@@ -66,6 +114,46 @@ class AccountUpdateInformationDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class AccountDetailsDTO(ABBaseDTO):
     account: AccountDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountImageDetailsDTO(ABBaseDTO):
+    account: AccountImageDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressDetailsDTO(ABBaseDTO):
+    account: AccountAddressDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteDetailsDTO(ABBaseDTO):
+    account: AccountNoteDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteResponseDetailsDTO(ABBaseDTO):
+    account: AccountNoteResponseDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressUuidDetailsDTO(ABBaseDTO):
+    account: AccountAddressUuidDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteUuidDetailsDTO(ABBaseDTO):
+    account: AccountNoteUuidDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteUuidFileDetailsDTO(ABBaseDTO):
+    account: AccountNoteUuidFileDataDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountNoteUuidFileUuidDetailsDTO(ABBaseDTO):
+    account: AccountNoteUuidFileUuidDataDTO = None
 
 
 @dataclass(kw_only=True)
@@ -159,3 +247,103 @@ class AccountAddressesAdd(ABBaseDTO):
 @dataclass(kw_only=True)
 class AccountAddressesAddDTO(ABBaseDTO):
     account: AccountAddressesAdd = None
+
+
+@dataclass(kw_only=True)
+class AccountBillingPreferencesRequestDTO(ABBaseDTO):
+    account: AccountBillingPreferencesDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountBillingPreferencesResponseDTO(ABBaseDTO):
+    account: AccountBillingPreferencesResponseDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressRequestDTO(ABBaseDTO):
+    account: AccountAddressRequestDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressResponseDTO(ABBaseDTO):
+    account: AccountAddressResponseDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class EmailSentAttachmentDTO(ABBaseDTO):
+    name: str = None
+    path: str = None
+    size: int = None
+    type: str = None
+
+
+@dataclass(kw_only=True)
+class EmailSentDetailsDTO(ABBaseDTO):
+    uuid: str = None
+    messageType: str = None
+    status: str = None
+    fromEmail: str = None
+    to: str = None
+    cc: list = None
+    bcc: list = None
+    subject: str = None
+    body: str = None
+    additionalTemplate: str = None
+    createdAt: str = None
+    lastUpdatedAt: str = None
+    attachments: list = None
+
+    _custom_field_mapping = {
+        "from": "fromEmail"
+    }
+
+
+@dataclass(kw_only=True)
+class AccountCommunicationDetailsDTO(ABBaseDTO):
+    email: EmailSentDetailsDTO = None
+
+    #Used only in Request as Parent
+    # _custom_field_mapping = {
+    #     "from": "fromEmail"
+    # }
+
+
+@dataclass(kw_only=True)
+class EmailSentAccountDTO(ABBaseDTO):
+    communication: AccountCommunicationDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class EmailSentResponseDTO(ABBaseDTO):
+    account: EmailSentAccountDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountCommunicationResponseListDTO(ABBaseDTO):
+    emails: EmailSentDetailsDTO = None
+    pagination: PaginationDTO = None
+
+
+@dataclass(kw_only=True)
+class EmailGetAccountListDTO(ABBaseDTO):
+    communication: AccountCommunicationResponseListDTO = None
+
+
+@dataclass(kw_only=True)
+class EmailGetListResponseDTO(ABBaseDTO):
+    account: EmailGetAccountListDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountCommunicationResponseDetailsDTO(ABBaseDTO):
+    email: EmailSentDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class EmailGetAccountDetailsDTO(ABBaseDTO):
+    communication: AccountCommunicationResponseDetailsDTO = None
+
+
+@dataclass(kw_only=True)
+class EmailGetDetailsResponseDTO(ABBaseDTO):
+    account: EmailGetAccountDetailsDTO = None

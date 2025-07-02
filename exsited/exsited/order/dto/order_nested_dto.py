@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from exsited.exsited.common.dto.common_dto import TaxDTO
+from exsited.exsited.payment.dto.payment_dto import PaymentDataDTO
 from exsited.sdlize.ab_base_dto import ABBaseDTO
 
 
@@ -49,13 +50,33 @@ class OrderItemPriceSnapshotDTO(ABBaseDTO):
 
 
 @dataclass(kw_only=True)
+class PurchaseInvoiceDataPurchasePaymentAppliedDTO(ABBaseDTO):
+    processor: str = None
+    reference: str = None
+
+
+@dataclass(kw_only=True)
+class PurchaseInvoiceDataPurchasePaymentDTO(ABBaseDTO):
+    date: str = None
+    purchasePaymentApplied: list[PurchaseInvoiceDataPurchasePaymentAppliedDTO] = None
+
+
+@dataclass(kw_only=True)
+class PurchaseInvoiceDataDTO(ABBaseDTO):
+    issueDate: str = None
+    dueDate: str = None
+    purchasePayment: PurchaseInvoiceDataPurchasePaymentDTO = None
+
+@dataclass(kw_only=True)
 class POInformationDTO(ABBaseDTO):
     id: str = None
     name: str = None
     accountId: str = None
     currency: str = None
     itemQuantity: str = None
+    taxExemptWhenSold: str = None
     itemPriceSnapshot: OrderItemPriceSnapshotDTO = None
+    purchaseInvoice: PurchaseInvoiceDataDTO = None
 
 
 @dataclass(kw_only=True)
@@ -107,6 +128,7 @@ class OrderLineDTO(ABBaseDTO):
     version: str = None
     itemPriceTax: TaxDTO = None
     isTaxExemptWhenSold: str = None
+    taxExemptWhenSold: str = None
 
     itemPriceSnapshot: OrderItemPriceSnapshotDTO = None
     itemSaleTaxConfiguration: OrderItemSaleTaxConfigurationDTO = None
@@ -150,6 +172,12 @@ class OrderLineDTO(ABBaseDTO):
     preOrderStockDetails: PreOrderStockDetailsDTO = None
     expectedDeliveryDate: str = None
 
+    purchaseOrderId: str = None
+    purchaseInvoiceId: str = None
+    itemId: str = None
+    itemName: str = None
+    itemOrderQuantity: str = None
+
 
 
 @dataclass(kw_only=True)
@@ -164,6 +192,8 @@ class OrderPropertiesDTO(ABBaseDTO):
     paymentTermAlignment: str = None
     fulfillmentMode: str = None
     fulfillmentTerm: str = None
+    consolidateInvoice: str = None
+    consolidateKey: str = None
 
 
 @dataclass(kw_only=True)
@@ -201,10 +231,7 @@ class ContractPropertiesDTO(ABBaseDTO):
     terminationNoticePeriod: str = None
 
 
-@dataclass(kw_only=True)
-class OrderUpgradeDTO(ABBaseDTO):
-    effectiveDate: str = None
-    lines: list[OrderLineDTO] = None
+
 
 
 @dataclass(kw_only=True)
@@ -223,6 +250,17 @@ class UpgradeDowngradePreviewDTO(ABBaseDTO):
     currency: str = None
 
 
+@dataclass(kw_only=True)
+class ContractAdjustmentPreviewDTO(ABBaseDTO):
+    subTotal: str = None
+    taxTotal: str = None
+    discountTotal: str = None
+    shippingTotal: str = None
+    total: str = None
+    currency: str = None
+    oldTotal: str = None
+    totalChanged: str = None
+    totalDue: str = None
 
 
 @dataclass(kw_only=True)
@@ -242,3 +280,8 @@ class KpisDTO(ABBaseDTO):
     lastCancelledOn: str = None
     lastChangedOn: str = None
     lastDeletedOn: str = None
+
+
+@dataclass(kw_only=True)
+class InvoiceExpressDTO(ABBaseDTO):
+    payment: PaymentDataDTO = None

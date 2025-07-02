@@ -134,6 +134,12 @@ class EmailDTO(ABBaseDTO):
 
 
 @dataclass(kw_only=True)
+class AccountImageDataDTO(ABBaseDTO):
+    imageUri: str = None
+    accountId: str = None
+
+
+@dataclass(kw_only=True)
 class PhoneDTO(ABBaseDTO):
     countryCode: str = None
     areaCode: str = None
@@ -248,8 +254,87 @@ class AccountContactUpdate(ABBaseDTO):
     contact: ContactDTO = None
 
 
-
 @dataclass(kw_only=True)
 class AccountContactsUpdate(ABBaseDTO):
     contacts: ContactDTO = None
     id: str = None
+
+@dataclass(kw_only=True)
+class AcccountAddressDTO(ABBaseDTO):
+    addressLine1: str = None
+    addressLine2: str = None
+    addressLine3: str = None
+    addressLine4: str = None
+    addressLine5: str = None
+    postCode: str = None
+    uuid: str = None
+    city: str = None
+    state: str = None
+    country: str = None
+    isDefaultBilling: bool = None
+    isDefaultShipping: bool = None
+
+
+@dataclass(kw_only=True)
+class AcccountAddressRequestDTO(ABBaseDTO):
+    address_line_1: str = None
+    address_line_2: str = None
+    address_line_3: str = None
+    address_line_4: str = None
+    address_line_5: str = None
+    postCode: str = None
+    uuid: str = None
+    city: str = None
+    state: str = None
+    country: str = None
+    isDefaultBilling: bool = None
+    isDefaultShipping: bool = None
+
+
+@dataclass(kw_only=True)
+class FileDTO(ABBaseDTO):
+    uuid: str = None
+    name: str = None
+    version: str = None
+
+@dataclass(kw_only=True)
+class NoteDataDTO(ABBaseDTO):
+    uuid: str = None
+    version: str = None
+    content: str = None
+    files: list[FileDTO] = None
+    createdBy: str = None
+    createdOn: str = None
+    lastUpdatedBy: str = None
+    lastUpdatedOn: str = None
+
+
+@dataclass(kw_only=True)
+class NoteFileDataDTO(ABBaseDTO):
+    files: list[FileDTO] = None
+
+
+@dataclass(kw_only=True)
+class NoteFileUuidDataDTO(ABBaseDTO):
+    file: FileDTO = None
+
+##############
+@dataclass(kw_only=True)
+class AccountBillingPreferencesDetailsDTO(ABBaseDTO):
+    billingPreferences: BillingPreferencesDTO = None
+
+@dataclass(kw_only=True)
+class AccountBillingPreferencesResponseDetailsDTO(ABBaseDTO):
+    id: str = None
+    billingPreferences: BillingPreferencesDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressRequestDetailsDTO(ABBaseDTO):
+    address: AcccountAddressRequestDTO = None
+
+
+@dataclass(kw_only=True)
+class AccountAddressResponseDetailsDTO(ABBaseDTO):
+    id: str = None
+    addresses: AcccountAddressDTO = None

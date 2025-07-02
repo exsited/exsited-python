@@ -1,7 +1,9 @@
 from exsited.exsited.common.common_enum import SortDirection
 from exsited.exsited.order.dto.order_dto import OrderCreateDTO, OrderDetailsDTO, OrderListDTO, OrderCancelResponseDTO, \
-    OrderUpgradeDowngradeDTO, OrderDowngradeDetailsDTO
-from exsited.exsited.order.dto.order_nested_dto import OrderUpgradeDTO
+    OrderUpgradeDowngradeDTO, OrderDowngradeDetailsDTO, ContractAdjustmentPreviewResponseDTO, OrderDowngradePreviewDTO, \
+    ContractAdjustmentPreviewRequestDTO, OrderUpgradePreviewDTO, OrderDowngradeDTO, OrderUpgradeDTO, \
+    OrderPaymentMethodsResponseDTO
+from exsited.exsited.order.dto.order_nested_dto import ContractAdjustmentPreviewDTO
 from exsited.exsited.order.dto.order_dto import OrderCreateDTO, OrderDetailsDTO, OrderListDTO, OrderCancelResponseDTO, \
     AccountOrdersResponseDTO
 from exsited.exsited.order.dto.order_nested_dto import OrderLineDTO
@@ -15,6 +17,7 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 class Order(ABRestProcessor):
     def __init__(self, request_token_dto, file_token_mgr=None):
         super().__init__(request_token_dto, file_token_mgr)
+
     def create(self, request_data: OrderCreateDTO) -> OrderDetailsDTO:
         response = self.post(url=OrderApiUrl.ORDERS, request_obj=request_data, response_obj=OrderDetailsDTO())
         return response
@@ -28,11 +31,6 @@ class Order(ABRestProcessor):
     def usage_list(self, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) -> UsageListDTO:
         params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
         response = self.get(url=OrderApiUrl.USAGE_LIST, params=params, response_obj=UsageListDTO())
-        return response
-
-    def add_multiple_usage(self, request_data: MultipleUsageCreateDTO) -> MultipleUsageResponseDTO:
-        response = self.post(url=OrderApiUrl.USAGE_ADD, request_obj=request_data,
-                             response_obj=MultipleUsageResponseDTO())
         return response
 
     def details(self, id: str) -> OrderDetailsDTO:
@@ -66,6 +64,10 @@ class Order(ABRestProcessor):
         response = self.post(url=OrderApiUrl.USAGE_ADD, request_obj=request_data, response_obj=UsageCreateDTO())
         return response
 
+    def add_multiple_usage(self, request_data: MultipleUsageCreateDTO) -> MultipleUsageResponseDTO:
+        response = self.post(url=OrderApiUrl.USAGE_ADD, request_obj=request_data, response_obj=MultipleUsageResponseDTO())
+        return response
+
     def create_with_purchase(self, request_data: OrderCreateDTO) -> OrderDetailsDTO:
         response = self.post(url=OrderApiUrl.PURCHASE_ORDER_CREATE, request_obj=request_data,
                              response_obj=OrderDetailsDTO())
@@ -74,6 +76,31 @@ class Order(ABRestProcessor):
     def create_with_contract(self, request_data: OrderCreateDTO) -> OrderDetailsDTO:
         response = self.post(url=OrderApiUrl.CONTRACT_ORDER_CREATE, request_obj=request_data,
                              response_obj=OrderDetailsDTO())
+        return response
+
+    def upgrade(self, order_id: str, request_data: OrderUpgradeDTO) -> OrderDetailsDTO:
+        response = self.post(url=OrderApiUrl.ORDER_UPGRADE.format(id=order_id), request_obj=request_data,
+                             response_obj=OrderDetailsDTO())
+        return response
+
+    def contract_adjustment(self, order_id: str, request_data: ContractAdjustmentPreviewRequestDTO) -> ContractAdjustmentPreviewResponseDTO:
+        response = self.post(url=OrderApiUrl.CONTRACT_ADJUSTMENT.format(id=order_id), request_obj=request_data,
+                             response_obj=ContractAdjustmentPreviewResponseDTO())
+        return response
+
+    def upgrade_preview(self, order_id: str, request_data: OrderUpgradePreviewDTO) -> OrderUpgradeDowngradeDTO:
+        response = self.post(url=OrderApiUrl.ORDER_UPGRADE_PREVIEW.format(id=order_id), request_obj=request_data,
+                             response_obj=OrderUpgradeDowngradeDTO())
+        return response
+
+    def downgrade(self, order_id: str, request_data: OrderDowngradeDTO) -> OrderDowngradeDetailsDTO:
+        response = self.post(url=OrderApiUrl.ORDER_DOWNGRADE.format(id=order_id), request_obj=request_data,
+                             response_obj=OrderDowngradeDetailsDTO())
+        return response
+
+    def downgrade_preview(self, order_id: str, request_data: OrderDowngradePreviewDTO) -> OrderUpgradeDowngradeDTO:
+        response = self.post(url=OrderApiUrl.ORDER_DOWNGRADE_PREVIEW.format(id=order_id), request_obj=request_data,
+                             response_obj=OrderUpgradeDowngradeDTO())
         return response
 
     def reactivate(self, id: str, effective_date: str) -> OrderCancelResponseDTO:
@@ -86,8 +113,18 @@ class Order(ABRestProcessor):
         response = self.post(url=OrderApiUrl.ORDER_PREORDER, request_obj=request_data, response_obj=OrderDetailsDTO())
         return response
 
+    def change(self, id: str, request_data: OrderCreateDTO) -> OrderDetailsDTO:
+        response = self.post(url=OrderApiUrl.ORDER_CHANGE.format(id=id),
+                             request_obj=request_data,
+                             response_obj=OrderDetailsDTO())
+        return response
+
     def delete(self, id: str):
         response = self.delete_request(url=OrderApiUrl.ORDER_DELETE.format(id=id), response_obj={})
+        return response
+
+    def order_quote_pdf(self, id: str):
+        response = self.get(url=OrderApiUrl.ORDER_QUOTE_PDF.format(id=id))
         return response
 
     def information(self, id: str) -> OrderDetailsDTO:
@@ -129,7 +166,16 @@ class Order(ABRestProcessor):
                             request_obj=request_data, response_obj=OrderDetailsDTO())
         return response
 
+    def fill_in_billing_preference(self, id: str, request_data: OrderCreateDTO) -> OrderDetailsDTO:
+        response = self.patch(url=OrderApiUrl.ORDER_BILLING_PREFERENCES.format(id=id),
+                            request_obj=request_data, response_obj=OrderDetailsDTO())
+        return response
+
     def relinquish(self, id: str, request_data: OrderCreateDTO) -> OrderDetailsDTO:
         response = self.post(url=OrderApiUrl.ORDER_RELINQUISH.format(id=id),
                              request_obj=request_data, response_obj=OrderDetailsDTO())
+        return response
+
+    def payment_methods(self, id: str) -> OrderPaymentMethodsResponseDTO:
+        response = self.get(url=OrderApiUrl.PAYMENT_METHODS.format(id=id), response_obj=OrderPaymentMethodsResponseDTO())
         return response

@@ -7,9 +7,9 @@ from exsited.http.ab_rest_processor import ABRestProcessor
 
 
 class Invoice(ABRestProcessor):
-
     def __init__(self, request_token_dto, file_token_mgr=None):
         super().__init__(request_token_dto, file_token_mgr)
+
     def create(self, id: str, request_data: InvoiceCreateDTO) -> InvoiceDetailsDTO:
         response = self.post(url=InvoiceApiUrl.INVOICE_CREATE.format(id=id), request_obj=request_data,
                              response_obj=InvoiceDetailsDTO())
