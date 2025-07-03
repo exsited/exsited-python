@@ -110,7 +110,13 @@ def test_account_create_basic():
     SDKConfig.PRINT_REQUEST_DATA = False
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         # You will edit the following request_data
@@ -151,7 +157,13 @@ def test_order_create_basic():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         # You will edit the following request_data
@@ -281,7 +293,13 @@ This will automatically update the association tables, allowing you to retrieve 
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
 
-    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(request_token_dto=CommonData.get_request_token_dto())
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
 
     try:
         request_data = OrderCreateDTO(
