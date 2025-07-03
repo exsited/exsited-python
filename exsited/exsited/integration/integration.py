@@ -1,15 +1,6 @@
 from exsited.common.sdk_util import SDKUtil
 from exsited.exsited.common.common_enum import SortDirection
-from exsited.exsited.integration.dto.integration_dto import IntegrationConnectionListResponseDTO, \
-    IntegrationConnectionCreateResponseDTO, IntegrationConnectionCreateRequestDTO, \
-    PartnerFunctionCreateResponseDTO, LinkedAccountsResponseDTO, LinkedAccountResponseDTO, \
-    IntegrationConnectionEnableResponseDTO, IntegrationConnectionDisableResponseDTO, \
-    PartnerFunctionRequestDTO, PartnerFunctionUpdateResponseDTO, \
-    IntegrationConnectionGetResponseDTO, PartnerFunctionEnableResponseDTO, PartnerFunctionDisableResponseDTO, \
-    IntegrationConnectionConfigRequestDTO, IntegrationConnectionConfigResponseDTO, AutomationUpdateResponseDTO, \
-    IntegrationAutomationListResponseDTO, IntegrationAutomationDetailsResponseDTO, PartnerFunctionListResponseDTO, \
-    PartnerFunctionDetailsResponseDTO, XeroIntegrationConfigurationResponseDTO, AutomationRequestDTO, \
-    AutomationCreateResponseDTO, LinkedCustomersListResponseDTO, LinkedCustomersDetailsResponseDTO, LinkedCustomersQuotesResponseDTO
+from exsited.exsited.integration.dto.integration_dto import *
 from exsited.exsited.integration.integration_api_url import IntegrationApiUrl
 from exsited.http.ab_rest_processor import ABRestProcessor
 
@@ -132,4 +123,15 @@ class Integration(ABRestProcessor):
         params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
         response = self.get(url=IntegrationApiUrl.INTEGRATION_LINKED_OBJECTS_BY_CUSTOMER_QUOTES.format(provider_uuid=provider_uuid, linked_account_uuid=linked_account_uuid),
                             params=params, response_obj=LinkedCustomersQuotesResponseDTO())
+        return response
+
+    def get_linked_quotes_list(self, provider_uuid: str, limit: int = None, offset: int = None, direction: SortDirection = None, order_by: str = None) -> LinkedQuotesListDTO:
+        params = SDKUtil.init_pagination_params(limit=limit, offset=offset, direction=direction, order_by=order_by)
+        response = self.get(url=IntegrationApiUrl.INTEGRATION_LINKED_QUOTES_LIST.format(provider_uuid=provider_uuid),
+                            params=params, response_obj=LinkedQuotesListDTO())
+        return response
+
+    def get_linked_quotes_details(self, provider_uuid: str, quotes_uuid: str) -> LinkedQuotesDetailsDTO:
+        response = self.get(url=IntegrationApiUrl.INTEGRATION_LINKED_QUOTE_DETAILS.format(provider_uuid=provider_uuid, quotes_uuid=quotes_uuid),
+                            response_obj=LinkedQuotesDetailsDTO())
         return response
