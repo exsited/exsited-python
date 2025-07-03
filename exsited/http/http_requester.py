@@ -40,8 +40,9 @@ class HTTPResponse:
 
 
 class HTTPRequester:
-    headers: dict = {}
-    baseUrl: str
+    def __init__(self):
+        self.headers: dict = {}
+        self.baseUrl: str
 
     def _get_url(self, url):
         return self.baseUrl + url
