@@ -761,3 +761,26 @@ def test_get_integration_linked_objects_customer_details():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
+
+def test_get_integration_linked_objects_customer_quotes():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = True
+
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
+
+    try:
+        provider_uuid = "provider_uuid"
+        linked_account_uuid = "linked_account_uuid"
+        response = exsited_sdk.integration.get_linked_objects_by_customer_quotes(provider_uuid=provider_uuid, linked_account_uuid=linked_account_uuid, limit=1)
+        print(response)
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)

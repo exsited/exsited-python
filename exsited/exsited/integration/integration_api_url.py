@@ -16,6 +16,7 @@ class IntegrationApiUrl:
     INTEGRATION_LIST_LINKED_OBJECTS_BY_CUSTOMER = "/api/v3/integration/{provider_uuid}/linked-customers"
     INTEGRATION_LINKED_OBJECTS_BY_ACCOUNT_DETAILS = "/api/v3/integration/{provider_uuid}/linked-accounts/{linked_account_uuid}"
     INTEGRATION_LINKED_OBJECTS_BY_CUSTOMER_DETAILS = "/api/v3/integration/{provider_uuid}/linked-customers/{linked_account_uuid}"
+    INTEGRATION_LINKED_OBJECTS_BY_CUSTOMER_QUOTES = "/api/v3/integration/{provider_uuid}/linked-customers/{linked_account_uuid}/quotes"
     PARTNER_FUNCTION_UPDATE = "/api/v3/integration/{connection_uuid}/partner-function/{partner_function_uuid}"
     INTEGRATION_CONNECTION_CONFIGURATION = "/api/v3/integration/{connection_uuid}/configuration"
     AUTOMATION_UPDATE = "/api/v3/integration/{connection_uuid}/automation/{automation_uuid}"

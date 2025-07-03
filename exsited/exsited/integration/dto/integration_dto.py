@@ -629,3 +629,21 @@ class AutomationRequestDTO(ABBaseDTO):
 @dataclass(kw_only=True)
 class AutomationCreateResponseDTO(ABBaseDTO):
     integrationAutomation: IntegrationAutomationDTO = None
+
+
+@dataclass(kw_only=True)
+class LinkedCustomersQuotesDataDTO(ABBaseDTO):
+    uuid: str = None
+    createdBy: str = None
+    createdOn: str = None
+    lastUpdatedBy: str = None
+    lastUpdatedOn: str = None
+    link: str = None
+    version: str = None
+    attributes: list = None
+
+
+@dataclass(kw_only=True)
+class LinkedCustomersQuotesResponseDTO(ABBaseDTO):
+    linkedCustomerQuotes: list[LinkedCustomersQuotesDataDTO] = None
+    pagination: PaginationDTO = None
