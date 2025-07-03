@@ -98,7 +98,7 @@ class LinkedAccountDTO(ABBaseDTO):
     createdOn: str = None
     lastUpdatedBy: str = None
     lastUpdatedOn: str = None
-    fieldMappedProperties: list[FieldMappedPropertiesDTO] = None
+    fieldMappedProperties: list = None
     projectId: str = None
     projectName: str = None
     projectNumber: str = None

@@ -10,6 +10,7 @@ from tests.common.common_data import CommonData
 def test_get_integration_linked_objects_account():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
+
     token_file_path = "shared_token.json"
     file_token_mgr = FileTokenManager(token_file_path)
 
@@ -32,6 +33,7 @@ def test_get_integration_linked_objects_account():
 def test_get_integration_linked_objects_account_details():
     SDKConfig.PRINT_REQUEST_DATA = True
     SDKConfig.PRINT_RAW_RESPONSE = False
+
     token_file_path = "shared_token.json"
     file_token_mgr = FileTokenManager(token_file_path)
 
