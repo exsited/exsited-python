@@ -784,3 +784,50 @@ def test_get_integration_linked_objects_customer_quotes():
         print(ab)
         print(ab.get_errors())
         print(ab.raw_response)
+
+
+def test_get_integration_linked_quotes_list():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = True
+
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
+
+    try:
+        provider_uuid = "provider_uuid"
+        response = exsited_sdk.integration.get_linked_quotes_list(provider_uuid=provider_uuid)
+        print(response)
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)
+
+
+def test_get_integration_linked_quotes_details():
+    SDKConfig.PRINT_REQUEST_DATA = True
+    SDKConfig.PRINT_RAW_RESPONSE = True
+
+    token_file_path = "shared_token.json"
+    file_token_mgr = FileTokenManager(token_file_path)
+
+    exsited_sdk: ExsitedSDK = ExsitedSDK().init_sdk(
+        request_token_dto=CommonData.get_request_token_dto(),
+        file_token_mgr=file_token_mgr
+    )
+
+    try:
+        provider_uuid = "provider_uuid"
+        quotes_uuid = "quotes_uuid"
+        response = exsited_sdk.integration.get_linked_quotes_details(provider_uuid=provider_uuid, quotes_uuid=quotes_uuid)
+        print(response)
+
+    except ABException as ab:
+        print(ab)
+        print(ab.get_errors())
+        print(ab.raw_response)

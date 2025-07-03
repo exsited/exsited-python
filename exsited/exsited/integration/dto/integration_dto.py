@@ -633,6 +633,7 @@ class AutomationCreateResponseDTO(ABBaseDTO):
 
 @dataclass(kw_only=True)
 class LinkedCustomersQuotesDataDTO(ABBaseDTO):
+    associatedClientName: str = None
     uuid: str = None
     createdBy: str = None
     createdOn: str = None
@@ -647,3 +648,14 @@ class LinkedCustomersQuotesDataDTO(ABBaseDTO):
 class LinkedCustomersQuotesResponseDTO(ABBaseDTO):
     linkedCustomerQuotes: list[LinkedCustomersQuotesDataDTO] = None
     pagination: PaginationDTO = None
+
+
+@dataclass(kw_only=True)
+class LinkedQuotesListDTO(ABBaseDTO):
+    linkedQuotes: list[LinkedCustomersQuotesDataDTO] = None
+    pagination: PaginationDTO = None
+
+
+@dataclass(kw_only=True)
+class LinkedQuotesDetailsDTO(ABBaseDTO):
+    linkedQuote: LinkedCustomersQuotesDataDTO = None
